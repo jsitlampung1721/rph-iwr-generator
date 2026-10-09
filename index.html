@@ -16,7 +16,7 @@
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans min-h-screen">
 
-  <!-- Header App -->
+  <!-- Header Aplikasi -->
   <header class="bg-emerald-700 text-white p-4 shadow-md no-print sticky top-0 z-50">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
       <div>
@@ -37,27 +37,27 @@
     </div>
   </header>
 
-  <!-- Container Utama -->
+  <!-- Kontainer Utama -->
   <main class="max-w-7xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6 my-2">
 
     <!-- Form Input (Kolom Kiri) -->
     <section class="lg:col-span-5 bg-white p-5 rounded-lg shadow border border-slate-200 no-print space-y-5 max-h-[88vh] overflow-y-auto">
       
-      <!-- Panel Bantuan AI Generator -->
+      <!-- Panel Asisten AI Generator -->
       <div class="bg-emerald-50 border border-emerald-200 p-3.5 rounded-lg space-y-2">
         <div class="flex items-center justify-between">
           <h2 class="text-xs font-bold text-emerald-900 uppercase tracking-wider flex items-center gap-1">
-            🤖 Penjana Otomatis AI (AI Assistant)
+            🤖 Generator Otomatis AI (Asisten AI)
           </h2>
         </div>
-        <p class="text-xs text-emerald-700">Jana otomatis seluruh langkah pembelajaran & penilaian berdasarkan sasaran materi.</p>
+        <p class="text-xs text-emerald-700">Buat otomatis seluruh langkah pembelajaran & penilaian berdasarkan target materi.</p>
         
         <div>
-          <input type="password" id="geminiApiKey" placeholder="Gunakan Gemini API Key (Opsional untuk AI lanjutan)" class="w-full p-1.5 text-xs border rounded bg-white">
+          <input type="password" id="geminiApiKey" placeholder="Masukkan Gemini API Key (Opsional untuk AI Lanjutan)" class="w-full p-1.5 text-xs border rounded bg-white">
         </div>
 
         <button onclick="generateWithAI()" id="btnAi" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2 px-3 rounded text-xs transition flex items-center justify-center gap-1.5 shadow">
-          <span>✨ Jana RPH Otomatis dengan AI</span>
+          <span>✨ Buat RPH Otomatis dengan AI</span>
         </button>
       </div>
 
@@ -94,7 +94,7 @@
             <input type="text" id="alokasiWaktu" oninput="updateFromForm()" class="w-full p-1.5 border rounded text-xs">
           </div>
           <div>
-            <label class="block text-xs font-medium text-slate-600">Jumlah Peserta</label>
+            <label class="block text-xs font-medium text-slate-600">Jumlah Peserta Didik</label>
             <input type="text" id="jumlahPeserta" oninput="updateFromForm()" class="w-full p-1.5 border rounded text-xs">
           </div>
         </div>
@@ -156,7 +156,7 @@
           <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian IV. Langkah Pembelajaran (7 Langkah)</h3>
         </div>
         <div id="formLangkahContainer" class="space-y-2">
-          <!-- Dinamis di-render via JavaScript -->
+          <!-- Di-render dinamis via JavaScript -->
         </div>
       </div>
 
@@ -164,7 +164,7 @@
       <div class="space-y-3 border-t pt-3">
         <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian V. Penilaian</h3>
         <div id="formPenilaianContainer" class="space-y-2">
-          <!-- Dinamis di-render via JavaScript -->
+          <!-- Di-render dinamis via JavaScript -->
         </div>
       </div>
 
@@ -176,7 +176,7 @@
       </div>
     </section>
 
-    <!-- Document Preview (Kolom Kanan) -->
+    <!-- Pratinjau Dokumen (Kolom Kanan) -->
     <section class="lg:col-span-7 bg-white p-8 rounded-lg shadow border border-slate-200 print-area min-h-[88vh]">
       <div id="documentContent" class="text-slate-900 leading-relaxed text-sm">
         <!-- Konten RPH di-render otomatis via JavaScript -->
@@ -186,7 +186,7 @@
   </main>
 
   <script>
-    // Data Preset Bawaan JSIT
+    // Data Preset Standar JSIT Indonesia
     const presets = {
       SD: {
         judulModul: "Jilid 1 Metode Belajar Al-Qur'an Ilman Wa Ruuhan",
@@ -495,13 +495,13 @@
       document.getElementById("documentContent").innerHTML = html;
     }
 
-    // Fungsi Penjana AI Otomatis (Smart Engine + Gemini API Support)
+    // Fungsi Generator Otomatis AI (Engine Pintar + Dukungan Gemini API)
     async function generateWithAI() {
       const btn = document.getElementById("btnAi");
       const apiKey = document.getElementById("geminiApiKey").value.trim();
       
       btn.disabled = true;
-      btn.innerHTML = `<span>⏳ Menjana dengan AI...</span>`;
+      btn.innerHTML = `<span>⏳ Memproses dengan AI...</span>`;
 
       try {
         const targetHafalan = document.getElementById("targetHafalan").value;
@@ -558,12 +558,12 @@ Berikan output JSON valid dengan format:
             document.getElementById("targetAdab").value = parsed.targetAdab;
           }
         } else {
-          // Smart Offline AI Engine (Penjanaan berasaskan sintesis aturan JSIT)
-          await new Promise(r => setTimeout(r, 600)); // Efek jeda simulasi AI
+          // Smart Offline Engine (Sintesis berbasis aturan JSIT)
+          await new Promise(r => setTimeout(r, 600)); // Simulasi jeda AI
           
           currentData.langkah[3].isi = `Peserta didik mengulang hafalan sebelumnya. Pendidik mencontohkan bacaan ${targetHafalan} secara tartil dengan metode talaqqi. Pendidik memberikan penjelasan ringkas kandungan ayat. Peserta didik menirukan dan menghafal secara berkelompok serta individual secara bergantian.`;
           
-          currentData.langkah[5].isi = `Peserta didik membaca bersama target ${targetUtama}. Pendidik menjelaskan kaidah pokok bacaan dan memutar/memperagakan contoh bacaan yang tepat. Peserta didik berlatih secara kelompok dan menyetorkan bacaan individual.`;
+          currentData.langkah[5].isi = `Peserta didik membaca bersama target ${targetUtama}. Pendidik menjelaskan kaidah pokok bacaan dan memperagakan contoh bacaan yang tepat. Peserta didik berlatih secara kelompok dan menyetorkan bacaan individual.`;
 
           currentData.penilaian[1].instrumen = `Tes lisan kelancaran dan kefasihan membaca ${targetHafalan} secara individual.`;
           currentData.penilaian[3].instrumen = `Praktik dan identifikasi langsung kaidah ${targetUtama} pada ayat yang dipelajari.`;
@@ -572,12 +572,12 @@ Berikan output JSON valid dengan format:
         renderFormLangkah();
         renderFormPenilaian();
         renderPreview();
-        alert("✨ RPH Berhasil Dijana Otomatis!");
+        alert("✨ RPH Berhasil Dibuat Otomatis!");
       } catch (err) {
-        alert("Gagal menjana dengan AI: " + err.message + "\nSistem menggunakan Smart Engine Offline.");
+        alert("Gagal memproses dengan AI: " + err.message + "\nSistem kembali menggunakan Smart Engine Offline.");
       } finally {
         btn.disabled = false;
-        btn.innerHTML = `<span>✨ Jana RPH Otomatis dengan AI</span>`;
+        btn.innerHTML = `<span>✨ Buat RPH Otomatis dengan AI</span>`;
       }
     }
 
