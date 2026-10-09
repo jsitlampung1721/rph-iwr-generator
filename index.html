@@ -495,7 +495,7 @@
       document.getElementById("documentContent").innerHTML = html;
     }
 
-    // Fungsi Generator Otomatis AI (Engine Pintar + Dukungan Gemini API)
+    // Fungsi Generator Otomatis AI (Engine Pintar + Perbaikan Penanganan Error API)
     async function generateWithAI() {
       const btn = document.getElementById("btnAi");
       const apiKey = document.getElementById("geminiApiKey").value.trim();
@@ -518,7 +518,7 @@ Target Hafalan: ${targetHafalan}
 Target Utama: ${targetUtama}
 Target Makna/Tadabbur: ${targetMakna}
 
-Berikan output JSON valid dengan format:
+Berikan output JSON valid tanpa tanda tambahan apapun dengan format persis seperti ini:
 {
   "langkah": [
     {"nama": "Langkah 1: Pembukaan", "waktu": "4 menit", "isi": "..."},
@@ -538,7 +538,8 @@ Berikan output JSON valid dengan format:
   ]
 }`;
 
-          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+          // Menggunakan model resmi gemini-1.5-flash
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -547,6 +548,16 @@ Berikan output JSON valid dengan format:
           });
 
           const resData = await res.json();
+
+          // Pengecekan jika Google memberikan respon Error / API Key bermasalah
+          if (resData.error) {
+            throw new Error(`Google API Error (${resData.error.code}): ${resData.error.message}`);
+          }
+
+          if (!resData.candidates || !resData.candidates[0]) {
+            throw new Error("Respon AI tidak ditemukan atau diblokir oleh sistem keamanan Google.");
+          }
+
           let rawText = resData.candidates[0].content.parts[0].text;
           rawText = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
           const parsed = JSON.parse(rawText);
@@ -558,8 +569,8 @@ Berikan output JSON valid dengan format:
             document.getElementById("targetAdab").value = parsed.targetAdab;
           }
         } else {
-          // Smart Offline Engine (Sintesis berbasis aturan JSIT)
-          await new Promise(r => setTimeout(r, 600)); // Simulasi jeda AI
+          // Smart Offline Engine (Jika API Key dikosongkan)
+          await new Promise(r => setTimeout(r, 600));
           
           currentData.langkah[3].isi = `Peserta didik mengulang hafalan sebelumnya. Pendidik mencontohkan bacaan ${targetHafalan} secara tartil dengan metode talaqqi. Pendidik memberikan penjelasan ringkas kandungan ayat. Peserta didik menirukan dan menghafal secara berkelompok serta individual secara bergantian.`;
           
@@ -574,13 +585,12 @@ Berikan output JSON valid dengan format:
         renderPreview();
         alert("✨ RPH Berhasil Dibuat Otomatis!");
       } catch (err) {
-        alert("Gagal memproses dengan AI: " + err.message + "\nSistem kembali menggunakan Smart Engine Offline.");
+        alert("Gagal memproses dengan AI: " + err.message);
       } finally {
         btn.disabled = false;
         btn.innerHTML = `<span>✨ Buat RPH Otomatis dengan AI</span>`;
       }
     }
-
     function downloadWord() {
       const content = document.getElementById("documentContent").innerHTML;
       const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' "+
