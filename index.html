@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RPH MBQ 'Ilman Wa Ruuhan Generator</title>
+  <title>RPH MBQ 'Ilman Wa Ruuhan Generator Otomatis</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @media print {
       .no-print { display: none !important; }
       .print-area { width: 100% !important; margin: 0 !important; padding: 0 !important; }
       body { background-color: white !important; font-size: 11pt; }
-      .page-break { page-break-before: always; }
     }
   </style>
 </head>
@@ -22,7 +21,7 @@
       <div>
         <h1 class="text-xl font-bold flex items-center gap-2">
           <span>✨ RPH MBQ 'Ilman Wa Ruuhan Generator</span>
-          <span class="bg-emerald-800 text-emerald-200 text-xs px-2 py-0.5 rounded border border-emerald-600">Otomatis JSIT</span>
+          <span class="bg-emerald-800 text-emerald-200 text-xs px-2 py-0.5 rounded border border-emerald-600">Database CP 2026</span>
         </h1>
         <p class="text-xs text-emerald-100">Badan Pengembangan Pendidikan Al-Qur’an – JSIT Indonesia</p>
       </div>
@@ -40,111 +39,133 @@
   <!-- Kontainer Utama -->
   <main class="max-w-7xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6 my-2">
 
-    <!-- Form Input (Kolom Kiri) -->
-    <section class="lg:col-span-5 bg-white p-5 rounded-lg shadow border border-slate-200 no-print space-y-5 max-h-[88vh] overflow-y-auto">
+    <!-- Form Input Navigasi Database (Kolom Kiri) -->
+    <section class="lg:col-span-5 bg-white p-5 rounded-lg shadow border border-slate-200 no-print space-y-4 max-h-[88vh] overflow-y-auto">
       
-      <!-- Panel Tombol Generator Otomatis -->
-      <div class="bg-emerald-50 border border-emerald-200 p-3.5 rounded-lg space-y-2">
+      <!-- Panel Generator Klik-dan-Pilih -->
+      <div class="bg-emerald-50 border border-emerald-200 p-3.5 rounded-lg space-y-3">
         <h2 class="text-xs font-bold text-emerald-900 uppercase tracking-wider flex items-center gap-1">
-          ⚡ Generator Otomatis RPH
+          🎯 Pemilih Target CP (Klik & Generate)
         </h2>
-        <p class="text-xs text-emerald-700">Isi target materi di bawah, lalu klik tombol ini untuk memperbarui seluruh langkah pembelajaran dan penilaian secara otomatis.</p>
+        
+        <!-- Dropdown Jenjang & Kelas -->
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Jenjang</label>
+            <select id="selectJenjang" onchange="onJenjangChange()" class="w-full p-1.5 border rounded text-xs bg-white font-medium">
+              <option value="PAUD">PAUD / TK</option>
+              <option value="SD" selected>SD IT</option>
+              <option value="SMP">SMP IT</option>
+              <option value="SMA">SMA IT</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Kelas / Tingkat</label>
+            <select id="selectKelas" onchange="onKelasChange()" class="w-full p-1.5 border rounded text-xs bg-white font-medium">
+              <!-- Diisi dinamis -->
+            </select>
+          </div>
+        </div>
 
-        <button onclick="buatRphOtomatis()" id="btnGen" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2 px-3 rounded text-xs transition flex items-center justify-center gap-1.5 shadow">
-          <span>✨ Buat RPH Otomatis Sekarang</span>
+        <!-- Pilihan Target Dinamis dari Database CP -->
+        <div class="space-y-2 pt-1">
+          <div>
+            <label class="block text-xs font-medium text-slate-700">Target Hafalan (FASIH 2)</label>
+            <select id="selectHafalan" class="w-full p-1.5 border rounded text-xs bg-white">
+              <!-- Diisi dinamis -->
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-700" id="lblTargetUtama">Target Materi Utama (FASIH 1)</label>
+            <select id="selectMateriUtama" class="w-full p-1.5 border rounded text-xs bg-white">
+              <!-- Diisi dinamis -->
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-700">Fokus Adab & Santun (SANTUN)</label>
+            <select id="selectAdab" class="w-full p-1.5 border rounded text-xs bg-white">
+              <!-- Diisi dinamis -->
+            </select>
+          </div>
+        </div>
+
+        <button onclick="generateRphOtomatis()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2 px-3 rounded text-xs transition shadow flex items-center justify-center gap-1">
+          <span>🚀 Generate RPH Otomatis Sekarang</span>
         </button>
       </div>
 
-      <!-- Pilih Jenjang & Preset -->
-      <div>
-        <label class="block text-xs font-bold text-slate-700 mb-1">Pilihan Jenjang Sekolah</label>
-        <select id="jenjangSelect" onchange="applyPreset()" class="w-full p-2 border rounded text-sm bg-slate-50 focus:ring-2 focus:ring-emerald-500 font-medium">
-          <option value="SD">SD IT (Jilid IWR - 2 x 35 Menit)</option>
-          <option value="SMP">SMP IT (Tahsin, Tahfizh, Tadabbur - 2 x 30 Menit)</option>
-          <option value="SMA">SMA IT (Tahsin, Tahfizh, Tadabbur - 2 x 30 Menit)</option>
-        </select>
-      </div>
-
-      <!-- BAGIAN I: IDENTITAS -->
+      <!-- BAGIAN I: IDENTITAS RPH -->
       <div class="space-y-2 border-t pt-3">
         <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian I. Identitas RPH</h3>
         <div>
           <label class="block text-xs font-medium text-slate-600">Judul Modul Ajar</label>
-          <input type="text" id="judulModul" oninput="updateFromForm()" class="w-full p-1.5 border rounded text-xs">
+          <input type="text" id="judulModul" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs">
         </div>
         <div class="grid grid-cols-2 gap-2">
           <div>
             <label class="block text-xs font-medium text-slate-600">Kelas / Fase</label>
-            <input type="text" id="kelasFase" oninput="updateFromForm()" class="w-full p-1.5 border rounded text-xs">
+            <input type="text" id="kelasFase" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs">
           </div>
           <div>
             <label class="block text-xs font-medium text-slate-600">Tahun Pelajaran</label>
-            <input type="text" id="tp" value="2025–2026" oninput="updateFromForm()" class="w-full p-1.5 border rounded text-xs">
+            <input type="text" id="tp" value="2025–2026" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs">
           </div>
         </div>
         <div class="grid grid-cols-2 gap-2">
           <div>
             <label class="block text-xs font-medium text-slate-600">Alokasi Waktu</label>
-            <input type="text" id="alokasiWaktu" oninput="updateFromForm()" class="w-full p-1.5 border rounded text-xs">
+            <input type="text" id="alokasiWaktu" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs">
           </div>
           <div>
-            <label class="block text-xs font-medium text-slate-600">Jumlah Peserta Didik</label>
-            <input type="text" id="jumlahPeserta" oninput="updateFromForm()" class="w-full p-1.5 border rounded text-xs">
+            <label class="block text-xs font-medium text-slate-600">Jumlah Peserta</label>
+            <input type="text" id="jumlahPeserta" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs">
           </div>
         </div>
         <div>
           <label class="block text-xs font-medium text-slate-600">Sarana & Prasarana</label>
-          <input type="text" id="sarana" oninput="updateFromForm()" class="w-full p-1.5 border rounded text-xs">
+          <input type="text" id="sarana" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs">
         </div>
       </div>
 
-      <!-- BAGIAN II: CAPAIAN & TARGET -->
+      <!-- BAGIAN II: CAPAIAN PEMBELAJARAN & TARGET -->
       <div class="space-y-2 border-t pt-3">
         <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian II. Capaian & Target</h3>
         
-        <!-- Adab -->
         <div class="bg-slate-50 p-2 rounded border border-slate-200 space-y-1">
           <span class="text-xs font-semibold text-slate-700">1. Adab dan Santun</span>
-          <textarea id="capaianAdab" oninput="updateFromForm()" rows="2" class="w-full p-1.5 border rounded text-xs" placeholder="Capaian Adab"></textarea>
-          <input type="text" id="targetAdab" oninput="updateFromForm()" class="w-full p-1.5 border rounded text-xs" placeholder="Target Pertemuan Ini">
+          <textarea id="capaianAdab" oninput="updatePreviewFromForm()" rows="2" class="w-full p-1.5 border rounded text-xs"></textarea>
+          <input type="text" id="targetAdab" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs" placeholder="Target Pertemuan Ini">
         </div>
 
-        <!-- Hafalan -->
         <div class="bg-slate-50 p-2 rounded border border-slate-200 space-y-1">
           <span class="text-xs font-semibold text-slate-700">2. Hafalan</span>
-          <textarea id="capaianHafalan" oninput="updateFromForm()" rows="1" class="w-full p-1.5 border rounded text-xs" placeholder="Capaian Hafalan"></textarea>
-          <input type="text" id="targetHafalan" oninput="updateFromForm()" class="w-full p-1.5 border rounded text-xs" placeholder="Target Pertemuan Ini">
+          <textarea id="capaianHafalan" oninput="updatePreviewFromForm()" rows="2" class="w-full p-1.5 border rounded text-xs"></textarea>
+          <input type="text" id="targetHafalan" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs" placeholder="Target Pertemuan Ini">
         </div>
 
-        <!-- Makna -->
         <div class="bg-slate-50 p-2 rounded border border-slate-200 space-y-1">
-          <span class="text-xs font-semibold text-slate-700" id="labelMakna">3. Kandungan Surat / Tadabbur</span>
-          <textarea id="capaianMakna" oninput="updateFromForm()" rows="1" class="w-full p-1.5 border rounded text-xs" placeholder="Capaian Pemahaman Makna"></textarea>
-          <input type="text" id="targetMakna" oninput="updateFromForm()" class="w-full p-1.5 border rounded text-xs" placeholder="Target Pertemuan Ini">
+          <span class="text-xs font-semibold text-slate-700" id="labelMakna">3. Pemahaman Makna</span>
+          <textarea id="capaianMakna" oninput="updatePreviewFromForm()" rows="2" class="w-full p-1.5 border rounded text-xs"></textarea>
+          <input type="text" id="targetMakna" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs" placeholder="Target Pertemuan Ini">
         </div>
 
-        <!-- Materi Utama -->
         <div class="bg-slate-50 p-2 rounded border border-slate-200 space-y-1">
-          <span class="text-xs font-semibold text-slate-700" id="labelMateriUtama">4. Materi Jilid / Tilawah</span>
-          <textarea id="capaianUtama" oninput="updateFromForm()" rows="1" class="w-full p-1.5 border rounded text-xs" placeholder="Capaian Materi Utama"></textarea>
-          <input type="text" id="targetMateriUtama" oninput="updateFromForm()" class="w-full p-1.5 border rounded text-xs" placeholder="Target Pertemuan Ini">
+          <span class="text-xs font-semibold text-slate-700" id="labelMateriUtama">4. Bacaan / Tajwid</span>
+          <textarea id="capaianUtama" oninput="updatePreviewFromForm()" rows="2" class="w-full p-1.5 border rounded text-xs"></textarea>
+          <input type="text" id="targetMateriUtama" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs" placeholder="Target Pertemuan Ini">
         </div>
       </div>
 
       <!-- BAGIAN III: PROFIL PELAJAR IWR -->
       <div class="space-y-2 border-t pt-3">
         <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian III. Profil Pelajar IWR</h3>
-        <div>
-          <label class="block text-xs font-medium text-slate-600">Baris 1</label>
-          <input type="text" id="profilBaris1" oninput="updateFromForm()" class="w-full p-1.5 border rounded text-xs">
-        </div>
-        <div>
-          <label class="block text-xs font-medium text-slate-600">Baris 2</label>
-          <input type="text" id="profilBaris2" oninput="updateFromForm()" class="w-full p-1.5 border rounded text-xs">
-        </div>
+        <input type="text" id="profil1" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs">
+        <input type="text" id="profil2" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs">
       </div>
 
-      <!-- BAGIAN IV: LANGKAH PEMBELAJARAN -->
+      <!-- BAGIAN IV: 7 LANGKAH PEMBELAJARAN -->
       <div class="space-y-3 border-t pt-3">
         <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian IV. Langkah Pembelajaran (7 Langkah)</h3>
         <div id="formLangkahContainer" class="space-y-2"></div>
@@ -154,12 +175,6 @@
       <div class="space-y-3 border-t pt-3">
         <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian V. Penilaian</h3>
         <div id="formPenilaianContainer" class="space-y-2"></div>
-      </div>
-
-      <div class="pt-2 border-t">
-        <button onclick="applyPreset()" class="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 py-1.5 rounded text-xs font-semibold">
-          🔄 Reset ke Preset Default
-        </button>
       </div>
     </section>
 
@@ -171,126 +186,308 @@
   </main>
 
   <script>
-    const presets = {
+    // Database Resmi Capaian Pembelajaran (CP) MBQ 'Ilman Wa Ruuhan 2026
+    const cpDatabase = {
+      PAUD: {
+        TK_A: {
+          namaKelas: "TK A",
+          alokasi: "2 × 30 menit (1 Pertemuan)",
+          model: "Tatap Muka",
+          kapasitas: "≤ 8 peserta didik per kelompok",
+          bacaanCP: "Mengenal dan membaca huruf Hijaiyah Hamzah-Dhod berharakat Fathah.",
+          hafalanCP: "Menirukan QS. Al-Faatihah, An-Nas, Al-Falaq, Al-Ikhlas, Al-Lahab, An-Nashr, Al-Kaafirun, Al-Kautsar.",
+          maknaCP: "Mengenal arti nama surat dan jumlah ayat yang dihafal.",
+          bacaanList: ["Mengenal Huruf Hamzah - Kho' berharakat Fathah", "Mengenal Huruf Dal - Zay berharakat Fathah", "Mengenal Huruf Sin - Dhod berharakat Fathah"],
+          hafalanList: ["QS. Al-Faatihah", "QS. An-Nas", "QS. Al-Falaq", "QS. Al-Ikhlas", "QS. Al-Lahab", "QS. An-Nashr", "QS. Al-Kaafirun", "QS. Al-Kautsar"]
+        },
+        TK_B: {
+          namaKelas: "TK B",
+          alokasi: "2 × 30 menit (1 Pertemuan)",
+          model: "Tatap Muka",
+          kapasitas: "≤ 8 peserta didik per kelompok",
+          bacaanCP: "Mengenal & membaca huruf Hijaiyah Tho'-Yaa' berharakat Fathah.",
+          hafalanCP: "Menirukan QS. Al-Ma'un, Quraisy, Al-Fiil, Al-Humazah, Al-'Ashr, At-Takatsur, Al-Qoori'ah, Al-'Aadiyat, Az-Zalzalah.",
+          maknaCP: "Mengingat arti nama surat, jumlah ayat, dan hikmah dari surat yang dihafal secara sederhana.",
+          bacaanList: ["Mengenal Huruf Tho' - Fa' berharakat Fathah", "Mengenal Huruf Qof - Lam berharakat Fathah", "Mengenal Huruf Mim - Yaa' berharakat Fathah"],
+          hafalanList: ["QS. Al-Ma'un", "QS. Quraisy", "QS. Al-Fiil", "QS. Al-Humazah", "QS. Al-'Ashr", "QS. At-Takatsur", "QS. Al-Qoori'ah", "QS. Al-'Aadiyat", "QS. Az-Zalzalah"]
+        }
+      },
       SD: {
-        judulModul: "Jilid 1 Metode Belajar Al-Qur'an Ilman Wa Ruuhan",
-        kelasFase: "Kelas I / Sekolah Dasar (Fase A)",
-        alokasiWaktu: "2 × 35 menit (1 Pertemuan)",
-        model: "Tatap Muka",
-        jumlahPeserta: "≤ 10 peserta didik per kelompok",
-        sarana: "Ruang kelas, papan tulis, buku jilid IWR",
-        targetPeserta: "Peserta didik reguler Kelas I SD",
-        capaianAdab: "1. Belajar membiasakan diri mengulang pelajaran bacaan jilid dan hafalan di rumah dengan bimbingan orang tua.\n2. Belajar membiasakan diri membawa dan meletakkan Al-Qur'an dengan benar.",
-        targetAdab: "Peserta didik menyampaikan pelaksanaan jadwal mengulang di rumah serta mempraktikkan cara membawa Al-Qur'an atau buku jilid dengan benar.",
-        capaianHafalan: "Peserta didik mampu menghafal QS. An-Nas dengan baik dan benar.",
-        targetHafalan: "Peserta didik menirukan dan mulai menghafal QS. An-Nas ayat 2.",
-        capaianMakna: "Peserta didik menyebutkan arti nama surat dan jumlah ayat QS. An-Nas.",
-        targetMakna: "Peserta didik menyebutkan arti An-Nas (Manusia) dan jumlah ayatnya (6 ayat).",
-        capaianUtama: "Peserta didik melafalkan materi jilid 1 halaman 1–4 dengan tepat.",
-        targetUtama: "Peserta didik melafalkan bunyi bacaan jilid 1 halaman 1 dengan tepat.",
-        labelMakna: "Kandungan Surat",
-        labelUtama: "Materi Jilid",
-        aspekUtama: "Materi Jilid",
-        profil1: "Taat kepada Allah – Memuliakan Al-Qur’an – Beradab terhadap Sesama",
-        profil2: "Bacaan sesuai Tajwid – Hafalan sesuai Target – Memahami Makna Surat dan Ayat",
-        langkah: [
-          { nama: "Langkah 1: Pembukaan", waktu: "4 menit", isi: "Pendidik mengucapkan salam dan menanyakan kabar. Memimpin syahadat, selawat, Al-Fatihah, Doa Penawar Hati, serta ice breaking tebak ayat." },
-          { nama: "Langkah 2: Adab dan Santun", waktu: "5 menit", isi: "Pendidik mengevaluasi jadwal mengulang di rumah dan mencontohkan cara membawa buku jilid/Al-Qur'an dengan tangan kanan di dada. Peserta didik mempraktikkannya." },
-          { nama: "Langkah 3: Energizer", waktu: "2 menit", isi: "Pendidik memimpin Tepuk IWR dan Yel-Yel IWR untuk menyegarkan semangat." },
-          { nama: "Langkah 4: Hafalan", waktu: "10 menit", isi: "Peserta didik muroja'ah hafalan lalu mempraktikkan talaqqi ayat target. Pendidik menjelaskan arti nama surat dan jumlah ayat." },
-          { nama: "Langkah 5: Energizer", waktu: "2 menit", isi: "Pengondisian kembali peserta didik dengan Tepuk IWR dan Yel-Yel IWR." },
-          { nama: "Langkah 6: Materi Jilid", waktu: "9 menit", isi: "Membaca bersama materi pengulangan, menyimak penjelasan alat peraga dari pendidik, serta latihan membaca berkelompok dan individual." },
-          { nama: "Langkah 7: Penutup", waktu: "3 menit", isi: "Simpulan hafalan & jilid, pengarahan jadwal rumah bersama orang tua, doa kaffaratul majlis, dan salam." }
-        ],
-        penilaian: [
-          { aspek: "Adab dan Santun", teknik: "Observasi langsung", instrumen: "Buku prestasi capaian santun yang diisi oleh peserta didik setiap akhir pekan." },
-          { aspek: "Hafalan", teknik: "Tes lisan (talaqqi)", instrumen: "Peserta didik membaca target hafalan satu per satu. Pendidik menilai kelancaran dan kefasihan." },
-          { aspek: "Kandungan Surat", teknik: "Tanya jawab lisan", instrumen: "Peserta didik menjawab pertanyaan singkat tentang nama dan jumlah ayat." },
-          { aspek: "Materi Jilid", teknik: "Tes lisan individual", instrumen: "Pendidik menilai bacaan jilid peserta didik secara individual." }
-        ]
+        SD_1: {
+          namaKelas: "Kelas I / Sekolah Dasar (Fase A)",
+          alokasi: "2 × 35 menit (1 Pertemuan)",
+          model: "Tatap Muka",
+          kapasitas: "≤ 10 peserta didik per kelompok",
+          bacaanCP: "Membaca huruf-huruf Hijaiyah berharakat (Fathah, Kasroh, Dhommah, Mad, Alif Lam, Sukun) sesuai kaidah tajwid.",
+          hafalanCP: "QS. An-Nas, Al-Falaq, Al-Ikhlas, Al-Lahab, An-Nashr, Al-Kaafiruun, Al-Kautsar, Al-Ma'uun, Quraisy, Al-Fiil, Al-Humazah, Al-'Ashr, At-Takatsur, Al-Qoori'ah.",
+          maknaCP: "Menyebutkan arti nama surat, jumlah ayat, dan menyimpulkan hikmah dari surat yang dihafal secara sederhana.",
+          bacaanList: ["Jilid 1 halaman 1-5 (Harakat Fathah)", "Jilid 1 halaman 6-10 (Harakat Kasroh & Dhommah)", "Jilid 2 halaman 1-5 (Mad Thabi'i)", "Jilid 2 halaman 6-10 (Alif Lam & Sukun)"],
+          hafalanList: ["QS. An-Nas ayat 1-6", "QS. Al-Falaq ayat 1-5", "QS. Al-Ikhlas ayat 1-4", "QS. Al-Lahab ayat 1-5", "QS. An-Nashr ayat 1-3", "QS. Al-Kaafiruun ayat 1-6", "QS. Al-Kautsar ayat 1-3"]
+        },
+        SD_2: {
+          namaKelas: "Kelas II / Sekolah Dasar (Fase A)",
+          alokasi: "2 × 35 menit (1 Pertemuan)",
+          model: "Tatap Muka",
+          kapasitas: "≤ 10 peserta didik per kelompok",
+          bacaanCP: "Membaca Mim Sukun, Nun & Mim Bertasydid, Nun Sukun/Tanwin, Ro', Mad Far'i, Waqof/Washol, Huruf Muqotho'ah, dan Bacaan Ghorib.",
+          hafalanCP: "QS. Al-'Adiyat, Az-Zalzalah, Al-Bayyinah, Al-Qodr, Al-'Alaq, At-Tiin, Al-Insyiroh, Ad-Dhuha.",
+          maknaCP: "Menyebutkan arti nama surat, jumlah ayat, dan menyimpulkan hikmah dari surat yang dihafal secara sederhana.",
+          bacaanList: ["Hukum Mim Sukun & Ghunnah", "Hukum Nun Sukun & Tanwin (Izhar, Idgham, Iqlab, Ikhfa)", "Kaidah Waqaf & Washal", "Bacaan Gharib & Muqatta'ah"],
+          hafalanList: ["QS. Al-'Adiyat ayat 1-11", "QS. Az-Zalzalah ayat 1-8", "QS. Al-Bayyinah ayat 1-8", "QS. Al-Qodr ayat 1-5", "QS. At-Tiin ayat 1-8"]
+        },
+        SD_3: {
+          namaKelas: "Kelas III / Sekolah Dasar (Fase B)",
+          alokasi: "2 × 35 menit (1 Pertemuan)",
+          model: "Tatap Muka",
+          kapasitas: "≤ 12 peserta didik per kelompok",
+          bacaanCP: "Membaca Al-Qur'an minimal 10 juz sesuai kaidah tajwid yang benar.",
+          hafalanCP: "QS. Al-Lail, As-Syams, Al-Balad, Al-Fajr, Al-Ghosyiyah, Al-A'la.",
+          maknaCP: "Membaca arti surat & jumlah ayat, mengkorelasikan nilai-nilainya dengan kehidupan sehari-hari.",
+          bacaanList: ["Tilawah Juz 1 - Surah Al-Baqarah", "Tilawah Juz 2 - Surah Al-Baqarah", "Tilawah Juz 3 - Surah Ali 'Imran"],
+          hafalanList: ["QS. Al-Lail ayat 1-21", "QS. As-Syams ayat 1-15", "QS. Al-Balad ayat 1-20", "QS. Al-Fajr ayat 1-30"]
+        },
+        SD_4: {
+          namaKelas: "Kelas IV / Sekolah Dasar (Fase B)",
+          alokasi: "2 × 35 menit (1 Pertemuan)",
+          model: "Tatap Muka",
+          kapasitas: "≤ 12 peserta didik per kelompok",
+          bacaanCP: "Membaca Al-Qur'an minimal 20 juz sesuai kaidah tajwid yang benar.",
+          hafalanCP: "QS. At-Thoriq, Al-Buruj, Al-Insyigoq, Al-Muthoffifin.",
+          maknaCP: "Membaca arti surat & jumlah ayat, mengkorelasikan nilai-nilainya dengan kehidupan sehari-hari.",
+          bacaanList: ["Tilawah Juz 11 - Surah Yunus", "Tilawah Juz 12 - Surah Hud", "Tilawah Juz 15 - Surah Al-Isra'"],
+          hafalanList: ["QS. At-Thoriq ayat 1-17", "QS. Al-Buruj ayat 1-22", "QS. Al-Insyiqoq ayat 1-25"]
+        },
+        SD_5: {
+          namaKelas: "Kelas V / Sekolah Dasar (Fase C)",
+          alokasi: "2 × 35 menit (1 Pertemuan)",
+          model: "Tatap Muka",
+          kapasitas: "≤ 12 peserta didik per kelompok",
+          bacaanCP: "Membaca Al-Qur'an satu kali khatam dengan kaidah tajwid, mengenal teori tajwid secara bertahap.",
+          hafalanCP: "QS. Al-Infithor, At-Takwir, 'Abasa, An-Nazi'at, An-Naba.",
+          maknaCP: "Membaca terjemahan juz 30 dan mengkorelasikan nilai-nilainya dengan kehidupan sehari-hari.",
+          bacaanList: ["Tilawah & Tajwid Mad Wajib Muttashil", "Tilawah & Tajwid Mad Jaiz Munfashil", "Tilawah & Tajwid Hukum Ro' (Tafkhim/Tarqiq)"],
+          hafalanList: ["QS. Al-Infithor ayat 1-19", "QS. At-Takwir ayat 1-29", "QS. 'Abasa ayat 1-42", "QS. An-Naba ayat 1-40"]
+        },
+        SD_6: {
+          namaKelas: "Kelas VI / Sekolah Dasar (Fase C)",
+          alokasi: "2 × 35 menit (1 Pertemuan)",
+          model: "Tatap Muka",
+          kapasitas: "≤ 12 peserta didik per kelompok",
+          bacaanCP: "Membaca Al-Qur'an satu kali khatam dengan kaidah tajwid, mengenal teori tajwid secara bertahap.",
+          hafalanCP: "QS. Al-Mulk, Al-Qolam, Al-Haqqah, Al-Ma'arij, Nuh, Al-Jin, Al-Muzzammil, Al-Mudatssir, Al-Qiyamah, Al-Insan, Al-Mursalat. Muroja'ah Juz 30 dan Juz 29.",
+          maknaCP: "Membaca terjemahan juz 30 dan 29 serta mengkorelasikan nilainya dengan kehidupan sehari-hari.",
+          bacaanList: ["Khatam Al-Qur'an & Pendalaman Tajwid", "Evaluasi Bacaan Makhraj & Sifat Huruf"],
+          hafalanList: ["QS. Al-Mulk ayat 1-30", "QS. Al-Qolam ayat 1-52", "QS. Al-Muzzammil ayat 1-20"]
+        }
       },
       SMP: {
-        judulModul: "Tahsin, Tahfizh, dan Tadabbur Al-Qur'an Metode Ilman Wa Ruuhan – Kelas VII",
-        kelasFase: "Kelas VII / Sekolah Menengah Pertama (Fase D)",
-        alokasiWaktu: "2 × 30 menit (1 Pertemuan)",
-        model: "Tatap Muka (halaqah)",
-        jumlahPeserta: "≤ 15 peserta didik per halaqah",
-        sarana: "Ruang kelas/musala, mushaf Al-Qur'an, Al-Qur'an terjemah, buku tafsir juz 30, papan tulis, buku mutaba'ah",
-        targetPeserta: "Peserta didik reguler Kelas VII SMP",
-        capaianAdab: "1. Terbiasa tilawah dan mengulang hafalan serta membaca terjemahan di rumah sesuai jadwal.\n2. Terbiasa membawa dan meletakkan Al-Qur'an dengan benar.",
-        targetAdab: "Peserta didik melaporkan pelaksanaan jadwal pekan lalu dan mempraktikkan cara membawa/meletakkan mushaf dengan benar.",
-        capaianHafalan: "Juz 28: QS. Al-Mujadalah, QS. Al-Hasyr, dan QS. Al-Mumtahanah; muroja'ah Juz 30 dan 29.",
-        targetHafalan: "Peserta didik menghafal QS. Al-Mujadalah ayat 1 dengan lancar dan tajwid yang benar, serta muroja'ah QS. Al-Mulk ayat 1–5.",
-        capaianMakna: "Membaca terjemahan juz 30, menyimak tafsir juz 30, dan mengorelasikan nilainya.",
-        targetMakna: "Peserta didik membaca terjemahan QS. An-Naba' ayat 6–16, menyimak tafsir ringkasnya, dan menyebutkan satu contoh sikap syukur.",
-        capaianUtama: "Membaca Al-Qur'an minimal dua kali khatam sesuai kaidah tajwid serta mengenal konsep teori tajwid.",
-        targetUtama: "Peserta didik menjelaskan dan mempraktikkan hukum Mad Wajib Muttashil dan Mad 'Aridh Lissukun pada QS. An-Naba' ayat 1–16.",
-        labelMakna: "Pemahaman Makna",
-        labelUtama: "Tilawah dan Tajwid",
-        aspekUtama: "Tilawah dan Tajwid",
-        profil1: "Taat kepada Allah – Memuliakan Al-Qur’an – Beradab terhadap Sesama",
-        profil2: "Bacaan sesuai Tajwid – Hafalan sesuai Target – Memahami Makna Surat dan Ayat",
-        langkah: [
-          { nama: "Langkah 1: Pembukaan", waktu: "4 menit", isi: "Salam, pengecekan kesiapan wudu/mushaf, syahadat, selawat, Al-Fatihah, doa sebelum belajar, dan ice breaking sambung ayat." },
-          { nama: "Langkah 2: Adab dan Santun", waktu: "5 menit", isi: "Pemeriksaan buku mutaba'ah, edukasi memuliakan mushaf (membawa tangan kanan di dada, tidak di lantai), dan praktik siswa." },
-          { nama: "Langkah 3: Energizer", waktu: "2 menit", isi: "Yel-Yel IWR dan permainan Tebak Surat." },
-          { nama: "Langkah 4: Hafalan", waktu: "11 menit", isi: "Muroja'ah hafalan, talaqqi per penggalan target hafalan, ulasan terjemahan/asbabun nuzul singkat, dan setoran hafalan." },
-          { nama: "Langkah 5: Energizer", waktu: "2 menit", isi: "Peregangan singkat dan Yel-Yel IWR." },
-          { nama: "Langkah 6: Tilawah, Tajwid & Tadabbur", waktu: "12 menit", isi: "Tilawah bersama, penjelasan hukum tajwid target pertemuan, serta latihan tilawah mandiri dan berkelompok." },
-          { nama: "Langkah 7: Penutup", waktu: "4 menit", isi: "Simpulan hafalan & tilawah, penugasan mutaba'ah terjemahan rumah, doa kaffaratul majlis, dan salam." }
-        ],
-        penilaian: [
-          { aspek: "Adab dan Santun", teknik: "Observasi dan penilaian diri", instrumen: "Buku mutaba'ah (diparaf orang tua) & jurnal sikap pendidik." },
-          { aspek: "Hafalan", teknik: "Tes lisan (setoran/tasmi')", instrumen: "Rubrik hafalan: kelancaran, makhraj, tajwid, waqaf." },
-          { aspek: "Pemahaman Makna", teknik: "Tanya jawab dan penugasan", instrumen: "Peserta didik menyebutkan pesan ayat dan contoh sikap nyata." },
-          { aspek: "Tilawah dan Tajwid", teknik: "Tes lisan dan identifikasi", instrumen: "Identifikasi contoh hukum tajwid & tilawah individual." }
-        ]
+        SMP_7: {
+          namaKelas: "Kelas VII / Sekolah Menengah Pertama (Fase D)",
+          alokasi: "2 × 30 menit (1 Pertemuan)",
+          model: "Tatap Muka (halaqah)",
+          kapasitas: "≤ 15 peserta didik per halaqah",
+          bacaanCP: "Membaca Al-Qur'an minimal dua kali khatam sesuai kaidah tajwid; mengenal seluruh konsep teori tajwid dengan baik.",
+          hafalanCP: "Juz 28: QS. Al-Mujadalah, Al-Hasyr, Al-Mumtahanah; muroja'ah Juz 30 dan 29.",
+          maknaCP: "Membaca terjemahan juz 30, menyimak tafsir juz 30, dan mengorelasikan nilainya dengan kehidupan sehari-hari.",
+          bacaanList: ["Tajwid Waqaf & Ibtida'", "Tajwid Hukum Mad 'Aridh Lissukun", "Tajwid Hukum Ghunnah & Idgham"],
+          hafalanList: ["QS. Al-Mujadalah ayat 1-11", "QS. Al-Hasyr ayat 1-10", "QS. Al-Mumtahanah ayat 1-13"]
+        },
+        SMP_8: {
+          namaKelas: "Kelas VIII / Sekolah Menengah Pertama (Fase D)",
+          alokasi: "2 × 30 menit (1 Pertemuan)",
+          model: "Tatap Muka (halaqah)",
+          kapasitas: "≤ 15 peserta didik per halaqah",
+          bacaanCP: "Membaca Al-Qur'an dua kali khatam dengan bacaan sesuai kaidah tajwid yang benar.",
+          hafalanCP: "Juz 28: QS. Ash-Shaff, Al-Jumu'ah, Al-Munafiqun; muroja'ah Juz 30 dan 29.",
+          maknaCP: "Membaca terjemahan juz 29, menyimak tafsir juz 30, dan mengorelasikan nilainya dengan kehidupan sehari-hari.",
+          bacaanList: ["Tilawah Tartil Surah Al-Baqarah", "Tajwid Hukum Nun Sukun & Tanwin Lanjutan"],
+          hafalanList: ["QS. Ash-Shaff ayat 1-14", "QS. Al-Jumu'ah ayat 1-11", "QS. Al-Munafiqun ayat 1-11"]
+        },
+        SMP_9: {
+          namaKelas: "Kelas IX / Sekolah Menengah Pertama (Fase D)",
+          alokasi: "2 × 30 menit (1 Pertemuan)",
+          model: "Tatap Muka (halaqah)",
+          kapasitas: "≤ 15 peserta didik per halaqah",
+          bacaanCP: "Membaca Al-Qur'an dua kali khatam dengan bacaan sesuai kaidah tajwid yang benar.",
+          hafalanCP: "Juz 28: QS. At-Taghabun, At-Thalaq, At-Tahrim; muroja'ah Juz 30 dan 29.",
+          maknaCP: "Membaca terjemahan juz 28, menyimak tafsir juz 30, dan mengorelasikan nilainya dengan kehidupan sehari-hari.",
+          bacaanList: ["Tilawah Pendalaman Kaidah Tajwid Kompleks", "Evaluasi Bacaan Gharib"],
+          hafalanList: ["QS. At-Taghabun ayat 1-18", "QS. At-Thalaq ayat 1-12", "QS. At-Tahrim ayat 1-12"]
+        }
       },
       SMA: {
-        judulModul: "Tahsin, Tahfizh, dan Tadabbur Al-Qur'an Metode Ilman Wa Ruuhan – Kelas X",
-        kelasFase: "Kelas X / Sekolah Menengah Atas (Fase E)",
-        alokasiWaktu: "2 × 30 menit (1 Pertemuan)",
-        model: "Tatap Muka (halaqah)",
-        jumlahPeserta: "≤ 12 peserta didik per halaqah",
-        sarana: "Ruang kelas/musala, mushaf Al-Qur'an, Al-Qur'an terjemah, buku tafsir juz 29, papan tulis/proyektor, buku mutaba'ah",
-        targetPeserta: "Peserta didik reguler Kelas X SMA",
-        capaianAdab: "1. Terbiasa tilawah dan mengulang hafalan serta membaca terjemahan di rumah.\n2. Terbiasa membawa dan meletakkan Al-Qur'an dengan benar serta mengingatkan orang lain.",
-        targetAdab: "Peserta didik mengevaluasi pelaksanaan jadwal pekan lalu, membawa/meletakkan mushaf dengan benar, dan saling mengingatkan dengan santun.",
-        capaianHafalan: "Juz 27: QS. Ath-Thuur dan QS. An-Najm; muroja'ah Juz 30, 29, dan 28.",
-        targetHafalan: "Peserta didik menghafal QS. Ath-Thuur ayat 1–6 dengan lancar dan tajwid yang benar, serta muroja'ah QS. Ash-Shaff ayat 1–4.",
-        capaianMakna: "Membaca terjemahan juz 28, menyimak tafsir juz 29, dan mengorelasikan nilainya.",
-        targetMakna: "Peserta didik menyimak tafsir QS. Al-Mulk ayat 1–2, menjelaskan makna 'ahsanu 'amala', dan menuliskan komitmen amal nyata.",
-        capaianUtama: "Membaca Al-Qur'an minimal 3 kali khatam sesuai kaidah tajwid & teori tajwid.",
-        targetUtama: "Peserta didik menerapkan kaidah waqaf dan ibtida' (tanda-tanda waqaf) dengan tepat saat membaca QS. Al-Mulk ayat 1–5.",
-        labelMakna: "Pemahaman Makna",
-        labelUtama: "Tilawah dan Tajwid",
-        aspekUtama: "Tilawah dan Tajwid",
-        profil1: "Taat kepada Allah – Memuliakan Al-Qur’an – Beradab terhadap Sesama",
-        profil2: "Bacaan sesuai Tajwid – Hafalan sesuai Target – Memahami Makna Surat dan Ayat",
-        langkah: [
-          { nama: "Langkah 1: Pembukaan", waktu: "5 menit", isi: "Salam, kesiapan wudu, syahadat, selawat, Al-Fatihah & doa dipimpin siswa, serta ice breaking tebak ayat." },
-          { nama: "Langkah 2: Adab dan Santun", waktu: "10 menit", isi: "Pemeriksaan mutaba'ah, demonstrasi memuliakan mushaf, dan role-play saling mengingatkan dengan lembut." },
-          { nama: "Langkah 3: Energizer", waktu: "2 menit", isi: "Yel-Yel IWR dan permainan Sambung Ayat Estafet." },
-          { nama: "Langkah 4: Hafalan", waktu: "15 menit", isi: "Muroja'ah hafalan, talaqqi ayat target, ulasan kandungan surat, tasmi' berpasangan, dan setoran individual." },
-          { nama: "Langkah 5: Energizer", waktu: "2 menit", isi: "Pengondisian dengan peregangan singkat dan Yel-Yel IWR." },
-          { nama: "Langkah 6: Tilawah, Tajwid & Tadabbur", waktu: "15 menit", isi: "Tilawah dipimpin pendidik, ulasan kaidah tajwid/waqaf-ibtida', dan tilawah individual bergantian." },
-          { nama: "Langkah 7: Penutup", waktu: "6 menit", isi: "Simpulan hafalan & kaidah tajwid, tugas mandiri terjemahan, doa kaffaratul majlis dipimpin siswa, dan salam." }
-        ],
-        penilaian: [
-          { aspek: "Adab dan Santun", teknik: "Observasi, penilaian diri & antarteman", instrumen: "Buku mutaba'ah, jurnal sikap, & penilaian antarteman." },
-          { aspek: "Hafalan", teknik: "Tes lisan (tasmi')", instrumen: "Rubrik hafalan: kelancaran, makhraj, tajwid, waqaf-ibtida'." },
-          { aspek: "Pemahaman Makna", teknik: "Penugasan tertulis dan diskusi", instrumen: "Kartu komitmen amal dan jawaban reflektif." },
-          { aspek: "Tilawah dan Tajwid", teknik: "Tes lisan dan identifikasi", instrumen: "Identifikasi penerapan tajwid & tilawah individual." }
-        ]
+        SMA_10: {
+          namaKelas: "Kelas X / Sekolah Menengah Atas (Fase E)",
+          alokasi: "2 × 30 menit (1 Pertemuan)",
+          model: "Tatap Muka (halaqah)",
+          kapasitas: "≤ 12 peserta didik per halaqah",
+          bacaanCP: "Membaca Al-Qur'an minimal 3 kali khatam sesuai kaidah tajwid; memahami seluruh konsep teori tajwid dengan baik.",
+          hafalanCP: "Juz 27: QS. Ath-Thuur dan An-Najm; muroja'ah Juz 30, 29, dan 28.",
+          maknaCP: "Membaca terjemahan juz 28, menyimak tafsir juz 29, dan mengorelasikan nilainya dengan kehidupan sehari-hari.",
+          bacaanList: ["Teori & Praktik Waqaf Ibtida' (Tanda Waqaf)", "Kaidah Tajwid Makhraj & Sifat Huruf"],
+          hafalanList: ["QS. Ath-Thuur ayat 1-15", "QS. Ath-Thuur ayat 16-30", "QS. An-Najm ayat 1-25"]
+        },
+        SMA_11: {
+          namaKelas: "Kelas XI / Sekolah Menengah Atas (Fase E)",
+          alokasi: "2 × 30 menit (1 Pertemuan)",
+          model: "Tatap Muka (halaqah)",
+          kapasitas: "≤ 12 peserta didik per halaqah",
+          bacaanCP: "Membaca Al-Qur'an tiga kali khatam dengan bacaan sesuai kaidah tajwid yang benar.",
+          hafalanCP: "Juz 27: QS. Al-Qamar dan Ar-Rahman; muroja'ah Juz 30, 29, dan 28.",
+          maknaCP: "Membaca terjemahan juz 28, menyimak tafsir juz 29, dan mengorelasikan nilainya dengan kehidupan sehari-hari.",
+          bacaanList: ["Tilawah Mandiri & Murottal Tartil", "Identifikasi Tajwid Surat Panjang"],
+          hafalanList: ["QS. Al-Qamar ayat 1-25", "QS. Ar-Rahman ayat 1-30"]
+        },
+        SMA_12: {
+          namaKelas: "Kelas XII / Sekolah Menengah Atas (Fase F)",
+          alokasi: "2 × 30 menit (1 Pertemuan)",
+          model: "Tatap Muka (halaqah)",
+          kapasitas: "≤ 12 peserta didik per halaqah",
+          bacaanCP: "Membaca Al-Qur'an tiga kali khatam dengan bacaan sesuai kaidah tajwid yang benar.",
+          hafalanCP: "Juz 27: QS. Al-Waqi'ah dan Al-Hadid; muroja'ah Juz 30, 29, dan 28.",
+          maknaCP: "Membaca terjemahan juz 27, menyimak tafsir juz 28, dan mengorelasikan nilainya dengan kehidupan sehari-hari.",
+          bacaanList: ["Ujian Munaqasyah Tilawah & Tajwid", "Tasmi' Al-Qur'an Sekali Duduk"],
+          hafalanList: ["QS. Al-Waqi'ah ayat 1-35", "QS. Al-Hadid ayat 1-20"]
+        }
       }
     };
 
+    // Database Poin Adab & Santun (SANTUN) 2026
+    const adabDatabase = [
+      { id: "2.1", label: "2.1 Memelihara & Memuliakan Mushaf/Jilid", desc: "Membawa Al-Qur'an/buku jilid di dada dengan tangan kanan dan meletakkannya di tempat lebih tinggi (bukan di lantai)." },
+      { id: "2.2", label: "2.2 Membiasakan Wudu Sebelum Membaca", desc: "Berwudu secara tertib sebelum membaca Al-Qur'an." },
+      { id: "2.3", label: "2.3 Berpakaian Rapi & Bersih", desc: "Berpakaian rapi, bersih, dan harum saat pembelajaran Al-Qur'an." },
+      { id: "2.4", label: "2.4 Berdoa Khusyu Sebelum Belajar", desc: "Berdoa dengan khusyu dan memahami maknanya sebelum pembelajaran Al-Qur'an." },
+      { id: "2.5", label: "2.5 Menyimak Bacaan Orang Lain", desc: "Mendengarkan dan menyimak dengan khusyu ketika orang lain membaca Al-Qur'an/jilid." },
+      { id: "3.1", label: "3.1 Adab Berkata & Menghormati Guru/Orang Tua", desc: "Mencium tangan orang tua/guru dan mendoakan keduanya setelah salat." },
+      { id: "3.2", label: "3.2 Mengucapkan Kata Santun (4 Kata Ajaib)", desc: "Mengucapkan terima kasih, meminta tolong, meminta maaf, dan meminta izin dengan santun." },
+      { id: "3.3", label: "3.3 Sabar Mengantre & Menunggu Giliran", desc: "Bersikap sabar menunggu giliran membaca atau mengulang bacaan untuk perbaikan." },
+      { id: "3.4", label: "3.4 Menjaga Kebersihan & Ketenangan Kelas", desc: "Menjaga tempat belajar tetap rapi, bersih, dan tenang saat pembelajaran Al-Qur'an." }
+    ];
+
     let currentData = {};
 
-    function applyPreset() {
-      const jenjang = document.getElementById("jenjangSelect").value;
-      currentData = JSON.parse(JSON.stringify(presets[jenjang]));
+    function onJenjangChange() {
+      const jenjang = document.getElementById("selectJenjang").value;
+      const kelasSelect = document.getElementById("selectKelas");
+      kelasSelect.innerHTML = "";
 
+      const kelasKeys = Object.keys(cpDatabase[jenjang]);
+      kelasKeys.forEach(k => {
+        const opt = document.createElement("option");
+        opt.value = k;
+        opt.innerText = cpDatabase[jenjang][k].namaKelas;
+        kelasSelect.appendChild(opt);
+      });
+
+      onKelasChange();
+    }
+
+    function onKelasChange() {
+      const jenjang = document.getElementById("selectJenjang").value;
+      const kelasKey = document.getElementById("selectKelas").value;
+      const dataKelas = cpDatabase[jenjang][kelasKey];
+
+      // Populasikan Dropdown Hafalan
+      const selectHafalan = document.getElementById("selectHafalan");
+      selectHafalan.innerHTML = "";
+      dataKelas.hafalanList.forEach(item => {
+        const opt = document.createElement("option");
+        opt.value = item;
+        opt.innerText = item;
+        selectHafalan.appendChild(opt);
+      });
+
+      // Populasikan Dropdown Materi Utama
+      const selectMateriUtama = document.getElementById("selectMateriUtama");
+      selectMateriUtama.innerHTML = "";
+      dataKelas.bacaanList.forEach(item => {
+        const opt = document.createElement("option");
+        opt.value = item;
+        opt.innerText = item;
+        selectMateriUtama.appendChild(opt);
+      });
+
+      // Populasikan Dropdown Adab
+      const selectAdab = document.getElementById("selectAdab");
+      selectAdab.innerHTML = "";
+      adabDatabase.forEach(item => {
+        const opt = document.createElement("option");
+        opt.value = item.id;
+        opt.innerText = item.label;
+        selectAdab.appendChild(opt);
+      });
+
+      // Label Kondisional
+      if (jenjang === "SD" && kelasKey === "SD_1") {
+        document.getElementById("lblTargetUtama").innerText = "Target Materi Jilid (FASIH 1)";
+        document.getElementById("labelMakna").innerText = "3. Kandungan Surat";
+        document.getElementById("labelMateriUtama").innerText = "4. Materi Jilid";
+      } else {
+        document.getElementById("lblTargetUtama").innerText = "Target Tilawah & Tajwid (FASIH 1)";
+        document.getElementById("labelMakna").innerText = "3. Pemahaman Makna & Tadabbur";
+        document.getElementById("labelMateriUtama").innerText = "4. Tilawah dan Tajwid";
+      }
+    }
+
+    function generateRphOtomatis() {
+      const jenjang = document.getElementById("selectJenjang").value;
+      const kelasKey = document.getElementById("selectKelas").value;
+      const dataKelas = cpDatabase[jenjang][kelasKey];
+
+      const targetHafalanVal = document.getElementById("selectHafalan").value;
+      const targetMateriVal = document.getElementById("selectMateriUtama").value;
+      const adabId = document.getElementById("selectAdab").value;
+      const dataAdab = adabDatabase.find(a => a.id === adabId);
+
+      // Susun Data RPH
+      currentData = {
+        judulModul: jenjang === "SD" && kelasKey === "SD_1" ? "Jilid 1 Metode Belajar Al-Qur'an Ilman Wa Ruuhan" : `Tahsin, Tahfizh, dan Tadabbur Al-Qur'an Metode Ilman Wa Ruuhan – ${dataKelas.namaKelas}`,
+        kelasFase: dataKelas.namaKelas,
+        tp: "2025–2026",
+        alokasiWaktu: dataKelas.alokasi,
+        model: dataKelas.model,
+        jumlahPeserta: dataKelas.kapasitas,
+        sarana: "Ruang kelas/musala, mushaf Al-Qur'an/buku jilid, papan tulis, buku mutaba'ah",
+        targetPeserta: `Peserta didik reguler ${dataKelas.namaKelas}`,
+        
+        capaianAdab: `Terbiasa menerapkan adab terhadap Al-Qur'an dan sesama sesuai target tingkatan ${dataKelas.namaKelas}.`,
+        targetAdab: `Peserta didik mempraktikkan secara langsung: ${dataAdab.desc}`,
+        
+        capaianHafalan: dataKelas.hafalanCP,
+        targetHafalan: `Peserta didik menghafal ${targetHafalanVal} dengan lancar dan makhraj yang benar.`,
+        
+        capaianMakna: dataKelas.maknaCP,
+        targetMakna: `Peserta didik memahami kandungan/terjemahan ringkas dari ${targetHafalanVal}.`,
+        
+        capaianUtama: dataKelas.bacaanCP,
+        targetUtama: `Peserta didik menguasai dan melafalkan ${targetMateriVal} sesuai kaidah tajwid.`,
+        
+        labelMakna: jenjang === "SD" && kelasKey === "SD_1" ? "Kandungan Surat" : "Pemahaman Makna",
+        aspekUtama: jenjang === "SD" && kelasKey === "SD_1" ? "Materi Jilid" : "Tilawah dan Tajwid",
+        
+        profil1: "Taat kepada Allah – Memuliakan Al-Qur’an – Beradab terhadap Sesama",
+        profil2: "Bacaan sesuai Tajwid – Hafalan sesuai Target – Memahami Makna Surat dan Ayat",
+
+        langkah: [
+          { nama: "Langkah 1: Pembukaan", waktu: jenjang === "SD" ? "4 menit" : "5 menit", isi: "Pendidik mengucapkan salam, mengecek kesiapan peserta didik, memimpin bacaan syahadat, selawat, Al-Fatihah, dan Doa Penawar Hati bersama-sama, diselingi ice breaking tebak ayat." },
+          { nama: "Langkah 2: Adab dan Santun", waktu: "5 menit", isi: `Pendidik meninjau pelaksanaan mutaba'ah harian, lalu memberikan pemahaman dan contoh tentang: ${dataAdab.desc}. Peserta didik mempraktikkannya secara mandiri/berkelompok.` },
+          { nama: "Langkah 3: Energizer", waktu: "2 menit", isi: "Pendidik memimpin Tepuk IWR dan Yel-Yel IWR untuk menyegarkan konsentrasi dan semangat peserta didik." },
+          { nama: "Langkah 4: Hafalan", waktu: jenjang === "SD" ? "10 menit" : "15 menit", isi: `Muroja'ah hafalan sebelumnya. Pendidik memperagakan bacaan ${targetHafalanVal} dengan metode talaqqi. Peserta didik menirukan secara klasikal, kelompok, dan menyetorkan secara individual.` },
+          { nama: "Langkah 5: Energizer", waktu: "2 menit", isi: "Pengondisian peserta didik dengan peregangan singkat dan Yel-Yel IWR sebelum masuk materi bacaan utama." },
+          { nama: "Langkah 6: " + (jenjang === "SD" && kelasKey === "SD_1" ? "Materi Jilid" : "Tilawah & Tajwid"), waktu: jenjang === "SD" ? "9 menit" : "15 menit", isi: `Membaca bersama materi pengulangan. Pendidik menjelaskan kaidah pokok ${targetMateriVal}. Peserta didik berlatih membaca berkelompok dan dinilai satu per satu secara bergantian.` },
+          { nama: "Langkah 7: Penutup", waktu: jenjang === "SD" ? "3 menit" : "5 menit", isi: "Simpulan materi hafalan dan bacaan hari ini, pengarahan jadwal mengulang di rumah bersama orang tua, pembacaan doa kaffaratul majlis, dan salam penutup." }
+        ],
+
+        penilaian: [
+          { aspek: "Adab dan Santun", teknik: "Observasi langsung", instrumen: `Jurnal sikap & buku mutaba'ah harian terkait: ${dataAdab.label}` },
+          { aspek: "Hafalan", teknik: "Tes lisan (talaqqi/tasmi')", instrumen: `Rubrik hafalan: kelancaran, makharijul huruf, dan tajwid pada ${targetHafalanVal}` },
+          { aspek: jenjang === "SD" && kelasKey === "SD_1" ? "Kandungan Surat" : "Pemahaman Makna", teknik: "Tanya jawab lisan", instrumen: `Tanya jawab pemahaman pesan utama pada ${targetHafalanVal}` },
+          { aspek: jenjang === "SD" && kelasKey === "SD_1" ? "Materi Jilid" : "Tilawah dan Tajwid", teknik: "Tes lisan individual", instrumen: `Penilaian kelancaran & penerapan tajwid pada materi: ${targetMateriVal}` }
+        ]
+      };
+
+      // Set input form kiri
       document.getElementById("judulModul").value = currentData.judulModul;
       document.getElementById("kelasFase").value = currentData.kelasFase;
       document.getElementById("alokasiWaktu").value = currentData.alokasiWaktu;
@@ -306,11 +503,8 @@
       document.getElementById("capaianUtama").value = currentData.capaianUtama;
       document.getElementById("targetMateriUtama").value = currentData.targetUtama;
 
-      document.getElementById("profilBaris1").value = currentData.profil1;
-      document.getElementById("profilBaris2").value = currentData.profil2;
-
-      document.getElementById("labelMakna").innerText = "3. " + currentData.labelMakna;
-      document.getElementById("labelMateriUtama").innerText = "4. " + currentData.labelUtama;
+      document.getElementById("profil1").value = currentData.profil1;
+      document.getElementById("profil2").value = currentData.profil2;
 
       renderFormLangkah();
       renderFormPenilaian();
@@ -329,7 +523,7 @@
             <input type="text" value="${step.nama}" oninput="currentData.langkah[${idx}].nama=this.value; renderPreview();" class="p-1 border rounded text-xs w-2/3 bg-white">
             <input type="text" value="${step.waktu}" oninput="currentData.langkah[${idx}].waktu=this.value; renderPreview();" class="p-1 border rounded text-xs w-1/4 text-right bg-white">
           </div>
-          <textarea rows="2" oninput="currentData.langkah[${idx}].isi=this.value; renderPreview();" class="w-full p-1.5 border rounded text-xs bg-white" placeholder="Aktivitas Langkah ${idx+1}">${step.isi}</textarea>
+          <textarea rows="2" oninput="currentData.langkah[${idx}].isi=this.value; renderPreview();" class="w-full p-1.5 border rounded text-xs bg-white">${step.isi}</textarea>
         `;
         container.appendChild(div);
       });
@@ -344,14 +538,14 @@
         div.className = "bg-slate-50 p-2 rounded border border-slate-200 space-y-1 text-xs";
         div.innerHTML = `
           <span class="font-bold text-slate-700">${p.aspek}</span>
-          <input type="text" value="${p.teknik}" oninput="currentData.penilaian[${idx}].teknik=this.value; renderPreview();" class="w-full p-1 border rounded text-xs bg-white" placeholder="Teknik Penilaian">
-          <textarea rows="2" oninput="currentData.penilaian[${idx}].instrumen=this.value; renderPreview();" class="w-full p-1.5 border rounded text-xs bg-white" placeholder="Instrumen Penilaian">${p.instrumen}</textarea>
+          <input type="text" value="${p.teknik}" oninput="currentData.penilaian[${idx}].teknik=this.value; renderPreview();" class="w-full p-1 border rounded text-xs bg-white">
+          <textarea rows="2" oninput="currentData.penilaian[${idx}].instrumen=this.value; renderPreview();" class="w-full p-1.5 border rounded text-xs bg-white">${p.instrumen}</textarea>
         `;
         container.appendChild(div);
       });
     }
 
-    function updateFromForm() {
+    function updatePreviewFromForm() {
       currentData.judulModul = document.getElementById("judulModul").value;
       currentData.kelasFase = document.getElementById("kelasFase").value;
       currentData.tp = document.getElementById("tp").value;
@@ -368,8 +562,8 @@
       currentData.capaianUtama = document.getElementById("capaianUtama").value;
       currentData.targetUtama = document.getElementById("targetMateriUtama").value;
 
-      currentData.profil1 = document.getElementById("profilBaris1").value;
-      currentData.profil2 = document.getElementById("profilBaris2").value;
+      currentData.profil1 = document.getElementById("profil1").value;
+      currentData.profil2 = document.getElementById("profil2").value;
 
       renderPreview();
     }
@@ -478,37 +672,6 @@
       document.getElementById("documentContent").innerHTML = html;
     }
 
-    // Fungsi Otomatis Generator Tanpa API Key
-    function buatRphOtomatis() {
-      const btn = document.getElementById("btnGen");
-      btn.disabled = true;
-      btn.innerHTML = `<span>⏳ Menyusun RPH Otomatis...</span>`;
-
-      setTimeout(() => {
-        const targetHafalan = document.getElementById("targetHafalan").value || "materi target hafalan";
-        const targetUtama = document.getElementById("targetMateriUtama").value || "materi pokok";
-        const targetMakna = document.getElementById("targetMakna").value || "kandungan ayat";
-
-        // Langkah 4 (Hafalan) disesuaikan otomatis
-        currentData.langkah[3].isi = `Peserta didik mengulang hafalan sebelumnya. Pendidik mencontohkan bacaan ${targetHafalan} secara tartil dengan metode talaqqi. Pendidik memberikan penjelasan ringkas terkait ${targetMakna}. Peserta didik menirukan dan menghafal secara berkelompok serta menyetorkan bacaan individual.`;
-
-        // Langkah 6 (Materi Utama) disesuaikan otomatis
-        currentData.langkah[5].isi = `Peserta didik membaca bersama target ${targetUtama}. Pendidik menjelaskan kaidah pokok bacaan dan memperagakan contoh bacaan yang tepat. Peserta didik berlatih membaca secara kelompok dan menyetorkan bacaan individual secara bergantian.`;
-
-        // Instrumen penilaian disesuaikan otomatis
-        currentData.penilaian[1].instrumen = `Tes lisan kelancaran dan kefasihan membaca ${targetHafalan} secara individual.`;
-        currentData.penilaian[3].instrumen = `Praktik dan identifikasi langsung kaidah ${targetUtama} pada ayat/materi yang dipelajari.`;
-
-        renderFormLangkah();
-        renderFormPenilaian();
-        renderPreview();
-
-        btn.disabled = false;
-        btn.innerHTML = `<span>✨ Buat RPH Otomatis Sekarang</span>`;
-        alert("✨ RPH Berhasil Diperbarui Otomatis!");
-      }, 300);
-    }
-
     function downloadWord() {
       const content = document.getElementById("documentContent").innerHTML;
       const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' "+
@@ -527,8 +690,10 @@
       document.body.removeChild(fileDownload);
     }
 
+    // Inisialisasi awal saat halaman dibuka
     window.onload = function() {
-      applyPreset();
+      onJenjangChange();
+      generateRphOtomatis();
     };
   </script>
 </body>
