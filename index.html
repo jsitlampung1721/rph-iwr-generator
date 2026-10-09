@@ -26,9 +26,8 @@
         <p class="text-xs text-emerald-100">Badan Pengembangan Pendidikan Al-Qur’an – JSIT Indonesia</p>
       </div>
 
-      <!-- Opsi Mode Tampilan & Tombol Aksi -->
+      <!-- Switcher Mode Tampilan & Tombol Aksi -->
       <div class="flex flex-wrap items-center gap-2">
-        <!-- Switcher Mode Tampilan -->
         <div class="bg-emerald-800 p-1 rounded-lg flex items-center text-xs font-semibold">
           <button id="btnLayoutSide" onclick="setLayoutMode('side')" class="px-2.5 py-1 rounded bg-white text-emerald-900 shadow transition">
             ↔️ Samping
@@ -85,6 +84,17 @@
           </div>
         </div>
 
+        <!-- Pilihan Jilid IWR (Khusus Jilid) -->
+        <div id="boxPilihJilid" class="space-y-1">
+          <label class="block text-xs font-semibold text-emerald-800">Pilihan Jilid IWR</label>
+          <select id="selectJilid" onchange="generateRphOtomatis()" class="w-full p-1.5 border rounded text-xs bg-white font-medium">
+            <option value="Jilid 1">Jilid 1</option>
+            <option value="Jilid 2">Jilid 2</option>
+            <option value="Jilid 3">Jilid 3</option>
+            <option value="Jilid 4">Jilid 4</option>
+          </select>
+        </div>
+
         <div class="space-y-2 pt-1">
           <div>
             <label class="block text-xs font-medium text-slate-700">Target Hafalan (FASIH 2)</label>
@@ -111,8 +121,16 @@
       <div class="space-y-2 border-t pt-3">
         <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian I. Identitas RPH</h3>
         <div>
+          <label class="block text-xs font-medium text-slate-600">Satuan Pendidikan (Nama Sekolah)</label>
+          <input type="text" id="satuanPendidikan" value="SD IT Permata Hati" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs font-semibold text-emerald-900">
+        </div>
+        <div>
           <label class="block text-xs font-medium text-slate-600">Judul Modul Ajar</label>
           <input type="text" id="judulModul" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-600">Sub-Judul Header (Baris Keterangan Jilid / Fase)</label>
+          <input type="text" id="subHeader" placeholder="Jilid 1 | Kelas I SD | Satu Pertemuan" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs font-medium">
         </div>
         <div class="grid grid-cols-2 gap-2">
           <div>
@@ -441,6 +459,7 @@
     function onJenjangChange() {
       const jenjang = document.getElementById("selectJenjang").value;
       const kelasSelect = document.getElementById("selectKelas");
+      const boxJilid = document.getElementById("boxPilihJilid");
       kelasSelect.innerHTML = "";
 
       const kelasKeys = Object.keys(cpDatabase[jenjang]);
@@ -450,6 +469,12 @@
         opt.innerText = cpDatabase[jenjang][k].namaKelas;
         kelasSelect.appendChild(opt);
       });
+
+      if (jenjang === "SD" || jenjang === "PAUD") {
+        boxJilid.style.display = "block";
+      } else {
+        boxJilid.style.display = "none";
+      }
 
       onKelasChange();
     }
@@ -505,10 +530,23 @@
       const targetHafalanVal = document.getElementById("selectHafalan").value;
       const targetMateriVal = document.getElementById("selectMateriUtama").value;
       const adabId = document.getElementById("selectAdab").value;
+      const jilidVal = document.getElementById("selectJilid").value;
       const dataAdab = adabDatabase.find(a => a.id === adabId);
 
+      // Membuat Sub-Header Otomatis (Format persis seperti sampel JSIT)
+      let subHeaderAuto = "";
+      if (jenjang === "SD" && kelasKey === "SD_1") {
+        subHeaderAuto = `${jilidVal}  |  ${dataKelas.namaKelas.split(' / ')[0]} SD  |  Satu Pertemuan`;
+      } else if (jenjang === "PAUD") {
+        subHeaderAuto = `${jilidVal}  |  ${dataKelas.namaKelas}  |  Satu Pertemuan`;
+      } else {
+        subHeaderAuto = `Tahsin, Tahfizh & Tadabbur  |  ${dataKelas.namaKelas.split(' / ')[0]}  |  Satu Pertemuan`;
+      }
+
       currentData = {
-        judulModul: jenjang === "SD" && kelasKey === "SD_1" ? "Jilid 1 Metode Belajar Al-Qur'an Ilman Wa Ruuhan" : `Tahsin, Tahfizh, dan Tadabbur Al-Qur'an Metode Ilman Wa Ruuhan – ${dataKelas.namaKelas}`,
+        satuanPendidikan: document.getElementById("satuanPendidikan").value || "SD IT Permata Hati",
+        judulModul: jenjang === "SD" && kelasKey === "SD_1" ? `${jilidVal} Metode Belajar Al-Qur'an Ilman Wa Ruuhan` : `Tahsin, Tahfizh, dan Tadabbur Al-Qur'an Metode Ilman Wa Ruuhan – ${dataKelas.namaKelas}`,
+        subHeader: subHeaderAuto,
         kelasFase: dataKelas.namaKelas,
         tp: "2025–2026",
         alokasiWaktu: dataKelas.alokasi,
@@ -586,6 +624,7 @@
       };
 
       document.getElementById("judulModul").value = currentData.judulModul;
+      document.getElementById("subHeader").value = currentData.subHeader;
       document.getElementById("kelasFase").value = currentData.kelasFase;
       document.getElementById("alokasiWaktu").value = currentData.alokasiWaktu;
       document.getElementById("jumlahPeserta").value = currentData.jumlahPeserta;
@@ -643,7 +682,9 @@
     }
 
     function updatePreviewFromForm() {
+      currentData.satuanPendidikan = document.getElementById("satuanPendidikan").value;
       currentData.judulModul = document.getElementById("judulModul").value;
+      currentData.subHeader = document.getElementById("subHeader").value;
       currentData.kelasFase = document.getElementById("kelasFase").value;
       currentData.tp = document.getElementById("tp").value;
       currentData.alokasiWaktu = document.getElementById("alokasiWaktu").value;
@@ -678,8 +719,9 @@
           <div style="text-align: center; font-weight: bold; flex-grow: 1;">
             <div style="font-size: 14pt; text-transform: uppercase;">RENCANA PENGAJARAN HARIAN</div>
             <div style="font-size: 12pt; text-transform: uppercase;">MBQ ‘ILMAN WA RUUHAN (IWR)</div>
-            <div style="font-size: 9.5pt; font-weight: normal; margin-top: 2px;">
-              Badan Pengembangan Pendidikan Al-Qur’an – JSIT Indonesia &nbsp;|&nbsp; TP. ${currentData.tp}
+            ${currentData.subHeader ? `<div style="font-size: 10.5pt; color: #15803d; font-weight: bold; margin-top: 3px;">${currentData.subHeader}</div>` : ''}
+            <div style="font-size: 9pt; font-weight: normal; margin-top: 3px;">
+              Badan Pengembangan Pendidikan Al-Qur’an – Jaringan Sekolah Islam Terpadu (JSIT) Indonesia &nbsp;|&nbsp; TP. ${currentData.tp}
             </div>
           </div>
         </div>
@@ -691,6 +733,7 @@
             <th style="width: 30%; text-align: left; border: 1px solid #cbd5e1;">Komponen</th>
             <th style="text-align: left; border: 1px solid #cbd5e1;">Keterangan</th>
           </tr>
+          <tr><td style="border: 1px solid #cbd5e1;">Satuan Pendidikan</td><td style="border: 1px solid #cbd5e1; font-weight: bold;">${currentData.satuanPendidikan}</td></tr>
           <tr><td style="border: 1px solid #cbd5e1;">Judul Modul Ajar</td><td style="border: 1px solid #cbd5e1;">${currentData.judulModul}</td></tr>
           <tr><td style="border: 1px solid #cbd5e1;">Mata Pelajaran</td><td style="border: 1px solid #cbd5e1;">Al-Qur'an</td></tr>
           <tr><td style="border: 1px solid #cbd5e1;">Kelas / Jenjang</td><td style="border: 1px solid #cbd5e1;">${currentData.kelasFase}</td></tr>
@@ -812,7 +855,7 @@
       document.body.removeChild(fileDownload);
     }
 
-    // Inisialisasi Otomatis Saat Pertama Kali Dibuka
+    // Inisialisasi Otomatis
     window.onload = function() {
       onJenjangChange();
       generateRphOtomatis();
