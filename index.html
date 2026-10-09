@@ -810,30 +810,16 @@
       }
     });
 
-    /* EXPORT PDF LANGSUNG DENGAN WADAH ISOLASI TERPISAH (BEBAS SPASI KOSONG SCROLL) */
+    /* EXPORT PDF STABIL & PASTI TERISI PENUH */
     function downloadPdf() {
-      const sourceElement = document.getElementById('documentContent');
-      if (!sourceElement) return;
+      const element = document.getElementById('documentContent');
+      if (!element) return;
 
-      // Buat Wadah Kontainer Sementara yang Terisolasi dari Scroll Layar
-      const tempContainer = document.createElement('div');
-      tempContainer.style.position = 'absolute';
-      tempContainer.style.left = '-9999px';
-      tempContainer.style.top = '0px';
-      tempContainer.style.width = '794px'; // Lebar A4 Standar
-      tempContainer.style.padding = '0px';
-      tempContainer.style.margin = '0px';
-      tempContainer.style.backgroundColor = '#ffffff';
-      tempContainer.style.color = '#000000';
-      tempContainer.style.boxSizing = 'border-box';
-
-      // Salin Konten Pratinjau
-      tempContainer.innerHTML = sourceElement.innerHTML;
-      document.body.appendChild(tempContainer);
+      const filenameClean = `RPH_MBQ_IWR_${(currentData.judulModul || 'Dokumen').replace(/[^a-zA-Z0-9_-]/g, '_').substring(0, 30)}.pdf`;
 
       const opt = {
-        margin: [8, 8, 8, 8],
-        filename: `RPH_MBQ_IWR_${(currentData.judulModul || 'Dokumen').replace(/[^a-zA-Z0-9_-]/g, '_').substring(0, 30)}.pdf`,
+        margin: [10, 10, 10, 10],
+        filename: filenameClean,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: {
           scale: 2,
@@ -841,23 +827,13 @@
           allowTaint: true,
           scrollY: 0,
           scrollX: 0,
-          windowWidth: 794,
           logging: false
         },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
         pagebreak: { mode: ['css', 'legacy'], before: '.page-break' }
       };
 
-      html2pdf().set(opt).from(tempContainer).save().then(() => {
-        if (document.body.contains(tempContainer)) {
-          document.body.removeChild(tempContainer);
-        }
-      }).catch(err => {
-        console.error("Gagal membuat PDF:", err);
-        if (document.body.contains(tempContainer)) {
-          document.body.removeChild(tempContainer);
-        }
-      });
+      html2pdf().set(opt).from(element).save();
     }
 
     /* KALKULATOR DURASI OTOMATIS */
