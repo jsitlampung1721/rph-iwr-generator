@@ -35,7 +35,7 @@
       page-break-before: always;
     }
 
-    /* CSS KHUSUS CETAK (PRINT) - HANYA MENCETAK DOKUMEN HASIL PRATINJAU */
+    /* CSS KHUSUS CETAK (PRINT BROWSER) - HANYA MENCETAK DOKUMEN HASIL PRATINJAU */
     @media print {
       header, .no-print, #formSection, #mediaModal, #btnMobileMenu, nav, button {
         display: none !important;
@@ -84,7 +84,7 @@
         </div>
       </div>
 
-      <!-- NAVBAR DESKTOP / TABLET (Satu Shaf Horizontal Rapi) -->
+      <!-- NAVBAR DESKTOP / TABLET -->
       <nav class="hidden md:flex items-center gap-2 font-medium text-xs whitespace-nowrap">
         
         <!-- Tombol Media & Panduan -->
@@ -92,7 +92,7 @@
           📖 Panduan IWR
         </button>
 
-        <!-- DROPDOWN 1: Berkas & Ekspor (JSON, PDF, Word) -->
+        <!-- DROPDOWN 1: Berkas & Ekspor -->
         <div class="relative dropdown-container">
           <button onclick="toggleDropdown('dropdownBerkas')" class="bg-emerald-800 hover:bg-emerald-600 text-white px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 border border-emerald-600 transition">
             <span>📁 Berkas & PDF</span>
@@ -339,7 +339,7 @@
         </div>
       </div>
 
-      <!-- PANEL BARU: DAFTAR NAMA PESERTA DIDIK (SISWA) -->
+      <!-- PANEL INPUT DAFTAR NAMA PESERTA DIDIK (SISWA) -->
       <div class="bg-indigo-50 border border-indigo-200 p-3.5 rounded-lg space-y-2">
         <h3 class="text-xs font-bold text-indigo-900 uppercase flex items-center justify-between">
           <span>👥 Daftar Nama Peserta Didik (Siswa)</span>
@@ -810,17 +810,54 @@
       }
     });
 
-    /* EXPORT PDF LANGSUNG DENGAN PRESERVASI LOGO & WARNA */
+    /* EXPORT PDF LANGSUNG DENGAN WADAH ISOLASI TERPISAH (BEBAS SPASI KOSONG SCROLL) */
     function downloadPdf() {
-      const element = document.getElementById('documentContent');
+      const sourceElement = document.getElementById('documentContent');
+      if (!sourceElement) return;
+
+      // Buat Wadah Kontainer Sementara yang Terisolasi dari Scroll Layar
+      const tempContainer = document.createElement('div');
+      tempContainer.style.position = 'absolute';
+      tempContainer.style.left = '-9999px';
+      tempContainer.style.top = '0px';
+      tempContainer.style.width = '794px'; // Lebar A4 Standar
+      tempContainer.style.padding = '0px';
+      tempContainer.style.margin = '0px';
+      tempContainer.style.backgroundColor = '#ffffff';
+      tempContainer.style.color = '#000000';
+      tempContainer.style.boxSizing = 'border-box';
+
+      // Salin Konten Pratinjau
+      tempContainer.innerHTML = sourceElement.innerHTML;
+      document.body.appendChild(tempContainer);
+
       const opt = {
         margin: [8, 8, 8, 8],
-        filename: `RPH_MBQ_IWR_${(currentData.judulModul || 'Dokumen').substring(0, 25)}.pdf`,
+        filename: `RPH_MBQ_IWR_${(currentData.judulModul || 'Dokumen').replace(/[^a-zA-Z0-9_-]/g, '_').substring(0, 30)}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          scrollY: 0,
+          scrollX: 0,
+          windowWidth: 794,
+          logging: false
+        },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['css', 'legacy'], before: '.page-break' }
       };
-      html2pdf().set(opt).from(element).save();
+
+      html2pdf().set(opt).from(tempContainer).save().then(() => {
+        if (document.body.contains(tempContainer)) {
+          document.body.removeChild(tempContainer);
+        }
+      }).catch(err => {
+        console.error("Gagal membuat PDF:", err);
+        if (document.body.contains(tempContainer)) {
+          document.body.removeChild(tempContainer);
+        }
+      });
     }
 
     /* KALKULATOR DURASI OTOMATIS */
@@ -1326,7 +1363,7 @@
             </div>
           </div>
 
-          <!-- Logo Sekolah (Dioptimalkan untuk Print & Unduh PDF) -->
+          <!-- Logo Sekolah -->
           <div style="width: 95px; text-align: right; min-height: 70px; display: flex; align-items: center; justify-content: flex-end;">
             ${logoDataUrl ? `<img src="${logoDataUrl}" style="max-height: 70px; max-width: 95px; object-fit: contain; display: block; margin-left: auto;">` : '<span style="display:inline-block; width:1px; height:1px;"></span>'}
           </div>
@@ -1472,7 +1509,7 @@
         </div>
       `;
 
-      /* LAMPIRAN LEMBAR ASESMEN HARIAN SISWA (Generasi Nama Otomatis) */
+      /* LAMPIRAN LEMBAR ASESMEN HARIAN SISWA */
       if (showLampiran) {
         const rawSiswa = document.getElementById("txtDaftarSiswa") ? document.getElementById("txtDaftarSiswa").value : "";
         const listSiswa = rawSiswa.split('\n').map(s => s.trim()).filter(s => s !== "");
