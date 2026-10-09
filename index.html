@@ -20,6 +20,12 @@
     input, select, textarea, button {
       font-size: var(--input-font-size) !important;
     }
+    /* Memaksa Pencetakan Warna Sesuai Tampilan Layar */
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
     /* Area Input Fleksibel */
     #formSection {
       resize: vertical;
@@ -29,17 +35,34 @@
       page-break-before: always;
     }
 
-    /* Memastikan Warna Tabel & Gambar Presisi Saat Cetak / Download */
-    #documentContent *,
+    /* CSS KHUSUS CETAK (PRINT) - HANYA MENCETAK DOKUMEN HASIL PRATINJAU */
     @media print {
-      *, *:before, *:after {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-        color-adjust: exact !important;
+      header, .no-print, #formSection, #mediaModal, #btnMobileMenu, nav, button {
+        display: none !important;
       }
-      .no-print { display: none !important; }
-      .print-area { width: 100% !important; margin: 0 !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
-      body { background-color: white !important; font-size: 11pt !important; }
+      body {
+        background-color: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      #mainContainer {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      #previewSection {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        background-color: #ffffff !important;
+      }
+      #documentContent {
+        width: 100% !important;
+      }
     }
   </style>
 </head>
@@ -316,6 +339,16 @@
         </div>
       </div>
 
+      <!-- PANEL BARU: DAFTAR NAMA PESERTA DIDIK (SISWA) -->
+      <div class="bg-indigo-50 border border-indigo-200 p-3.5 rounded-lg space-y-2">
+        <h3 class="text-xs font-bold text-indigo-900 uppercase flex items-center justify-between">
+          <span>👥 Daftar Nama Peserta Didik (Siswa)</span>
+          <span class="text-[10px] text-indigo-700 font-normal">1 Nama Per Baris</span>
+        </h3>
+        <textarea id="txtDaftarSiswa" oninput="updatePreviewFromForm()" rows="5" placeholder="Ahmad Fulan&#10;Budi Santoso&#10;Siti Aisyah&#10;Zaid bin Haritsah" class="w-full p-2 border border-indigo-200 rounded bg-white text-xs font-medium leading-relaxed text-slate-800 focus:ring-2 focus:ring-indigo-500"></textarea>
+        <p class="text-[11px] text-indigo-700 italic">Nama-nama ini akan otomatis mengisi tabel Lembar Penilaian / Asesmen Harian di bagian bawah dokumen.</p>
+      </div>
+
       <!-- BAGIAN II: CAPAIAN PEMBELAJARAN & TARGET -->
       <div class="space-y-2 border-t pt-3">
         <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian II. Capaian & Target</h3>
@@ -375,7 +408,7 @@
         <div id="formLangkahContainer" class="space-y-3"></div>
       </div>
 
-      <!-- BAGIAN V: PENILAIAN, DIFERENSIASI, & LAMPIRAN (Diperbarui dengan Input Nama Siswa) -->
+      <!-- BAGIAN V: PENILAIAN, DIFERENSIASI, & LAMPIRAN -->
       <div class="space-y-3 border-t pt-3">
         <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian V. Penilaian & Diferensiasi</h3>
         <div id="formPenilaianContainer" class="space-y-3"></div>
@@ -395,22 +428,16 @@
           </div>
         </div>
 
-        <!-- Input Nama-Nama Siswa & Sakelar Cetak Lampiran Penilaian Siswa -->
-        <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-lg space-y-2.5 text-xs">
+        <!-- Opsi Cetak Lampiran Penilaian Siswa -->
+        <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-lg space-y-2 text-xs">
           <label class="flex items-center gap-2 font-bold text-emerald-900 cursor-pointer">
             <input type="checkbox" id="chkShowLampiran" onchange="updatePreviewFromForm()" checked class="w-4 h-4 text-emerald-600 rounded">
             <span>Sertakan Lampiran Lembar Penilaian Siswa (Jurnal Asesmen)</span>
           </label>
           
-          <div class="space-y-2 pt-1 border-t border-emerald-200/80">
-            <div>
-              <label class="block text-[11px] font-bold text-slate-700 mb-1">👥 Daftar Nama Peserta Didik (1 Nama per Baris):</label>
-              <textarea id="txtDaftarSiswa" oninput="updatePreviewFromForm()" rows="5" placeholder="Ahmad Fulan&#10;Budi Santoso&#10;Siti Aisyah&#10;Zaid bin Haritsah" class="w-full p-2 border rounded bg-white font-medium leading-relaxed text-slate-800"></textarea>
-            </div>
-            <div class="flex items-center justify-between text-slate-600">
-              <span class="text-[11px]">Jumlah Baris Kosong Minimal:</span>
-              <input type="number" id="numBarisSiswa" value="10" min="1" max="50" oninput="updatePreviewFromForm()" class="w-16 p-1 border rounded text-center bg-white font-bold text-xs">
-            </div>
+          <div class="flex items-center justify-between text-slate-600 pt-1">
+            <span class="text-[11px]">Jumlah Baris Minimum Tabel:</span>
+            <input type="number" id="numBarisSiswa" value="10" min="1" max="50" oninput="updatePreviewFromForm()" class="w-16 p-1 border rounded text-center bg-white font-bold text-xs">
           </div>
         </div>
       </div>
@@ -503,12 +530,10 @@
           <div class="bg-white p-3.5 rounded border border-emerald-200 space-y-3">
             <strong class="text-emerald-800 block border-b border-emerald-100 pb-1 text-xs">DOA PENAWAR HATI:</strong>
             
-            <!-- Teks Arab -->
             <p class="font-serif text-base leading-loose text-right font-semibold text-slate-800 bg-slate-50 p-3 rounded border border-slate-200" dir="rtl">
               اللَّهُمَّ إِنِّي عَبْدُكَ، ابْنُ عَبْدِكَ، ابْنُ أَمَتِكَ، نَاصِيَتِي بِيَدِكَ، مَاضٍ فِيَّ حُكْمُكَ، عَدْلٌ فِيَّ قَضَاؤُكَ، أَسْأَلُكَ بِكُلِّ اسْمٍ هُوَ لَكَ، سَمَّيْتَ بِهِ نَفْسَكَ، أَوْ أَنْزَلْتَهُ فِي كِتَابِكَ، أَوْ عَلَّمْتَهُ أَحَدًا مِنْ خَلْقِكَ، أَوِ اسْتَأْثَرْتَ بِهِ فِي عِلْمِ الْغَيْبِ عِنْدَكَ، أَنْ تَجْعَلَ الْقُرْآنَ رَبِيعَ قَلْبِي، وَنُورَ صَدْرِي، وَجَلَاءَ حُزْنِي، وَذَهَابَ هَمِّي
             </p>
             
-            <!-- Terjemahan -->
             <p class="italic text-slate-700 text-[11px] leading-relaxed pt-1">
               "Ya Allah! Sesungguhnya aku adalah hamba-Mu, anak hamba-Mu, dan anak hamba perempuan-Mu. Ubun-ubunku di tangan-Mu, keputusan-Mu berlaku padaku, qadha-Mu kepadaku adalah adil. Aku mohon kepada-Mu dengan tiap nama yang telah Engkau gunakan untuk diri-Mu, yang Engkau turunkan dalam kitab-Mu, Engkau ajarkan kepada seseorang dari makhluk-Mu, atau yang Engkau khususkan untuk diri-Mu dalam ilmu ghaib di sisi-Mu, hendaknya Engkau jadikan Al-Qur'an sebagai penenteram hatiku, cahaya di dadaku, pelenyap duka dan kesedihanku."
             </p>
@@ -1459,9 +1484,9 @@
           const namaSiswa = listSiswa[i - 1] || '';
           rowsHtml += `
             <tr>
-              <td style="border: 1px solid #cbd5e1; text-align: center; vertical-align: middle;">${i}</td>
-              <td style="border: 1px solid #cbd5e1; height: 28px; padding: 4px 8px; font-weight: 500; color: #0f172a; vertical-align: middle;">${namaSiswa}</td>
-              <td style="border: 1px solid #cbd5e1; text-align: center; font-size: 8pt; color: #64748b; vertical-align: middle;">[ ] BSB &nbsp; [ ] BSH &nbsp; [ ] MB</td>
+              <td style="border: 1px solid #cbd5e1; text-align: center; vertical-align: middle; padding: 5px 4px;">${i}</td>
+              <td style="border: 1px solid #cbd5e1; height: 28px; padding: 5px 8px; font-weight: 600; color: #0f172a; vertical-align: middle;">${namaSiswa}</td>
+              <td style="border: 1px solid #cbd5e1; text-align: center; font-size: 8pt; color: #475569; vertical-align: middle;">[ &nbsp; ] BSB &nbsp; [ &nbsp; ] BSH &nbsp; [ &nbsp; ] MB</td>
               <td style="border: 1px solid #cbd5e1;"></td>
               <td style="border: 1px solid #cbd5e1;"></td>
               <td style="border: 1px solid #cbd5e1;"></td>
