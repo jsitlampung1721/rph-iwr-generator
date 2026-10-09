@@ -28,9 +28,17 @@
     .page-break {
       page-break-before: always;
     }
+
+    /* Memastikan Warna Tabel & Gambar Presisi Saat Cetak / Download */
+    #documentContent *,
     @media print {
+      *, *:before, *:after {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+      }
       .no-print { display: none !important; }
-      .print-area { width: 100% !important; margin: 0 !important; padding: 0 !important; }
+      .print-area { width: 100% !important; margin: 0 !important; padding: 0 !important; border: none !important; box-shadow: none !important; }
       body { background-color: white !important; font-size: 11pt !important; }
     }
   </style>
@@ -367,7 +375,7 @@
         <div id="formLangkahContainer" class="space-y-3"></div>
       </div>
 
-      <!-- BAGIAN V: PENILAIAN, DIFERENSIASI, & LAMPIRAN -->
+      <!-- BAGIAN V: PENILAIAN, DIFERENSIASI, & LAMPIRAN (Diperbarui dengan Input Nama Siswa) -->
       <div class="space-y-3 border-t pt-3">
         <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian V. Penilaian & Diferensiasi</h3>
         <div id="formPenilaianContainer" class="space-y-3"></div>
@@ -387,15 +395,22 @@
           </div>
         </div>
 
-        <!-- Opsi Sakelar Cetak Lampiran Penilaian Siswa -->
-        <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-lg space-y-2 text-xs">
+        <!-- Input Nama-Nama Siswa & Sakelar Cetak Lampiran Penilaian Siswa -->
+        <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-lg space-y-2.5 text-xs">
           <label class="flex items-center gap-2 font-bold text-emerald-900 cursor-pointer">
             <input type="checkbox" id="chkShowLampiran" onchange="updatePreviewFromForm()" checked class="w-4 h-4 text-emerald-600 rounded">
-            <span>Sertakan Lampiran Lembar Penilaian Siswa (Jurnal Asesmen Harian)</span>
+            <span>Sertakan Lampiran Lembar Penilaian Siswa (Jurnal Asesmen)</span>
           </label>
-          <div class="flex items-center gap-2 pt-1">
-            <span class="text-slate-600">Jumlah Baris Siswa:</span>
-            <input type="number" id="numBarisSiswa" value="10" min="1" max="30" oninput="updatePreviewFromForm()" class="w-16 p-1 border rounded text-center bg-white font-bold">
+          
+          <div class="space-y-2 pt-1 border-t border-emerald-200/80">
+            <div>
+              <label class="block text-[11px] font-bold text-slate-700 mb-1">👥 Daftar Nama Peserta Didik (1 Nama per Baris):</label>
+              <textarea id="txtDaftarSiswa" oninput="updatePreviewFromForm()" rows="5" placeholder="Ahmad Fulan&#10;Budi Santoso&#10;Siti Aisyah&#10;Zaid bin Haritsah" class="w-full p-2 border rounded bg-white font-medium leading-relaxed text-slate-800"></textarea>
+            </div>
+            <div class="flex items-center justify-between text-slate-600">
+              <span class="text-[11px]">Jumlah Baris Kosong Minimal:</span>
+              <input type="number" id="numBarisSiswa" value="10" min="1" max="50" oninput="updatePreviewFromForm()" class="w-16 p-1 border rounded text-center bg-white font-bold text-xs">
+            </div>
           </div>
         </div>
       </div>
@@ -480,7 +495,7 @@
           </div>
         </div>
 
-        <!-- Tab 2: Doa-Doa Pembuka & Penawar Hati (TELAH DIPERBARUI SESUAI GAMBAR) -->
+        <!-- Tab 2: Doa-Doa Pembuka & Penawar Hati -->
         <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-lg space-y-2">
           <h3 class="font-bold text-emerald-900 text-sm flex items-center gap-1">
             🤲 2. Doa Pembuka & Penawar Hati
@@ -770,14 +785,14 @@
       }
     });
 
-    /* EXPORT PDF LANGSUNG */
+    /* EXPORT PDF LANGSUNG DENGAN PRESERVASI LOGO & WARNA */
     function downloadPdf() {
       const element = document.getElementById('documentContent');
       const opt = {
         margin: [8, 8, 8, 8],
         filename: `RPH_MBQ_IWR_${(currentData.judulModul || 'Dokumen').substring(0, 25)}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
+        html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
       html2pdf().set(opt).from(element).save();
@@ -830,7 +845,8 @@
         namaGuru: document.getElementById("namaGuru").value,
         nipGuru: document.getElementById("nipGuru").value,
         kotaTanggal: document.getElementById("kotaTanggal").value,
-        logoDataUrl: logoDataUrl
+        logoDataUrl: logoDataUrl,
+        daftarSiswa: document.getElementById("txtDaftarSiswa") ? document.getElementById("txtDaftarSiswa").value : ""
       };
       localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(profile));
     }
@@ -847,6 +863,9 @@
           if (profile.nipGuru) document.getElementById("nipGuru").value = profile.nipGuru;
           if (profile.kotaTanggal) document.getElementById("kotaTanggal").value = profile.kotaTanggal;
           if (profile.logoDataUrl) logoDataUrl = profile.logoDataUrl;
+          if (profile.daftarSiswa && document.getElementById("txtDaftarSiswa")) {
+            document.getElementById("txtDaftarSiswa").value = profile.daftarSiswa;
+          }
         } catch(e) {
           console.error("Gagal memuat profil:", e);
         }
@@ -912,6 +931,9 @@
 
             if (currentData.diferensiasiPengayaan) document.getElementById("diferensiasiPengayaan").value = currentData.diferensiasiPengayaan;
             if (currentData.diferensiasiRemedial) document.getElementById("diferensiasiRemedial").value = currentData.diferensiasiRemedial;
+            if (currentData.daftarSiswa && document.getElementById("txtDaftarSiswa")) {
+              document.getElementById("txtDaftarSiswa").value = currentData.daftarSiswa;
+            }
 
             document.getElementById("kotaTanggal").value = currentData.kotaTanggal || "";
             document.getElementById("namaKepalaSekolah").value = currentData.namaKepalaSekolah || "";
@@ -1097,6 +1119,7 @@
 
         diferensiasiPengayaan: "Peserta didik yang telah mencapai target hafalan/bacaan lebih cepat diberikan materi pengayaan lanjutan (1-2 baris/ayat ke depan) serta diberdayakan sebagai tutor sebaya bagi rekannya.",
         diferensiasiRemedial: "Peserta didik yang belum mencapai target diberikan pendampingan bimbingan khusus (talaqqi fardhi) secara individual oleh pendidik.",
+        daftarSiswa: document.getElementById("txtDaftarSiswa") ? document.getElementById("txtDaftarSiswa").value : "",
 
         kotaTanggal: document.getElementById("kotaTanggal").value,
         namaKepalaSekolah: document.getElementById("namaKepalaSekolah").value,
@@ -1242,6 +1265,7 @@
 
       currentData.diferensiasiPengayaan = document.getElementById("diferensiasiPengayaan").value;
       currentData.diferensiasiRemedial = document.getElementById("diferensiasiRemedial").value;
+      currentData.daftarSiswa = document.getElementById("txtDaftarSiswa") ? document.getElementById("txtDaftarSiswa").value : "";
 
       currentData.kotaTanggal = document.getElementById("kotaTanggal").value;
       currentData.namaKepalaSekolah = document.getElementById("namaKepalaSekolah").value;
@@ -1260,12 +1284,13 @@
       const t = docThemes[selectedThemeKey] || docThemes.hijau;
 
       const showLampiran = document.getElementById("chkShowLampiran") ? document.getElementById("chkShowLampiran").checked : true;
-      const jumlahBarisSiswa = parseInt(document.getElementById("numBarisSiswa") ? document.getElementById("numBarisSiswa").value : 10) || 10;
 
       let html = `
         <!-- Header Dokumen -->
         <div style="display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 12px; border-bottom: 2px solid #000; padding-bottom: 10px;">
-          <img src="https://lh3.googleusercontent.com/d/1NYK166dwtbJFMNeNznw7EM3QCoHpRDEH" style="max-height: 70px; max-width: 95px; object-fit: contain;">
+          <div style="width: 95px; text-align: left;">
+            <img src="https://lh3.googleusercontent.com/d/1NYK166dwtbJFMNeNznw7EM3QCoHpRDEH" style="max-height: 70px; max-width: 95px; object-fit: contain; display: block;" crossOrigin="anonymous">
+          </div>
           
           <div style="text-align: center; font-weight: bold; flex-grow: 1;">
             <div style="font-size: 14pt; text-transform: uppercase;">RENCANA PENGAJARAN HARIAN</div>
@@ -1276,8 +1301,9 @@
             </div>
           </div>
 
-          <div style="width: 95px; text-align: right;">
-            ${logoDataUrl ? `<img src="${logoDataUrl}" style="max-height: 70px; max-width: 95px; object-fit: contain; margin-left: auto;">` : ''}
+          <!-- Logo Sekolah (Dioptimalkan untuk Print & Unduh PDF) -->
+          <div style="width: 95px; text-align: right; min-height: 70px; display: flex; align-items: center; justify-content: flex-end;">
+            ${logoDataUrl ? `<img src="${logoDataUrl}" style="max-height: 70px; max-width: 95px; object-fit: contain; display: block; margin-left: auto;">` : '<span style="display:inline-block; width:1px; height:1px;"></span>'}
           </div>
         </div>
 
@@ -1421,15 +1447,21 @@
         </div>
       `;
 
-      /* LAMPIRAN LEMBAR ASESMEN HARIAN SISWA */
+      /* LAMPIRAN LEMBAR ASESMEN HARIAN SISWA (Generasi Nama Otomatis) */
       if (showLampiran) {
+        const rawSiswa = document.getElementById("txtDaftarSiswa") ? document.getElementById("txtDaftarSiswa").value : "";
+        const listSiswa = rawSiswa.split('\n').map(s => s.trim()).filter(s => s !== "");
+        const minBaris = parseInt(document.getElementById("numBarisSiswa") ? document.getElementById("numBarisSiswa").value : 10) || 10;
+        const totalBaris = Math.max(listSiswa.length, minBaris);
+
         let rowsHtml = '';
-        for (let i = 1; i <= jumlahBarisSiswa; i++) {
+        for (let i = 1; i <= totalBaris; i++) {
+          const namaSiswa = listSiswa[i - 1] || '';
           rowsHtml += `
             <tr>
-              <td style="border: 1px solid #cbd5e1; text-align: center;">${i}</td>
-              <td style="border: 1px solid #cbd5e1; height: 28px;"></td>
-              <td style="border: 1px solid #cbd5e1; text-align: center; font-size: 8pt; color: #64748b;">[ ] BSB &nbsp; [ ] BSH &nbsp; [ ] MB</td>
+              <td style="border: 1px solid #cbd5e1; text-align: center; vertical-align: middle;">${i}</td>
+              <td style="border: 1px solid #cbd5e1; height: 28px; padding: 4px 8px; font-weight: 500; color: #0f172a; vertical-align: middle;">${namaSiswa}</td>
+              <td style="border: 1px solid #cbd5e1; text-align: center; font-size: 8pt; color: #64748b; vertical-align: middle;">[ ] BSB &nbsp; [ ] BSH &nbsp; [ ] MB</td>
               <td style="border: 1px solid #cbd5e1;"></td>
               <td style="border: 1px solid #cbd5e1;"></td>
               <td style="border: 1px solid #cbd5e1;"></td>
