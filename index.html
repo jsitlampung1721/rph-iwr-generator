@@ -4,35 +4,60 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RPH MBQ 'Ilman Wa Ruuhan Generator Otomatis</title>
+  <!-- Favicon Logo IWR -->
+  <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/d/1g4yAaTezHTWbS_v5Kz0B3jARrJE8kit1">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    :root {
+      --app-font-size: 14px;
+      --input-font-size: 14px;
+    }
+    body {
+      font-size: var(--app-font-size);
+    }
+    input, select, textarea, button {
+      font-size: var(--input-font-size) !important;
+    }
     @media print {
       .no-print { display: none !important; }
       .print-area { width: 100% !important; margin: 0 !important; padding: 0 !important; }
-      body { background-color: white !important; font-size: 11pt; }
+      body { background-color: white !important; font-size: 11pt !important; }
     }
   </style>
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans min-h-screen">
 
   <!-- Header Aplikasi -->
-  <header class="bg-emerald-700 text-white p-4 shadow-md no-print sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
-      <div>
-        <h1 class="text-xl font-bold flex items-center gap-2">
-          <span>✨ RPH MBQ 'Ilman Wa Ruuhan Generator</span>
-          <span class="bg-emerald-800 text-emerald-200 text-xs px-2 py-0.5 rounded border border-emerald-600">JSIT 2026</span>
-        </h1>
-        <p class="text-xs text-emerald-100">Badan Pengembangan Pendidikan Al-Qur’an – JSIT Indonesia</p>
+  <header class="bg-emerald-700 text-white p-3.5 shadow-md no-print sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-3">
+      <div class="flex items-center gap-3">
+        <img src="https://lh3.googleusercontent.com/d/1g4yAaTezHTWbS_v5Kz0B3jARrJE8kit1" alt="Logo IWR" class="w-9 h-9 object-contain bg-white rounded-full p-0.5">
+        <div>
+          <h1 class="text-lg font-bold flex items-center gap-2">
+            <span>✨ RPH MBQ 'Ilman Wa Ruuhan Generator</span>
+            <span class="bg-emerald-800 text-emerald-200 text-xs px-2 py-0.5 rounded border border-emerald-600">JSIT 2026</span>
+          </h1>
+          <p class="text-xs text-emerald-100">Badan Pengembangan Pendidikan Al-Qur’an – JSIT Indonesia</p>
+        </div>
       </div>
 
-      <!-- Switcher Mode Tampilan & Tombol Aksi -->
+      <!-- Control Panel: Ukuran Teks (Ramah Lansia) & Layout -->
       <div class="flex flex-wrap items-center gap-2">
-        <div class="bg-emerald-800 p-1 rounded-lg flex items-center text-xs font-semibold">
-          <button id="btnLayoutSide" onclick="setLayoutMode('side')" class="px-2.5 py-1 rounded bg-white text-emerald-900 shadow transition">
+        
+        <!-- Pengatur Ukuran Font (A- / Normal / A+) -->
+        <div class="bg-emerald-800 px-2 py-1 rounded-lg flex items-center gap-1 text-xs font-semibold border border-emerald-600">
+          <span class="text-emerald-200 mr-1">Teks:</span>
+          <button onclick="adjustTextSize(-1)" title="Kecilkan Teks" class="bg-emerald-700 hover:bg-emerald-600 px-2 py-0.5 rounded font-bold">A-</button>
+          <button onclick="resetTextSize()" title="Ukuran Normal" class="bg-emerald-700 hover:bg-emerald-600 px-2 py-0.5 rounded font-bold">100%</button>
+          <button onclick="adjustTextSize(1)" title="Perbesar Teks" class="bg-emerald-700 hover:bg-emerald-600 px-2 py-0.5 rounded font-bold">A+</button>
+        </div>
+
+        <!-- Switcher Mode Tampilan -->
+        <div class="bg-emerald-800 p-1 rounded-lg flex items-center text-xs font-semibold border border-emerald-600">
+          <button id="btnLayoutSide" onclick="setLayoutMode('side')" class="px-2 py-1 rounded bg-white text-emerald-900 shadow transition">
             ↔️ Samping
           </button>
-          <button id="btnLayoutStacked" onclick="setLayoutMode('stacked')" class="px-2.5 py-1 rounded text-emerald-100 hover:text-white transition">
+          <button id="btnLayoutStacked" onclick="setLayoutMode('stacked')" class="px-2 py-1 rounded text-emerald-100 hover:text-white transition">
             ↕️ Atas-Bawah
           </button>
         </div>
@@ -54,24 +79,24 @@
     <section id="formSection" class="lg:col-span-5 bg-white p-5 rounded-lg shadow border border-slate-200 no-print space-y-4 max-h-[88vh] overflow-y-auto">
       
       <!-- Panel 1: Upload Logo Sekolah -->
-      <div class="bg-slate-50 border border-slate-200 p-3 rounded-lg space-y-2">
-        <h2 class="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center justify-between">
-          <span>🏫 Logo Sekolah</span>
-          <button onclick="removeLogo()" class="text-[10px] text-red-600 hover:underline">Hapus Logo</button>
+      <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-lg space-y-2">
+        <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider flex items-center justify-between">
+          <span>🏫 Logo Sekolah Anda (Sebelah Kanan Header)</span>
+          <button onclick="removeLogo()" class="text-xs text-red-600 hover:underline">Hapus Logo</button>
         </h2>
-        <input type="file" id="logoInput" accept="image/*" onchange="handleLogoUpload(event)" class="w-full text-xs text-slate-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-emerald-100 file:text-emerald-800 hover:file:bg-emerald-200">
+        <input type="file" id="logoInput" accept="image/*" onchange="handleLogoUpload(event)" class="w-full text-xs text-slate-600 file:mr-2 file:py-1.5 file:px-3 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-emerald-100 file:text-emerald-800 hover:file:bg-emerald-200">
       </div>
 
       <!-- Panel 2: Pemilih Target CP -->
-      <div class="bg-emerald-50 border border-emerald-200 p-3.5 rounded-lg space-y-3">
-        <h2 class="text-xs font-bold text-emerald-900 uppercase tracking-wider flex items-center gap-1">
+      <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-lg space-y-3">
+        <h2 class="text-sm font-bold text-emerald-900 uppercase tracking-wider flex items-center gap-1">
           🎯 Pemilih Target CP (Klik & Generate)
         </h2>
         
         <div class="grid grid-cols-2 gap-2">
           <div>
             <label class="block text-xs font-semibold text-slate-700 mb-1">Jenjang</label>
-            <select id="selectJenjang" onchange="onJenjangChange()" class="w-full p-1.5 border rounded text-xs bg-white font-medium">
+            <select id="selectJenjang" onchange="onJenjangChange()" class="w-full p-2 border rounded bg-white font-medium">
               <option value="PAUD">PAUD / TK</option>
               <option value="SD" selected>SD IT</option>
               <option value="SMP">SMP IT</option>
@@ -80,14 +105,14 @@
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-700 mb-1">Kelas / Tingkat</label>
-            <select id="selectKelas" onchange="onKelasChange()" class="w-full p-1.5 border rounded text-xs bg-white font-medium"></select>
+            <select id="selectKelas" onchange="onKelasChange()" class="w-full p-2 border rounded bg-white font-medium"></select>
           </div>
         </div>
 
-        <!-- Pilihan Jilid IWR (Khusus Jilid) -->
+        <!-- Pilihan Jilid IWR -->
         <div id="boxPilihJilid" class="space-y-1">
           <label class="block text-xs font-semibold text-emerald-800">Pilihan Jilid IWR</label>
-          <select id="selectJilid" onchange="generateRphOtomatis()" class="w-full p-1.5 border rounded text-xs bg-white font-medium">
+          <select id="selectJilid" onchange="generateRphOtomatis()" class="w-full p-2 border rounded bg-white font-medium">
             <option value="Jilid 1">Jilid 1</option>
             <option value="Jilid 2">Jilid 2</option>
             <option value="Jilid 3">Jilid 3</option>
@@ -98,21 +123,21 @@
         <div class="space-y-2 pt-1">
           <div>
             <label class="block text-xs font-medium text-slate-700">Target Hafalan (FASIH 2)</label>
-            <select id="selectHafalan" class="w-full p-1.5 border rounded text-xs bg-white"></select>
+            <select id="selectHafalan" class="w-full p-2 border rounded bg-white"></select>
           </div>
 
           <div>
             <label class="block text-xs font-medium text-slate-700" id="lblTargetUtama">Target Materi Utama (FASIH 1)</label>
-            <select id="selectMateriUtama" class="w-full p-1.5 border rounded text-xs bg-white"></select>
+            <select id="selectMateriUtama" class="w-full p-2 border rounded bg-white"></select>
           </div>
 
           <div>
             <label class="block text-xs font-medium text-slate-700">Fokus Adab & Santun (SANTUN)</label>
-            <select id="selectAdab" class="w-full p-1.5 border rounded text-xs bg-white"></select>
+            <select id="selectAdab" class="w-full p-2 border rounded bg-white"></select>
           </div>
         </div>
 
-        <button onclick="generateRphOtomatis()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2 px-3 rounded text-xs transition shadow flex items-center justify-center gap-1">
+        <button onclick="generateRphOtomatis()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2.5 px-3 rounded shadow transition flex items-center justify-center gap-1">
           <span>🚀 Generate RPH Otomatis Sekarang</span>
         </button>
       </div>
@@ -122,39 +147,39 @@
         <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian I. Identitas RPH</h3>
         <div>
           <label class="block text-xs font-medium text-slate-600">Satuan Pendidikan (Nama Sekolah)</label>
-          <input type="text" id="satuanPendidikan" value="SD IT Permata Hati" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs font-semibold text-emerald-900">
+          <input type="text" id="satuanPendidikan" value="SD IT Permata Hati" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded font-semibold text-emerald-900">
         </div>
         <div>
           <label class="block text-xs font-medium text-slate-600">Judul Modul Ajar</label>
-          <input type="text" id="judulModul" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs">
+          <input type="text" id="judulModul" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded">
         </div>
         <div>
           <label class="block text-xs font-medium text-slate-600">Sub-Judul Header (Baris Keterangan Jilid / Fase)</label>
-          <input type="text" id="subHeader" placeholder="Jilid 1 | Kelas I SD | Satu Pertemuan" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs font-medium">
+          <input type="text" id="subHeader" placeholder="Jilid 1 | Kelas I SD | Satu Pertemuan" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded font-medium">
         </div>
         <div class="grid grid-cols-2 gap-2">
           <div>
             <label class="block text-xs font-medium text-slate-600">Kelas / Fase</label>
-            <input type="text" id="kelasFase" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs">
+            <input type="text" id="kelasFase" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded">
           </div>
           <div>
             <label class="block text-xs font-medium text-slate-600">Tahun Pelajaran</label>
-            <input type="text" id="tp" value="2025–2026" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs">
+            <input type="text" id="tp" value="2025–2026" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded">
           </div>
         </div>
         <div class="grid grid-cols-2 gap-2">
           <div>
             <label class="block text-xs font-medium text-slate-600">Alokasi Waktu</label>
-            <input type="text" id="alokasiWaktu" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs">
+            <input type="text" id="alokasiWaktu" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded">
           </div>
           <div>
             <label class="block text-xs font-medium text-slate-600">Jumlah Peserta</label>
-            <input type="text" id="jumlahPeserta" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs">
+            <input type="text" id="jumlahPeserta" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded">
           </div>
         </div>
         <div>
           <label class="block text-xs font-medium text-slate-600">Sarana & Prasarana</label>
-          <input type="text" id="sarana" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs">
+          <input type="text" id="sarana" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded">
         </div>
       </div>
 
@@ -162,48 +187,48 @@
       <div class="space-y-2 border-t pt-3">
         <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian II. Capaian & Target</h3>
         
-        <div class="bg-slate-50 p-2 rounded border border-slate-200 space-y-1">
+        <div class="bg-slate-50 p-2.5 rounded border border-slate-200 space-y-1">
           <span class="text-xs font-semibold text-slate-700">1. Adab dan Santun</span>
-          <textarea id="capaianAdab" oninput="updatePreviewFromForm()" rows="2" class="w-full p-1.5 border rounded text-xs"></textarea>
-          <input type="text" id="targetAdab" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs" placeholder="Target Pertemuan Ini">
+          <textarea id="capaianAdab" oninput="updatePreviewFromForm()" rows="3" class="w-full p-2 border rounded"></textarea>
+          <input type="text" id="targetAdab" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded" placeholder="Target Pertemuan Ini">
         </div>
 
-        <div class="bg-slate-50 p-2 rounded border border-slate-200 space-y-1">
+        <div class="bg-slate-50 p-2.5 rounded border border-slate-200 space-y-1">
           <span class="text-xs font-semibold text-slate-700">2. Hafalan</span>
-          <textarea id="capaianHafalan" oninput="updatePreviewFromForm()" rows="2" class="w-full p-1.5 border rounded text-xs"></textarea>
-          <input type="text" id="targetHafalan" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs" placeholder="Target Pertemuan Ini">
+          <textarea id="capaianHafalan" oninput="updatePreviewFromForm()" rows="2" class="w-full p-2 border rounded"></textarea>
+          <input type="text" id="targetHafalan" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded" placeholder="Target Pertemuan Ini">
         </div>
 
-        <div class="bg-slate-50 p-2 rounded border border-slate-200 space-y-1">
+        <div class="bg-slate-50 p-2.5 rounded border border-slate-200 space-y-1">
           <span class="text-xs font-semibold text-slate-700" id="labelMakna">3. Pemahaman Makna</span>
-          <textarea id="capaianMakna" oninput="updatePreviewFromForm()" rows="2" class="w-full p-1.5 border rounded text-xs"></textarea>
-          <input type="text" id="targetMakna" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs" placeholder="Target Pertemuan Ini">
+          <textarea id="capaianMakna" oninput="updatePreviewFromForm()" rows="2" class="w-full p-2 border rounded"></textarea>
+          <input type="text" id="targetMakna" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded" placeholder="Target Pertemuan Ini">
         </div>
 
-        <div class="bg-slate-50 p-2 rounded border border-slate-200 space-y-1">
+        <div class="bg-slate-50 p-2.5 rounded border border-slate-200 space-y-1">
           <span class="text-xs font-semibold text-slate-700" id="labelMateriUtama">4. Bacaan / Tajwid</span>
-          <textarea id="capaianUtama" oninput="updatePreviewFromForm()" rows="2" class="w-full p-1.5 border rounded text-xs"></textarea>
-          <input type="text" id="targetMateriUtama" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs" placeholder="Target Pertemuan Ini">
+          <textarea id="capaianUtama" oninput="updatePreviewFromForm()" rows="2" class="w-full p-2 border rounded"></textarea>
+          <input type="text" id="targetMateriUtama" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded" placeholder="Target Pertemuan Ini">
         </div>
       </div>
 
       <!-- BAGIAN III: PROFIL PELAJAR IWR -->
       <div class="space-y-2 border-t pt-3">
         <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian III. Profil Pelajar IWR</h3>
-        <input type="text" id="profil1" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs">
-        <input type="text" id="profil2" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs">
+        <input type="text" id="profil1" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded">
+        <input type="text" id="profil2" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded">
       </div>
 
       <!-- BAGIAN IV: 7 LANGKAH PEMBELAJARAN -->
       <div class="space-y-3 border-t pt-3">
         <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian IV. Langkah Pembelajaran (7 Langkah)</h3>
-        <div id="formLangkahContainer" class="space-y-2"></div>
+        <div id="formLangkahContainer" class="space-y-3"></div>
       </div>
 
       <!-- BAGIAN V: PENILAIAN -->
       <div class="space-y-3 border-t pt-3">
         <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian V. Penilaian</h3>
-        <div id="formPenilaianContainer" class="space-y-2"></div>
+        <div id="formPenilaianContainer" class="space-y-3"></div>
       </div>
 
       <!-- BAGIAN VI: TANDA TANGAN -->
@@ -211,22 +236,22 @@
         <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian VI. Tanda Tangan & Pengesahan</h3>
         <div>
           <label class="block text-xs font-medium text-slate-600">Kota & Tanggal RPH</label>
-          <input type="text" id="kotaTanggal" value="Bandar Lampung, 10 Oktober 2026" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs">
+          <input type="text" id="kotaTanggal" value="Bandar Lampung, 10 Oktober 2026" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded">
         </div>
         <div>
           <label class="block text-xs font-medium text-slate-600">Nama Kepala Sekolah</label>
-          <input type="text" id="namaKepalaSekolah" placeholder="Nama Kepala Sekolah, S.Pd." oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs">
+          <input type="text" id="namaKepalaSekolah" placeholder="Nama Kepala Sekolah, S.Pd." oninput="updatePreviewFromForm()" class="w-full p-2 border rounded">
         </div>
         <div>
           <label class="block text-xs font-medium text-slate-600">Nama Guru Al-Qur'an</label>
-          <input type="text" id="namaGuru" placeholder="Nama Guru Al-Qur'an, S.Pd.I" oninput="updatePreviewFromForm()" class="w-full p-1.5 border rounded text-xs">
+          <input type="text" id="namaGuru" placeholder="Nama Guru Al-Qur'an, S.Pd.I" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded">
         </div>
       </div>
     </section>
 
     <!-- Pratinjau Dokumen (Kolom Kanan / Bawah) -->
     <section id="previewSection" class="lg:col-span-7 bg-white p-8 rounded-lg shadow border border-slate-200 print-area min-h-[88vh]">
-      <div id="documentContent" class="text-slate-900 leading-relaxed text-sm"></div>
+      <div id="documentContent" class="text-slate-900 leading-relaxed"></div>
     </section>
 
   </main>
@@ -413,6 +438,20 @@
 
     let currentData = {};
     let logoDataUrl = "";
+    let baseFontSize = 14;
+
+    // Fitur Pengatur Ukuran Teks (Ramah Lansia)
+    function adjustTextSize(delta) {
+      baseFontSize = Math.max(12, Math.min(22, baseFontSize + delta));
+      document.documentElement.style.setProperty('--app-font-size', baseFontSize + 'px');
+      document.documentElement.style.setProperty('--input-font-size', (baseFontSize - 1) + 'px');
+    }
+
+    function resetTextSize() {
+      baseFontSize = 14;
+      document.documentElement.style.setProperty('--app-font-size', '14px');
+      document.documentElement.style.setProperty('--input-font-size', '13px');
+    }
 
     function setLayoutMode(mode) {
       const container = document.getElementById("mainContainer");
@@ -426,15 +465,15 @@
         form.className = "w-full bg-white p-5 rounded-lg shadow border border-slate-200 no-print space-y-4";
         preview.className = "w-full bg-white p-8 rounded-lg shadow border border-slate-200 print-area min-h-[88vh]";
         
-        btnStacked.className = "px-2.5 py-1 rounded bg-white text-emerald-900 shadow transition";
-        btnSide.className = "px-2.5 py-1 rounded text-emerald-100 hover:text-white transition";
+        btnStacked.className = "px-2 py-1 rounded bg-white text-emerald-900 shadow transition";
+        btnSide.className = "px-2 py-1 rounded text-emerald-100 hover:text-white transition";
       } else {
         container.className = "max-w-7xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6 my-2";
         form.className = "lg:col-span-5 bg-white p-5 rounded-lg shadow border border-slate-200 no-print space-y-4 max-h-[88vh] overflow-y-auto";
         preview.className = "lg:col-span-7 bg-white p-8 rounded-lg shadow border border-slate-200 print-area min-h-[88vh]";
         
-        btnSide.className = "px-2.5 py-1 rounded bg-white text-emerald-900 shadow transition";
-        btnStacked.className = "px-2.5 py-1 rounded text-emerald-100 hover:text-white transition";
+        btnSide.className = "px-2 py-1 rounded bg-white text-emerald-900 shadow transition";
+        btnStacked.className = "px-2 py-1 rounded text-emerald-100 hover:text-white transition";
       }
     }
 
@@ -533,7 +572,7 @@
       const jilidVal = document.getElementById("selectJilid").value;
       const dataAdab = adabDatabase.find(a => a.id === adabId);
 
-      // Membuat Sub-Header Otomatis (Format persis seperti sampel JSIT)
+      // Sub-Header Otomatis
       let subHeaderAuto = "";
       if (jenjang === "SD" && kelasKey === "SD_1") {
         subHeaderAuto = `${jilidVal}  |  ${dataKelas.namaKelas.split(' / ')[0]} SD  |  Satu Pertemuan`;
@@ -552,20 +591,20 @@
         alokasiWaktu: dataKelas.alokasi,
         model: dataKelas.model,
         jumlahPeserta: dataKelas.kapasitas,
-        sarana: "Ruang kelas/musala, mushaf Al-Qur'an/buku jilid, papan tulis, buku mutaba'ah",
+        sarana: "Ruang kelas, papan tulis, buku jilid IWR",
         targetPeserta: `Peserta didik reguler ${dataKelas.namaKelas}`,
         
-        capaianAdab: `Terbiasa menerapkan adab terhadap Al-Qur'an dan sesama sesuai target tingkatan ${dataKelas.namaKelas}.`,
-        targetAdab: `Peserta didik mempraktikkan secara langsung: ${dataAdab.desc}`,
+        capaianAdab: `1. Belajar membiasakan diri mengulang pelajaran bacaan jilid dan hafalan di rumah dengan bimbingan orang tua.\n2.1. Belajar membiasakan diri membawa dan meletakkan Al-Qur'an dengan benar, yaitu membawanya di dada dengan tangan kanan dan meletakkannya di tempat yang lebih tinggi (bukan di lantai).`,
+        targetAdab: `Peserta didik menyampaikan pelaksanaan jadwal mengulang di rumah serta mempraktikkan cara membawa Al-Qur'an atau buku jilid dengan benar.`,
         
-        capaianHafalan: dataKelas.hafalanCP,
-        targetHafalan: `Peserta didik menghafal ${targetHafalanVal} dengan lancar dan makhraj yang benar.`,
+        capaianHafalan: `Peserta didik mampu menghafal ${targetHafalanVal} dengan baik dan benar.`,
+        targetHafalan: `Peserta didik menirukan dan mulai menghafal ${targetHafalanVal}.`,
         
         capaianMakna: dataKelas.maknaCP,
-        targetMakna: `Peserta didik memahami kandungan/terjemahan ringkas dari ${targetHafalanVal}.`,
+        targetMakna: `Peserta didik menyebutkan arti dan jumlah ayat dari ${targetHafalanVal}.`,
         
         capaianUtama: dataKelas.bacaanCP,
-        targetUtama: `Peserta didik menguasai dan melafalkan ${targetMateriVal} sesuai kaidah tajwid.`,
+        targetUtama: `Peserta didik melafalkan bunyi bacaan ${targetMateriVal} dengan tepat.`,
         
         labelMakna: jenjang === "SD" && kelasKey === "SD_1" ? "Kandungan Surat" : "Pemahaman Makna",
         aspekUtama: jenjang === "SD" && kelasKey === "SD_1" ? "Materi Jilid" : "Tilawah dan Tajwid",
@@ -579,47 +618,54 @@
 
         langkah: [
           {
-            nama: "Langkah 1: Pembukaan",
+            nama: "Langkah 1",
+            subnama: "Pembukaan",
             waktu: jenjang === "SD" ? "4 menit" : "5 menit",
-            isi: "1. Pendidik mengucapkan salam dan menanyakan kabar peserta didik.\n2. Pendidik memastikan kesiapan tempat serta perlengkapan belajar peserta didik.\n3. Pendidik memimpin bacaan syahadat, selawat, Surah Al-Fatihah, dan Doa Penawar Hati bersama-sama.\n4. Pendidik memimpin ice breaking tebak ayat/sambung ayat untuk mencairkan suasana."
+            isi: "1. Pendidik mengucapkan salam dan menanyakan kabar peserta didik.\n2. Pendidik memimpin bacaan syahadat dan selawat bersama-sama.\n3. Pendidik dan peserta didik membaca Surah Al-Fatihah dan Doa Penawar Hati bersama-sama.\n4. Pendidik melaksanakan ice breaking: pendidik membacakan penggalan ayat pendek, lalu peserta didik melanjutkannya (tebak/lanjut ayat)."
           },
           {
-            nama: "Langkah 2: Adab dan Santun",
+            nama: "Langkah 2",
+            subnama: "Adab dan Santun",
             waktu: "5 menit",
-            isi: `1. Pendidik memeriksa pelaksanaan mutaba'ah dan jadwal mengulang harian peserta didik.\n2. Pendidik memberikan pemahaman dan mencontohkan adab: ${dataAdab.desc}.\n3. Peserta didik mempraktikkan adab tersebut secara mandiri dan berkelompok.\n4. Pendidik memberikan apresiasi dan mencatat perkembangan sikap peserta didik pada jurnal.`
+            isi: `1. Pendidik menanyakan kepada peserta didik apakah di rumah sudah mengulang hafalan dan materi jilid sesuai jadwal yang telah dibuat.\n2. Pendidik mencontohkan cara membawa Al-Qur'an atau buku jilid dengan benar: dibawa dengan tangan kanan, didekap di dada, dan disimpan di tempat yang tinggi. Peserta didik menirukannya.\n3. Pendidik menjelaskan secara sederhana alasan Al-Qur'an harus dimuliakan, yaitu karena Al-Qur'an adalah kalam Allah.\n4. Pendidik menunjuk sebagian peserta didik untuk mempraktikkan cara membawa Al-Qur'an atau buku jilidnya.\n5. Pendidik meminta setiap kelompok untuk mempraktikkan cara membawa Al-Qur'an atau buku jilidnya secara bergantian.\n6. Pendidik meminta seluruh peserta didik mempraktikkan cara membawa Al-Qur'an bersama-sama.\n7. Peserta didik mempraktikkan cara membawa Al-Qur'an satu per satu sesuai contoh yang diberikan.`
           },
           {
-            nama: "Langkah 3: Energizer",
+            nama: "Langkah 3",
+            subnama: "Energizer",
             waktu: "2 menit",
-            isi: "1. Pendidik memimpin Tepuk IWR dan Yel-Yel IWR secara bersama-sama.\n2. Pendidik memotivasi dan mengondisikan kembali fokus serta semangat peserta didik."
+            isi: "1. Pendidik memimpin Tepuk IWR bersama-sama.\n2. Pendidik memimpin Yel-Yel IWR untuk menyegarkan semangat peserta didik."
           },
           {
-            nama: "Langkah 4: Hafalan",
+            nama: "Langkah 4",
+            subnama: "Hafalan",
             waktu: jenjang === "SD" ? "10 menit" : "15 menit",
-            isi: `1. Peserta didik mengulang (muroja'ah) hafalan sebelumnya secara bersama-sama.\n2. Pendidik mencontohkan bacaan ${targetHafalanVal} secara tartil menggunakan metode talaqqi.\n3. Pendidik menjelaskan arti nama surat dan pesan pokok kandungan ayat secara ringkas.\n4. Peserta didik menirukan dan membaca target hafalan secara berkelompok dan bergantian.\n5. Peserta didik menyetorkan hafalan (tasmi') satu per satu disimak oleh pendidik.`
+            isi: `1. Peserta didik membaca ${targetHafalanVal} bersama-sama sebagai pengulangan.\n2. Pendidik membacakan ${targetHafalanVal} dengan tartil, lalu peserta didik menirukannya.\n3. Pendidik menjelaskan arti nama surat dan makna ayat secara sederhana.\n4. Pendidik menunjuk sebagian peserta didik untuk membaca ${targetHafalanVal}.\n5. Peserta didik membaca ${targetHafalanVal} secara berkelompok dan bergantian.\n6. Seluruh peserta didik membaca bersama-sama.\n7. Peserta didik membaca satu per satu. Pendidik menyimak dan mencatat perkembangan hafalan.`
           },
           {
-            nama: "Langkah 5: Energizer",
+            nama: "Langkah 5",
+            subnama: "Energizer",
             waktu: "2 menit",
-            isi: "1. Pendidik memimpin peregangan tubuh singkat dan Yel-Yel IWR.\n2. Pendidik mengondisikan kembali konsentrasi peserta didik sebelum masuk materi utama."
+            isi: "1. Pendidik mengondisikan kembali peserta didik dengan Tepuk IWR dan Yel-Yel IWR sebelum masuk materi jilid."
           },
           {
-            nama: "Langkah 6: " + (jenjang === "SD" && kelasKey === "SD_1" ? "Materi Jilid" : "Tilawah & Tajwid"),
+            nama: "Langkah 6",
+            subnama: (jenjang === "SD" && kelasKey === "SD_1" ? "Materi Jilid" : "Tilawah & Tajwid"),
             waktu: jenjang === "SD" ? "9 menit" : "15 menit",
-            isi: `1. Peserta didik membaca bersama materi pengulangan halaman/ayat sebelumnya.\n2. Pendidik memperagakan dan mencontohkan bacaan pokok ${targetMateriVal} secara fasih.\n3. Pendidik menjelaskan kaidah tajwid / kata kunci utama pada materi tersebut.\n4. Peserta didik berlatih membaca secara berkelompok dan bergantian.\n5. Pendidik menyimak dan menilai bacaan peserta didik secara individual.`
+            isi: `1. Peserta didik membaca bersama-sama ${targetMateriVal} sebagai pengulangan.\n2. Pendidik mencontohkan bunyi bacaan pokok sebanyak tiga kali dan diikuti.\n3. Pendidik menjelaskan pokok materi pada kata kunci alat peraga.\n4. Pendidik menunjuk peserta didik untuk membaca bacaan sesuai yang ditunjuk.\n5. Pendidik membagi peserta didik menjadi kelompok untuk membaca dua baris secara bergantian.\n6. Seluruh peserta didik membaca bersama-sama satu halaman penuh.\n7. Pendidik menilai bacaan peserta didik satu per satu secara bergantian.`
           },
           {
-            nama: "Langkah 7: Penutup",
+            nama: "Langkah 7",
+            subnama: "Penutup",
             waktu: jenjang === "SD" ? "3 menit" : "5 menit",
-            isi: "1. Peserta didik membaca bersama target hafalan dan materi pokok sebagai simpulan.\n2. Pendidik mengarahkan peserta didik untuk menyusun jadwal mengulang di rumah bersama orang tua.\n3. Pendidik dan peserta didik membaca doa kaffaratul majlis bersama-sama.\n4. Pendidik menutup pembelajaran dengan mengucapkan salam."
+            isi: "1. Peserta didik membaca bersama-sama target hafalan sebagai simpulan hafalan.\n2. Peserta didik membaca bersama-sama materi pokok jilid/tajwid sebagai simpulan materi.\n3. Pendidik mengarahkan peserta didik untuk membuat jadwal mengulang di rumah bersama orang tua.\n4. Peserta didik dan pendidik membaca doa kaffaratul majlis bersama-sama.\n5. Pendidik menutup pembelajaran dengan salam."
           }
         ],
 
         penilaian: [
-          { aspek: "Adab dan Santun", teknik: "Observasi langsung", instrumen: `Jurnal sikap & buku mutaba'ah harian terkait: ${dataAdab.label}` },
-          { aspek: "Hafalan", teknik: "Tes lisan (talaqqi/tasmi')", instrumen: `Rubrik hafalan: kelancaran, makharijul huruf, dan tajwid pada ${targetHafalanVal}` },
-          { aspek: jenjang === "SD" && kelasKey === "SD_1" ? "Kandungan Surat" : "Pemahaman Makna", teknik: "Tanya jawab lisan", instrumen: `Tanya jawab pemahaman pesan utama pada ${targetHafalanVal}` },
-          { aspek: jenjang === "SD" && kelasKey === "SD_1" ? "Materi Jilid" : "Tilawah dan Tajwid", teknik: "Tes lisan individual", instrumen: `Penilaian kelancaran & penerapan tajwid pada materi: ${targetMateriVal}` }
+          { aspek: "Adab dan Santun", teknik: "Observasi langsung", instrumen: `Buku prestasi capaian santun yang diisi oleh peserta didik setiap akhir pekan.` },
+          { aspek: "Hafalan", teknik: "Tes lisan (talaqqi)", instrumen: `Peserta didik membaca ${targetHafalanVal} satu per satu. Pendidik menilai kelancaran dan kefasihan bacaan.` },
+          { aspek: jenjang === "SD" && kelasKey === "SD_1" ? "Kandungan Surat" : "Pemahaman Makna", teknik: "Tanya jawab lisan", instrumen: `Peserta didik menjawab pertanyaan tentang arti nama surat dan jumlah ayatnya.` },
+          { aspek: jenjang === "SD" && kelasKey === "SD_1" ? "Materi Jilid" : "Tilawah dan Tajwid", teknik: "Tes lisan individual", instrumen: `Pendidik menilai bacaan peserta didik secara bergantian, sebanyak 3–5 peserta didik per pertemuan.` }
         ]
       };
 
@@ -653,13 +699,13 @@
 
       currentData.langkah.forEach((step, idx) => {
         const div = document.createElement("div");
-        div.className = "bg-slate-50 p-2 rounded border border-slate-200 space-y-1 text-xs";
+        div.className = "bg-slate-50 p-2.5 rounded border border-slate-200 space-y-1.5";
         div.innerHTML = `
           <div class="flex justify-between items-center font-bold text-slate-700">
-            <input type="text" value="${step.nama}" oninput="currentData.langkah[${idx}].nama=this.value; renderPreview();" class="p-1 border rounded text-xs w-2/3 bg-white">
-            <input type="text" value="${step.waktu}" oninput="currentData.langkah[${idx}].waktu=this.value; renderPreview();" class="p-1 border rounded text-xs w-1/4 text-right bg-white">
+            <span>${step.nama} - ${step.subnama}</span>
+            <input type="text" value="${step.waktu}" oninput="currentData.langkah[${idx}].waktu=this.value; renderPreview();" class="p-1 border rounded text-xs w-1/4 text-right bg-white font-medium">
           </div>
-          <textarea rows="4" oninput="currentData.langkah[${idx}].isi=this.value; renderPreview();" class="w-full p-1.5 border rounded text-xs bg-white font-mono">${step.isi}</textarea>
+          <textarea rows="5" oninput="currentData.langkah[${idx}].isi=this.value; renderPreview();" class="w-full p-2 border rounded bg-white font-mono text-xs leading-relaxed">${step.isi}</textarea>
         `;
         container.appendChild(div);
       });
@@ -671,11 +717,11 @@
 
       currentData.penilaian.forEach((p, idx) => {
         const div = document.createElement("div");
-        div.className = "bg-slate-50 p-2 rounded border border-slate-200 space-y-1 text-xs";
+        div.className = "bg-slate-50 p-2.5 rounded border border-slate-200 space-y-1.5";
         div.innerHTML = `
           <span class="font-bold text-slate-700">${p.aspek}</span>
-          <input type="text" value="${p.teknik}" oninput="currentData.penilaian[${idx}].teknik=this.value; renderPreview();" class="w-full p-1 border rounded text-xs bg-white">
-          <textarea rows="2" oninput="currentData.penilaian[${idx}].instrumen=this.value; renderPreview();" class="w-full p-1.5 border rounded text-xs bg-white">${p.instrumen}</textarea>
+          <input type="text" value="${p.teknik}" oninput="currentData.penilaian[${idx}].teknik=this.value; renderPreview();" class="w-full p-1.5 border rounded bg-white font-medium">
+          <textarea rows="2" oninput="currentData.penilaian[${idx}].instrumen=this.value; renderPreview();" class="w-full p-2 border rounded bg-white">${p.instrumen}</textarea>
         `;
         container.appendChild(div);
       });
@@ -714,47 +760,56 @@
       if (!currentData.judulModul) return;
 
       const html = `
-        <div style="display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 12px; border-bottom: 2px solid #000; padding-bottom: 10px;">
-          ${logoDataUrl ? `<img src="${logoDataUrl}" style="max-height: 65px; max-width: 90px; object-fit: contain;">` : ''}
+        <!-- Header Dokumen dengan Logo JSIT Lampung di Kiri & Logo Sekolah di Kanan -->
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 12px; border-bottom: 2px solid #000; padding-bottom: 10px;">
+          <!-- Logo JSIT Wilayah Lampung (Sebelah Kiri) -->
+          <img src="https://lh3.googleusercontent.com/d/1NYK166dwtbJFMNeNznw7EM3QCoHpRDEH" style="max-height: 70px; max-width: 95px; object-fit: contain;">
+          
+          <!-- Judul & Keterangan Tengah -->
           <div style="text-align: center; font-weight: bold; flex-grow: 1;">
             <div style="font-size: 14pt; text-transform: uppercase;">RENCANA PENGAJARAN HARIAN</div>
             <div style="font-size: 12pt; text-transform: uppercase;">MBQ ‘ILMAN WA RUUHAN (IWR)</div>
-            ${currentData.subHeader ? `<div style="font-size: 10.5pt; color: #15803d; font-weight: bold; margin-top: 3px;">${currentData.subHeader}</div>` : ''}
+            ${currentData.subHeader ? `<div style="font-size: 11pt; color: #15803d; font-weight: bold; margin-top: 3px;">${currentData.subHeader}</div>` : ''}
             <div style="font-size: 9pt; font-weight: normal; margin-top: 3px;">
               Badan Pengembangan Pendidikan Al-Qur’an – Jaringan Sekolah Islam Terpadu (JSIT) Indonesia &nbsp;|&nbsp; TP. ${currentData.tp}
             </div>
           </div>
+
+          <!-- Logo Sekolah (Sebelah Kanan, jika diunggah) -->
+          <div style="width: 95px; text-align: right;">
+            ${logoDataUrl ? `<img src="${logoDataUrl}" style="max-height: 70px; max-width: 95px; object-fit: contain; margin-left: auto;">` : ''}
+          </div>
         </div>
 
-        <!-- Bagian I -->
-        <h3 style="font-weight: bold; font-size: 10.5pt; margin-top: 8px; margin-bottom: 4px; color: #166534;">Bagian I. Identitas RPH</h3>
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 9.5pt;" border="1" cellpadding="4">
-          <tr style="background-color: #f8fafc;">
-            <th style="width: 30%; text-align: left; border: 1px solid #cbd5e1;">Komponen</th>
-            <th style="text-align: left; border: 1px solid #cbd5e1;">Keterangan</th>
+        <!-- Bagian I. Identitas RPH -->
+        <h3 style="font-weight: bold; font-size: 10.5pt; margin-top: 10px; margin-bottom: 4px; color: #166534;">Bagian I. Identitas RPH</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 9.5pt;" border="1" cellpadding="5">
+          <tr style="background-color: #f8fafc; font-weight: bold;">
+            <th style="width: 30%; text-align: left; border: 1px solid #cbd5e1; background-color: #f1f5f9;">Komponen</th>
+            <th style="text-align: left; border: 1px solid #cbd5e1; background-color: #f1f5f9;">Keterangan</th>
           </tr>
-          <tr><td style="border: 1px solid #cbd5e1;">Satuan Pendidikan</td><td style="border: 1px solid #cbd5e1; font-weight: bold;">${currentData.satuanPendidikan}</td></tr>
-          <tr><td style="border: 1px solid #cbd5e1;">Judul Modul Ajar</td><td style="border: 1px solid #cbd5e1;">${currentData.judulModul}</td></tr>
-          <tr><td style="border: 1px solid #cbd5e1;">Mata Pelajaran</td><td style="border: 1px solid #cbd5e1;">Al-Qur'an</td></tr>
-          <tr><td style="border: 1px solid #cbd5e1;">Kelas / Jenjang</td><td style="border: 1px solid #cbd5e1;">${currentData.kelasFase}</td></tr>
-          <tr><td style="border: 1px solid #cbd5e1;">Alokasi Waktu</td><td style="border: 1px solid #cbd5e1;">${currentData.alokasiWaktu}</td></tr>
-          <tr><td style="border: 1px solid #cbd5e1;">Model Pembelajaran</td><td style="border: 1px solid #cbd5e1;">${currentData.model}</td></tr>
-          <tr><td style="border: 1px solid #cbd5e1;">Jumlah Peserta Didik</td><td style="border: 1px solid #cbd5e1;">${currentData.jumlahPeserta}</td></tr>
-          <tr><td style="border: 1px solid #cbd5e1;">Sarana dan Prasarana</td><td style="border: 1px solid #cbd5e1;">${currentData.sarana}</td></tr>
-          <tr><td style="border: 1px solid #cbd5e1;">Target Peserta Didik</td><td style="border: 1px solid #cbd5e1;">${currentData.targetPeserta}</td></tr>
+          <tr><td style="border: 1px solid #cbd5e1; font-weight: bold;">Satuan Pendidikan</td><td style="border: 1px solid #cbd5e1; font-weight: bold; color: #166534;">${currentData.satuanPendidikan}</td></tr>
+          <tr><td style="border: 1px solid #cbd5e1; font-weight: bold;">Judul Modul Ajar</td><td style="border: 1px solid #cbd5e1;">${currentData.judulModul}</td></tr>
+          <tr><td style="border: 1px solid #cbd5e1; font-weight: bold;">Mata Pelajaran</td><td style="border: 1px solid #cbd5e1;">Al-Qur'an</td></tr>
+          <tr><td style="border: 1px solid #cbd5e1; font-weight: bold;">Kelas / Jenjang</td><td style="border: 1px solid #cbd5e1;">${currentData.kelasFase}</td></tr>
+          <tr><td style="border: 1px solid #cbd5e1; font-weight: bold;">Alokasi Waktu</td><td style="border: 1px solid #cbd5e1;">${currentData.alokasiWaktu}</td></tr>
+          <tr><td style="border: 1px solid #cbd5e1; font-weight: bold;">Model Pembelajaran</td><td style="border: 1px solid #cbd5e1;">${currentData.model}</td></tr>
+          <tr><td style="border: 1px solid #cbd5e1; font-weight: bold;">Jumlah Peserta Didik</td><td style="border: 1px solid #cbd5e1;">${currentData.jumlahPeserta}</td></tr>
+          <tr><td style="border: 1px solid #cbd5e1; font-weight: bold;">Sarana dan Prasarana</td><td style="border: 1px solid #cbd5e1;">${currentData.sarana}</td></tr>
+          <tr><td style="border: 1px solid #cbd5e1; font-weight: bold;">Target Peserta Didik</td><td style="border: 1px solid #cbd5e1;">${currentData.targetPeserta}</td></tr>
         </table>
 
-        <!-- Bagian II -->
-        <h3 style="font-weight: bold; font-size: 10.5pt; margin-top: 10px; margin-bottom: 4px; color: #166534;">Bagian II. Capaian Pembelajaran</h3>
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 9.5pt;" border="1" cellpadding="4">
-          <tr style="background-color: #f8fafc;">
-            <th style="width: 25%; text-align: left; border: 1px solid #cbd5e1;">Aspek</th>
-            <th style="width: 40%; text-align: left; border: 1px solid #cbd5e1;">Capaian Pembelajaran</th>
+        <!-- Bagian II. Capaian Pembelajaran -->
+        <h3 style="font-weight: bold; font-size: 10.5pt; margin-top: 12px; margin-bottom: 4px; color: #166534;">Bagian II. Capaian Pembelajaran</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 9.5pt;" border="1" cellpadding="5">
+          <tr style="background-color: #f1f5f9; font-weight: bold;">
+            <th style="width: 22%; text-align: left; border: 1px solid #cbd5e1;">Aspek</th>
+            <th style="width: 43%; text-align: left; border: 1px solid #cbd5e1;">Capaian Pembelajaran</th>
             <th style="text-align: left; border: 1px solid #cbd5e1;">Target Pertemuan Ini</th>
           </tr>
           <tr>
             <td style="border: 1px solid #cbd5e1; font-weight: bold;">Adab dan Santun</td>
-            <td style="border: 1px solid #cbd5e1; whitespace: pre-line;">${currentData.capaianAdab}</td>
+            <td style="border: 1px solid #cbd5e1; white-space: pre-line;">${currentData.capaianAdab}</td>
             <td style="border: 1px solid #cbd5e1;">${currentData.targetAdab}</td>
           </tr>
           <tr>
@@ -774,35 +829,35 @@
           </tr>
         </table>
 
-        <!-- Bagian III -->
-        <h3 style="font-weight: bold; font-size: 10.5pt; margin-top: 10px; margin-bottom: 4px; color: #166534;">Bagian III. Profil Pelajar IWR</h3>
-        <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 8px; text-align: center; border-radius: 4px; font-weight: bold; margin-bottom: 12px; font-size: 9pt;">
+        <!-- Bagian III. Profil Pelajar IWR -->
+        <h3 style="font-weight: bold; font-size: 10.5pt; margin-top: 12px; margin-bottom: 4px; color: #166534;">Bagian III. Profil Pelajar IWR</h3>
+        <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 9px; text-align: center; border-radius: 4px; font-weight: bold; margin-bottom: 14px; font-size: 9.5pt; color: #166534;">
           ${currentData.profil1}<br>
-          ${currentData.profil2}
+          <span style="color: #047857;">${currentData.profil2}</span>
         </div>
 
-        <!-- Bagian IV -->
-        <h3 style="font-weight: bold; font-size: 10.5pt; margin-top: 10px; margin-bottom: 4px; color: #166534;">Bagian IV. Langkah-Langkah Pembelajaran (7 Langkah)</h3>
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 9.5pt;" border="1" cellpadding="4">
-          <tr style="background-color: #f8fafc;">
-            <th style="width: 28%; text-align: left; border: 1px solid #cbd5e1;">Langkah & Durasi</th>
+        <!-- Bagian IV. Langkah-Langkah Pembelajaran -->
+        <h3 style="font-weight: bold; font-size: 10.5pt; margin-top: 12px; margin-bottom: 4px; color: #166534;">Bagian IV. Langkah-Langkah Pembelajaran (7 Langkah)</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 9.5pt;" border="1" cellpadding="5">
+          <tr style="background-color: #f1f5f9; font-weight: bold;">
+            <th style="width: 25%; text-align: left; border: 1px solid #cbd5e1;">Langkah & Durasi</th>
             <th style="text-align: left; border: 1px solid #cbd5e1;">Aktivitas Pembelajaran</th>
           </tr>
           ${currentData.langkah.map(step => `
             <tr>
-              <td style="border: 1px solid #cbd5e1; font-weight: bold; vertical-align: top;">
-                ${step.nama}<br><span style="font-weight: normal; font-size: 8.5pt; color: #475569;">(${step.waktu})</span>
+              <td style="border: 1px solid #cbd5e1; font-weight: bold; vertical-align: top; background-color: #fafafa;">
+                ${step.nama}<br>${step.subnama}<br><span style="font-weight: normal; font-size: 8.5pt; color: #475569;">${step.waktu}</span>
               </td>
-              <td style="border: 1px solid #cbd5e1; vertical-align: top; white-space: pre-line;">${step.isi}</td>
+              <td style="border: 1px solid #cbd5e1; vertical-align: top; white-space: pre-line; line-height: 1.6;">${step.isi}</td>
             </tr>
           `).join('')}
         </table>
 
-        <!-- Bagian V -->
-        <h3 style="font-weight: bold; font-size: 10.5pt; margin-top: 10px; margin-bottom: 4px; color: #166534;">Bagian V. Penilaian</h3>
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 9.5pt;" border="1" cellpadding="4">
-          <tr style="background-color: #f8fafc;">
-            <th style="width: 25%; text-align: left; border: 1px solid #cbd5e1;">Aspek</th>
+        <!-- Bagian V. Penilaian -->
+        <h3 style="font-weight: bold; font-size: 10.5pt; margin-top: 12px; margin-bottom: 4px; color: #166534;">Bagian V. Penilaian</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 9.5pt;" border="1" cellpadding="5">
+          <tr style="background-color: #f1f5f9; font-weight: bold;">
+            <th style="width: 22%; text-align: left; border: 1px solid #cbd5e1;">Aspek</th>
             <th style="width: 28%; text-align: left; border: 1px solid #cbd5e1;">Teknik Penilaian</th>
             <th style="text-align: left; border: 1px solid #cbd5e1;">Instrumen</th>
           </tr>
@@ -814,6 +869,10 @@
             </tr>
           `).join('')}
         </table>
+
+        <div style="font-size: 8.5pt; font-style: italic; color: #475569; margin-top: 6px; margin-bottom: 16px;">
+          Catatan: Durasi setiap langkah bersifat fleksibel dan dapat disesuaikan dengan kondisi serta tingkat fokus peserta didik di kelas. Pendidik diharapkan mengutamakan suasana belajar yang menyenangkan.
+        </div>
 
         <!-- Bagian VI: Blok Tanda Tangan -->
         <div style="margin-top: 25px; page-break-inside: avoid; font-size: 9.5pt;">
@@ -855,7 +914,7 @@
       document.body.removeChild(fileDownload);
     }
 
-    // Inisialisasi Otomatis
+    // Inisialisasi Otomatis Saat Dibuka
     window.onload = function() {
       onJenjangChange();
       generateRphOtomatis();
