@@ -46,12 +46,23 @@
         </div>
       </div>
 
-      <!-- Control Panel: Ukuran Teks (Ramah Lansia) & Layout -->
+      <!-- Control Panel Header -->
       <div class="flex flex-wrap items-center gap-2">
         
-        <!-- Pengatur Ukuran Font (A- / Normal / A+) -->
+        <!-- Fitur Export / Import JSON (Tahap 1) -->
+        <div class="bg-emerald-800 px-2 py-1 rounded-lg flex items-center gap-1 border border-emerald-600">
+          <button onclick="exportRphJson()" title="Simpan RPH Ke File JSON" class="bg-emerald-600 hover:bg-emerald-500 text-white px-2 py-1 rounded text-xs font-semibold flex items-center gap-1">
+            📥 Export JSON
+          </button>
+          <label class="bg-emerald-600 hover:bg-emerald-500 text-white px-2 py-1 rounded text-xs font-semibold cursor-pointer flex items-center gap-1">
+            📤 Import JSON
+            <input type="file" id="importJsonInput" accept=".json" onchange="importRphJson(event)" class="hidden">
+          </label>
+        </div>
+
+        <!-- Pengatur Ukuran Font (Ramah Lansia) -->
         <div class="bg-emerald-800 px-2.5 py-1 rounded-lg flex items-center gap-1 text-xs font-semibold border border-emerald-600">
-          <span class="text-emerald-200 mr-1">Ukuran Font:</span>
+          <span class="text-emerald-200 mr-1">Font:</span>
           <button onclick="adjustTextSize(-1)" title="Kecilkan Teks" class="bg-emerald-700 hover:bg-emerald-600 px-2 py-0.5 rounded font-bold">A-</button>
           <button onclick="resetTextSize()" title="Ukuran Normal" class="bg-emerald-700 hover:bg-emerald-600 px-2 py-0.5 rounded font-bold">100%</button>
           <button onclick="adjustTextSize(1)" title="Perbesar Teks" class="bg-emerald-700 hover:bg-emerald-600 px-2 py-0.5 rounded font-bold">A+</button>
@@ -80,12 +91,13 @@
   <!-- Kontainer Utama -->
   <main id="mainContainer" class="max-w-7xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6 my-2">
 
-    <!-- Form Input (Kolom Kiri / Atas) - Memiliki Handle Resize di Sudut Kanan Bawah -->
+    <!-- Form Input (Kolom Kiri / Atas) -->
     <section id="formSection" class="lg:col-span-5 bg-white p-6 rounded-lg shadow border border-slate-200 no-print space-y-5 h-[88vh] overflow-y-auto">
       
-      <!-- Petunjuk Singkat Resize -->
-      <div class="text-[11px] bg-amber-50 text-amber-800 p-2 rounded border border-amber-200 flex items-center justify-between">
-        <span>💡 <b>Tips:</b> Tarik ujung kanan-bawah area ini untuk memperpanjang/memperkecil formulir.</span>
+      <!-- Status LocalStorage (Auto-Save Profil) -->
+      <div class="text-xs bg-emerald-50 text-emerald-900 p-2.5 rounded border border-emerald-200 flex items-center justify-between">
+        <span id="storageStatusText">💾 Profil sekolah & guru tersimpan otomatis di browser ini.</span>
+        <button onclick="clearSavedProfile()" class="text-[11px] text-red-600 hover:underline ml-2">Reset</button>
       </div>
 
       <!-- Panel 1: Upload Logo Sekolah -->
@@ -473,6 +485,116 @@
     let logoDataUrl = "";
     let baseFontSize = 14;
 
+    /* FITUR TAHAP 1: LOCAL STORAGE & EXPORT/IMPORT JSON */
+    const STORAGE_KEY_PROFILE = "rph_iwr_saved_profile_2026";
+
+    function saveProfileToStorage() {
+      const profile = {
+        satuanPendidikan: document.getElementById("satuanPendidikan").value,
+        namaKepalaSekolah: document.getElementById("namaKepalaSekolah").value,
+        nipKepalaSekolah: document.getElementById("nipKepalaSekolah").value,
+        namaGuru: document.getElementById("namaGuru").value,
+        nipGuru: document.getElementById("nipGuru").value,
+        kotaTanggal: document.getElementById("kotaTanggal").value,
+        logoDataUrl: logoDataUrl
+      };
+      localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(profile));
+    }
+
+    function loadProfileFromStorage() {
+      const saved = localStorage.getItem(STORAGE_KEY_PROFILE);
+      if (saved) {
+        try {
+          const profile = JSON.parse(saved);
+          if (profile.satuanPendidikan) document.getElementById("satuanPendidikan").value = profile.satuanPendidikan;
+          if (profile.namaKepalaSekolah) document.getElementById("namaKepalaSekolah").value = profile.namaKepalaSekolah;
+          if (profile.nipKepalaSekolah) document.getElementById("nipKepalaSekolah").value = profile.nipKepalaSekolah;
+          if (profile.namaGuru) document.getElementById("namaGuru").value = profile.namaGuru;
+          if (profile.nipGuru) document.getElementById("nipGuru").value = profile.nipGuru;
+          if (profile.kotaTanggal) document.getElementById("kotaTanggal").value = profile.kotaTanggal;
+          if (profile.logoDataUrl) logoDataUrl = profile.logoDataUrl;
+        } catch(e) {
+          console.error("Gagal memuat profil:", e);
+        }
+      }
+    }
+
+    function clearSavedProfile() {
+      if (confirm("Apakah Anda yakin ingin menghapus profil identitas sekolah/guru tersimpan?")) {
+        localStorage.removeItem(STORAGE_KEY_PROFILE);
+        logoDataUrl = "";
+        document.getElementById("logoInput").value = "";
+        alert("Profil tersimpan berhasil dihapus.");
+        location.reload();
+      }
+    }
+
+    function exportRphJson() {
+      const exportObj = {
+        meta: "RPH_IWR_GENERATOR_JSIT_2026",
+        data: currentData,
+        logo: logoDataUrl
+      };
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `Template_RPH_${(currentData.judulModul || 'IWR').substring(0, 20)}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    function importRphJson(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (imported.data) {
+            currentData = imported.data;
+            if (imported.logo) logoDataUrl = imported.logo;
+
+            // Form inputs update
+            document.getElementById("satuanPendidikan").value = currentData.satuanPendidikan || "";
+            document.getElementById("judulModul").value = currentData.judulModul || "";
+            document.getElementById("subHeader").value = currentData.subHeader || "";
+            document.getElementById("kelasFase").value = currentData.kelasFase || "";
+            document.getElementById("alokasiWaktu").value = currentData.alokasiWaktu || "";
+            document.getElementById("jumlahPeserta").value = currentData.jumlahPeserta || "";
+            document.getElementById("sarana").value = currentData.sarana || "";
+
+            document.getElementById("capaianAdab").value = currentData.capaianAdab || "";
+            document.getElementById("targetAdab").value = currentData.targetAdab || "";
+            document.getElementById("capaianHafalan").value = currentData.capaianHafalan || "";
+            document.getElementById("targetHafalan").value = currentData.targetHafalan || "";
+            document.getElementById("capaianMakna").value = currentData.capaianMakna || "";
+            document.getElementById("targetMakna").value = currentData.targetMakna || "";
+            document.getElementById("capaianUtama").value = currentData.capaianUtama || "";
+            document.getElementById("targetMateriUtama").value = currentData.targetUtama || "";
+
+            document.getElementById("profil1").value = currentData.profil1 || "";
+            document.getElementById("profil2").value = currentData.profil2 || "";
+
+            document.getElementById("kotaTanggal").value = currentData.kotaTanggal || "";
+            document.getElementById("namaKepalaSekolah").value = currentData.namaKepalaSekolah || "";
+            document.getElementById("nipKepalaSekolah").value = currentData.nipKepalaSekolah || "";
+            document.getElementById("namaGuru").value = currentData.namaGuru || "";
+            document.getElementById("nipGuru").value = currentData.nipGuru || "";
+
+            renderFormLangkah();
+            renderFormPenilaian();
+            renderPreview();
+            alert("Template RPH berhasil di-import!");
+          }
+        } catch (err) {
+          alert("Gagal membaca berkas JSON. Pastikan format berkas sesuai.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
     function adjustTextSize(delta) {
       baseFontSize = Math.max(12, Math.min(22, baseFontSize + delta));
       document.documentElement.style.setProperty('--app-font-size', baseFontSize + 'px');
@@ -515,6 +637,7 @@
         const reader = new FileReader();
         reader.onload = function(e) {
           logoDataUrl = e.target.result;
+          saveProfileToStorage();
           renderPreview();
         };
         reader.readAsDataURL(file);
@@ -524,6 +647,7 @@
     function removeLogo() {
       logoDataUrl = "";
       document.getElementById("logoInput").value = "";
+      saveProfileToStorage();
       renderPreview();
     }
 
@@ -789,6 +913,7 @@
       currentData.namaGuru = document.getElementById("namaGuru").value;
       currentData.nipGuru = document.getElementById("nipGuru").value;
 
+      saveProfileToStorage(); // Menyimpan otomatis profil saat diketik
       renderPreview();
     }
 
@@ -964,6 +1089,7 @@
 
     // Inisialisasi Otomatis Saat Dibuka
     window.onload = function() {
+      loadProfileFromStorage();
       onJenjangChange();
       generateRphOtomatis();
     };
