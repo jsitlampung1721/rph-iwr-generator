@@ -469,14 +469,43 @@
         profil1: "Taat kepada Allah – Memuliakan Al-Qur’an – Beradab terhadap Sesama",
         profil2: "Bacaan sesuai Tajwid – Hafalan sesuai Target – Memahami Makna Surat dan Ayat",
 
+        // AKTIVITAS PEMBELAJARAN DISUSUN DALAM POIN-POIN BERNUMOR 1. 2. 3. DST
         langkah: [
-          { nama: "Langkah 1: Pembukaan", waktu: jenjang === "SD" ? "4 menit" : "5 menit", isi: "Pendidik mengucapkan salam, mengecek kesiapan peserta didik, memimpin bacaan syahadat, selawat, Al-Fatihah, dan Doa Penawar Hati bersama-sama, diselingi ice breaking tebak ayat." },
-          { nama: "Langkah 2: Adab dan Santun", waktu: "5 menit", isi: `Pendidik meninjau pelaksanaan mutaba'ah harian, lalu memberikan pemahaman dan contoh tentang: ${dataAdab.desc}. Peserta didik mempraktikkannya secara mandiri/berkelompok.` },
-          { nama: "Langkah 3: Energizer", waktu: "2 menit", isi: "Pendidik memimpin Tepuk IWR dan Yel-Yel IWR untuk menyegarkan konsentrasi dan semangat peserta didik." },
-          { nama: "Langkah 4: Hafalan", waktu: jenjang === "SD" ? "10 menit" : "15 menit", isi: `Muroja'ah hafalan sebelumnya. Pendidik memperagakan bacaan ${targetHafalanVal} dengan metode talaqqi. Peserta didik menirukan secara klasikal, kelompok, dan menyetorkan secara individual.` },
-          { nama: "Langkah 5: Energizer", waktu: "2 menit", isi: "Pengondisian peserta didik dengan peregangan singkat dan Yel-Yel IWR sebelum masuk materi bacaan utama." },
-          { nama: "Langkah 6: " + (jenjang === "SD" && kelasKey === "SD_1" ? "Materi Jilid" : "Tilawah & Tajwid"), waktu: jenjang === "SD" ? "9 menit" : "15 menit", isi: `Membaca bersama materi pengulangan. Pendidik menjelaskan kaidah pokok ${targetMateriVal}. Peserta didik berlatih membaca berkelompok dan dinilai satu per satu secara bergantian.` },
-          { nama: "Langkah 7: Penutup", waktu: jenjang === "SD" ? "3 menit" : "5 menit", isi: "Simpulan materi hafalan dan bacaan hari ini, pengarahan jadwal mengulang di rumah bersama orang tua, pembacaan doa kaffaratul majlis, dan salam penutup." }
+          {
+            nama: "Langkah 1: Pembukaan",
+            waktu: jenjang === "SD" ? "4 menit" : "5 menit",
+            isi: "1. Pendidik mengucapkan salam dan menanyakan kabar peserta didik.\n2. Pendidik memastikan kesiapan tempat serta perlengkapan belajar peserta didik.\n3. Pendidik memimpin bacaan syahadat, selawat, Surah Al-Fatihah, dan Doa Penawar Hati bersama-sama.\n4. Pendidik memimpin ice breaking tebak ayat/sambung ayat untuk mencairkan suasana."
+          },
+          {
+            nama: "Langkah 2: Adab dan Santun",
+            waktu: "5 menit",
+            isi: `1. Pendidik memeriksa pelaksanaan mutaba'ah dan jadwal mengulang harian peserta didik.\n2. Pendidik memberikan pemahaman dan mencontohkan adab: ${dataAdab.desc}.\n3. Peserta didik mempraktikkan adab tersebut secara mandiri dan berkelompok.\n4. Pendidik memberikan apresiasi dan mencatat perkembangan sikap peserta didik pada jurnal.`
+          },
+          {
+            nama: "Langkah 3: Energizer",
+            waktu: "2 menit",
+            isi: "1. Pendidik memimpin Tepuk IWR dan Yel-Yel IWR secara bersama-sama.\n2. Pendidik memotivasi dan mengondisikan kembali fokus serta semangat peserta didik."
+          },
+          {
+            nama: "Langkah 4: Hafalan",
+            waktu: jenjang === "SD" ? "10 menit" : "15 menit",
+            isi: `1. Peserta didik mengulang (muroja'ah) hafalan sebelumnya secara bersama-sama.\n2. Pendidik mencontohkan bacaan ${targetHafalanVal} secara tartil menggunakan metode talaqqi.\n3. Pendidik menjelaskan arti nama surat dan pesan pokok kandungan ayat secara ringkas.\n4. Peserta didik menirukan dan membaca target hafalan secara berkelompok dan bergantian.\n5. Peserta didik menyetorkan hafalan (tasmi') satu per satu disimak oleh pendidik.`
+          },
+          {
+            nama: "Langkah 5: Energizer",
+            waktu: "2 menit",
+            isi: "1. Pendidik memimpin peregangan tubuh singkat dan Yel-Yel IWR.\n2. Pendidik mengondisikan kembali konsentrasi peserta didik sebelum masuk materi utama."
+          },
+          {
+            nama: "Langkah 6: " + (jenjang === "SD" && kelasKey === "SD_1" ? "Materi Jilid" : "Tilawah & Tajwid"),
+            waktu: jenjang === "SD" ? "9 menit" : "15 menit",
+            isi: `1. Peserta didik membaca bersama materi pengulangan halaman/ayat sebelumnya.\n2. Pendidik memperagakan dan mencontohkan bacaan pokok ${targetMateriVal} secara fasih.\n3. Pendidik menjelaskan kaidah tajwid / kata kunci utama pada materi tersebut.\n4. Peserta didik berlatih membaca secara berkelompok dan bergantian.\n5. Pendidik menyimak dan menilai bacaan peserta didik secara individual.`
+          },
+          {
+            nama: "Langkah 7: Penutup",
+            waktu: jenjang === "SD" ? "3 menit" : "5 menit",
+            isi: "1. Peserta didik membaca bersama target hafalan dan materi pokok sebagai simpulan.\n2. Pendidik mengarahkan peserta didik untuk menyusun jadwal mengulang di rumah bersama orang tua.\n3. Pendidik dan peserta didik membaca doa kaffaratul majlis bersama-sama.\n4. Pendidik menutup pembelajaran dengan mengucapkan salam."
+          }
         ],
 
         penilaian: [
@@ -523,7 +552,7 @@
             <input type="text" value="${step.nama}" oninput="currentData.langkah[${idx}].nama=this.value; renderPreview();" class="p-1 border rounded text-xs w-2/3 bg-white">
             <input type="text" value="${step.waktu}" oninput="currentData.langkah[${idx}].waktu=this.value; renderPreview();" class="p-1 border rounded text-xs w-1/4 text-right bg-white">
           </div>
-          <textarea rows="2" oninput="currentData.langkah[${idx}].isi=this.value; renderPreview();" class="w-full p-1.5 border rounded text-xs bg-white">${step.isi}</textarea>
+          <textarea rows="4" oninput="currentData.langkah[${idx}].isi=this.value; renderPreview();" class="w-full p-1.5 border rounded text-xs bg-white font-mono">${step.isi}</textarea>
         `;
         container.appendChild(div);
       });
@@ -643,10 +672,10 @@
           </tr>
           ${currentData.langkah.map(step => `
             <tr>
-              <td style="border: 1px solid #cbd5e1; font-weight: bold;">
+              <td style="border: 1px solid #cbd5e1; font-weight: bold; vertical-align: top;">
                 ${step.nama}<br><span style="font-weight: normal; font-size: 8.5pt; color: #475569;">(${step.waktu})</span>
               </td>
-              <td style="border: 1px solid #cbd5e1;">${step.isi}</td>
+              <td style="border: 1px solid #cbd5e1; vertical-align: top; white-space: pre-line;">${step.isi}</td>
             </tr>
           `).join('')}
         </table>
