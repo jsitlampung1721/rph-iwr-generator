@@ -20,7 +20,7 @@
     input, select, textarea, button {
       font-size: var(--input-font-size) !important;
     }
-    /* Area Input Fleksibel (Bisa Ditarik Kebawah / Keatas) */
+    /* Area Input Fleksibel */
     #formSection {
       resize: vertical;
       min-height: 350px;
@@ -93,7 +93,6 @@
           </button>
 
           <div id="dropdownTampilan" class="dropdown-content hidden absolute right-0 mt-2 w-56 bg-white text-slate-800 rounded-lg shadow-xl border border-slate-200 z-50 p-3 space-y-3">
-            <!-- Theme Picker -->
             <div>
               <label class="block text-[11px] font-bold text-slate-600 mb-1">Tema Warna Cetak:</label>
               <select id="themeSelector" onchange="renderPreview()" class="w-full bg-slate-50 border rounded p-1.5 text-xs font-medium">
@@ -103,7 +102,6 @@
               </select>
             </div>
 
-            <!-- Font Size Adjuster -->
             <div class="border-t pt-2">
               <label class="block text-[11px] font-bold text-slate-600 mb-1">Ukuran Font Form:</label>
               <div class="flex items-center justify-between bg-slate-50 p-1 rounded border">
@@ -113,7 +111,6 @@
               </div>
             </div>
 
-            <!-- Mode Layout Switcher -->
             <div class="border-t pt-2">
               <label class="block text-[11px] font-bold text-slate-600 mb-1">Layout Layar:</label>
               <div class="grid grid-cols-2 gap-1">
@@ -131,7 +128,7 @@
 
       </nav>
 
-      <!-- TOMBOL HAMBURGER MOBILE / HP (Tampil Hanya di Layar Kecil) -->
+      <!-- TOMBOL HAMBURGER MOBILE / HP -->
       <button id="btnMobileMenu" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg bg-emerald-800 hover:bg-emerald-600 text-white focus:outline-none transition">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -140,15 +137,12 @@
 
     </div>
 
-    <!-- MENU DRAWER MOBILE (EXPANDABLE / COLLAPSIBLE ON MOBILE) -->
+    <!-- MENU DRAWER MOBILE -->
     <div id="mobileMenu" class="hidden md:hidden bg-emerald-800 border-t border-emerald-600 p-4 space-y-4 no-print">
-      
-      <!-- Panduan -->
       <button onclick="openMediaModal(); toggleMobileMenu();" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold py-2 px-3 rounded text-xs text-center">
         📖 Media & Panduan IWR
       </button>
 
-      <!-- Berkas & Download -->
       <div class="bg-emerald-900/60 p-3 rounded-lg space-y-2">
         <span class="text-[11px] font-bold text-emerald-200 uppercase tracking-wider block">📁 Berkas & Dokumen</span>
         <div class="grid grid-cols-2 gap-2">
@@ -162,10 +156,8 @@
         </div>
       </div>
 
-      <!-- Tampilan & Tema -->
       <div class="bg-emerald-900/60 p-3 rounded-lg space-y-2">
         <span class="text-[11px] font-bold text-emerald-200 uppercase tracking-wider block">⚙️ Pengaturan Tampilan</span>
-        
         <div>
           <label class="block text-[11px] text-emerald-100 mb-1">Tema Warna Cetak:</label>
           <select id="themeSelectorMobile" onchange="document.getElementById('themeSelector').value=this.value; renderPreview();" class="w-full bg-emerald-800 border border-emerald-600 rounded p-1.5 text-xs font-medium text-white">
@@ -193,11 +185,9 @@
         </div>
       </div>
 
-      <!-- Cetak -->
       <button onclick="window.print(); toggleMobileMenu();" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-3 rounded text-xs text-center border border-emerald-400">
         🖨️ Cetak Dokumen Sekarang
       </button>
-
     </div>
   </header>
 
@@ -490,14 +480,23 @@
           </div>
         </div>
 
-        <!-- Tab 2: Doa-Doa Pembuka & Penutup -->
+        <!-- Tab 2: Doa-Doa Pembuka & Penawar Hati (TELAH DIPERBARUI SESUAI GAMBAR) -->
         <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-lg space-y-2">
           <h3 class="font-bold text-emerald-900 text-sm flex items-center gap-1">
             🤲 2. Doa Pembuka & Penawar Hati
           </h3>
-          <div class="bg-white p-3 rounded border border-emerald-200 space-y-2">
-            <strong class="text-emerald-800 block">DOA PENAWAR HATI (اللَّهُمَّ اجْعَلِ الْقُرْآنَ رَبِيعَ قَلْبِي):</strong>
-            <p class="italic">"Ya Allah, jadikanlah Al-Qur'an sebagai penyejuk hatiku, cahaya dadaku, penawar kesedihanku, dan pengusir kecemasaanku."</p>
+          <div class="bg-white p-3.5 rounded border border-emerald-200 space-y-3">
+            <strong class="text-emerald-800 block border-b border-emerald-100 pb-1 text-xs">DOA PENAWAR HATI:</strong>
+            
+            <!-- Teks Arab -->
+            <p class="font-serif text-base leading-loose text-right font-semibold text-slate-800 bg-slate-50 p-3 rounded border border-slate-200" dir="rtl">
+              اللَّهُمَّ إِنِّي عَبْدُكَ، ابْنُ عَبْدِكَ، ابْنُ أَمَتِكَ، نَاصِيَتِي بِيَدِكَ، مَاضٍ فِيَّ حُكْمُكَ، عَدْلٌ فِيَّ قَضَاؤُكَ، أَسْأَلُكَ بِكُلِّ اسْمٍ هُوَ لَكَ، سَمَّيْتَ بِهِ نَفْسَكَ، أَوْ أَنْزَلْتَهُ فِي كِتَابِكَ، أَوْ عَلَّمْتَهُ أَحَدًا مِنْ خَلْقِكَ، أَوِ اسْتَأْثَرْتَ بِهِ فِي عِلْمِ الْغَيْبِ عِنْدَكَ، أَنْ تَجْعَلَ الْقُرْآنَ رَبِيعَ قَلْبِي، وَنُورَ صَدْرِي، وَجَلَاءَ حُزْنِي، وَذَهَابَ هَمِّي
+            </p>
+            
+            <!-- Terjemahan -->
+            <p class="italic text-slate-700 text-[11px] leading-relaxed pt-1">
+              "Ya Allah! Sesungguhnya aku adalah hamba-Mu, anak hamba-Mu, dan anak hamba perempuan-Mu. Ubun-ubunku di tangan-Mu, keputusan-Mu berlaku padaku, qadha-Mu kepadaku adalah adil. Aku mohon kepada-Mu dengan tiap nama yang telah Engkau gunakan untuk diri-Mu, yang Engkau turunkan dalam kitab-Mu, Engkau ajarkan kepada seseorang dari makhluk-Mu, atau yang Engkau khususkan untuk diri-Mu dalam ilmu ghaib di sisi-Mu, hendaknya Engkau jadikan Al-Qur'an sebagai penenteram hatiku, cahaya di dadaku, pelenyap duka dan kesedihanku."
+            </p>
           </div>
         </div>
 
@@ -765,7 +764,6 @@
       });
     }
 
-    // Menutup dropdown saat diklik di luar area menu
     window.addEventListener('click', function(e) {
       if (!e.target.closest('.dropdown-container') && !e.target.closest('#btnMobileMenu')) {
         document.querySelectorAll('.dropdown-content').forEach(d => d.classList.add('hidden'));
