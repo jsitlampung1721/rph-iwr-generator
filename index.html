@@ -45,8 +45,8 @@
       <div class="flex flex-wrap items-center gap-2">
         
         <!-- Pengatur Ukuran Font (A- / Normal / A+) -->
-        <div class="bg-emerald-800 px-2 py-1 rounded-lg flex items-center gap-1 text-xs font-semibold border border-emerald-600">
-          <span class="text-emerald-200 mr-1">Teks:</span>
+        <div class="bg-emerald-800 px-2.5 py-1 rounded-lg flex items-center gap-1 text-xs font-semibold border border-emerald-600">
+          <span class="text-emerald-200 mr-1">Ukuran Font:</span>
           <button onclick="adjustTextSize(-1)" title="Kecilkan Teks" class="bg-emerald-700 hover:bg-emerald-600 px-2 py-0.5 rounded font-bold">A-</button>
           <button onclick="resetTextSize()" title="Ukuran Normal" class="bg-emerald-700 hover:bg-emerald-600 px-2 py-0.5 rounded font-bold">100%</button>
           <button onclick="adjustTextSize(1)" title="Perbesar Teks" class="bg-emerald-700 hover:bg-emerald-600 px-2 py-0.5 rounded font-bold">A+</button>
@@ -54,10 +54,10 @@
 
         <!-- Switcher Mode Tampilan -->
         <div class="bg-emerald-800 p-1 rounded-lg flex items-center text-xs font-semibold border border-emerald-600">
-          <button id="btnLayoutSide" onclick="setLayoutMode('side')" class="px-2 py-1 rounded bg-white text-emerald-900 shadow transition">
+          <button id="btnLayoutSide" onclick="setLayoutMode('side')" class="px-2.5 py-1 rounded bg-white text-emerald-900 shadow transition">
             ↔️ Samping
           </button>
-          <button id="btnLayoutStacked" onclick="setLayoutMode('stacked')" class="px-2 py-1 rounded text-emerald-100 hover:text-white transition">
+          <button id="btnLayoutStacked" onclick="setLayoutMode('stacked')" class="px-2.5 py-1 rounded text-emerald-100 hover:text-white transition">
             ↕️ Atas-Bawah
           </button>
         </div>
@@ -76,10 +76,10 @@
   <main id="mainContainer" class="max-w-7xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6 my-2">
 
     <!-- Form Input (Kolom Kiri / Atas) -->
-    <section id="formSection" class="lg:col-span-5 bg-white p-5 rounded-lg shadow border border-slate-200 no-print space-y-4 max-h-[88vh] overflow-y-auto">
+    <section id="formSection" class="lg:col-span-5 bg-white p-6 rounded-lg shadow border border-slate-200 no-print space-y-5 max-h-[94vh] overflow-y-auto">
       
       <!-- Panel 1: Upload Logo Sekolah -->
-      <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-lg space-y-2">
+      <div class="bg-slate-50 border border-slate-200 p-4 rounded-lg space-y-2">
         <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider flex items-center justify-between">
           <span>🏫 Logo Sekolah Anda (Sebelah Kanan Header)</span>
           <button onclick="removeLogo()" class="text-xs text-red-600 hover:underline">Hapus Logo</button>
@@ -154,7 +154,7 @@
           <input type="text" id="judulModul" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded">
         </div>
         <div>
-          <label class="block text-xs font-medium text-slate-600">Sub-Judul Header (Baris Keterangan Jilid / Fase)</label>
+          <label class="block text-xs font-medium text-slate-600">Sub-Judul Header (Keterangan Jilid / Fase)</label>
           <input type="text" id="subHeader" placeholder="Jilid 1 | Kelas I SD | Satu Pertemuan" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded font-medium">
         </div>
         <div class="grid grid-cols-2 gap-2">
@@ -231,20 +231,32 @@
         <div id="formPenilaianContainer" class="space-y-3"></div>
       </div>
 
-      <!-- BAGIAN VI: TANDA TANGAN -->
+      <!-- BAGIAN VI: TANDA TANGAN & PENGESAHAN -->
       <div class="space-y-2 border-t pt-3">
         <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian VI. Tanda Tangan & Pengesahan</h3>
         <div>
           <label class="block text-xs font-medium text-slate-600">Kota & Tanggal RPH</label>
           <input type="text" id="kotaTanggal" value="Bandar Lampung, 10 Oktober 2026" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded">
         </div>
-        <div>
-          <label class="block text-xs font-medium text-slate-600">Nama Kepala Sekolah</label>
-          <input type="text" id="namaKepalaSekolah" placeholder="Nama Kepala Sekolah, S.Pd." oninput="updatePreviewFromForm()" class="w-full p-2 border rounded">
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs font-medium text-slate-600">Nama Kepala Sekolah</label>
+            <input type="text" id="namaKepalaSekolah" placeholder="Nama Kepala Sekolah, S.Pd." oninput="updatePreviewFromForm()" class="w-full p-2 border rounded">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-600">NIP / NIY / NPP Kepala Sekolah</label>
+            <input type="text" id="nipKepalaSekolah" placeholder="NIP. 19800101 200501 1 001" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded">
+          </div>
         </div>
-        <div>
-          <label class="block text-xs font-medium text-slate-600">Nama Guru Al-Qur'an</label>
-          <input type="text" id="namaGuru" placeholder="Nama Guru Al-Qur'an, S.Pd.I" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded">
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs font-medium text-slate-600">Nama Guru Al-Qur'an</label>
+            <input type="text" id="namaGuru" placeholder="Nama Guru Al-Qur'an, S.Pd.I" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-600">NIP / NIY / NPP Guru</label>
+            <input type="text" id="nipGuru" placeholder="NIP. 19900202 201502 2 002" oninput="updatePreviewFromForm()" class="w-full p-2 border rounded">
+          </div>
         </div>
       </div>
     </section>
@@ -436,11 +448,21 @@
       { id: "3.4", label: "3.4 Menjaga Kebersihan & Ketenangan Kelas", desc: "Menjaga tempat belajar tetap rapi, bersih, dan tenang saat pembelajaran Al-Qur'an." }
     ];
 
+    // Skema Warna Langkah-Langkah Pembelajaran Sesuai Dokumen Sampel Word
+    const stepTheme = [
+      { leftBg: '#1976d2', headerBg: '#e3f2fd', headerText: '#1565c0' }, // Langkah 1 Pembukaan (Biru)
+      { leftBg: '#6a1b9a', headerBg: '#f3e5f5', headerText: '#6a1b9a' }, // Langkah 2 Adab (Ungu)
+      { leftBg: '#d84315', headerBg: '#fbe9e7', headerText: '#d84315' }, // Langkah 3 Energizer (Oranye)
+      { leftBg: '#2e7d32', headerBg: '#e8f5e9', headerText: '#2e7d32' }, // Langkah 4 Hafalan (Hijau)
+      { leftBg: '#d84315', headerBg: '#fbe9e7', headerText: '#d84315' }, // Langkah 5 Energizer (Oranye)
+      { leftBg: '#1565c0', headerBg: '#e3f2fd', headerText: '#1565c0' }, // Langkah 6 Materi Jilid/Tajwid (Biru)
+      { leftBg: '#4e342e', headerBg: '#efebe9', headerText: '#4e342e' }  // Langkah 7 Penutup (Cokelat)
+    ];
+
     let currentData = {};
     let logoDataUrl = "";
     let baseFontSize = 14;
 
-    // Fitur Pengatur Ukuran Teks (Ramah Lansia)
     function adjustTextSize(delta) {
       baseFontSize = Math.max(12, Math.min(22, baseFontSize + delta));
       document.documentElement.style.setProperty('--app-font-size', baseFontSize + 'px');
@@ -462,18 +484,18 @@
 
       if (mode === 'stacked') {
         container.className = "max-w-7xl mx-auto p-4 flex flex-col gap-6 my-2";
-        form.className = "w-full bg-white p-5 rounded-lg shadow border border-slate-200 no-print space-y-4";
+        form.className = "w-full bg-white p-6 rounded-lg shadow border border-slate-200 no-print space-y-5";
         preview.className = "w-full bg-white p-8 rounded-lg shadow border border-slate-200 print-area min-h-[88vh]";
         
-        btnStacked.className = "px-2 py-1 rounded bg-white text-emerald-900 shadow transition";
-        btnSide.className = "px-2 py-1 rounded text-emerald-100 hover:text-white transition";
+        btnStacked.className = "px-2.5 py-1 rounded bg-white text-emerald-900 shadow transition";
+        btnSide.className = "px-2.5 py-1 rounded text-emerald-100 hover:text-white transition";
       } else {
         container.className = "max-w-7xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6 my-2";
-        form.className = "lg:col-span-5 bg-white p-5 rounded-lg shadow border border-slate-200 no-print space-y-4 max-h-[88vh] overflow-y-auto";
+        form.className = "lg:col-span-5 bg-white p-6 rounded-lg shadow border border-slate-200 no-print space-y-5 max-h-[94vh] overflow-y-auto";
         preview.className = "lg:col-span-7 bg-white p-8 rounded-lg shadow border border-slate-200 print-area min-h-[88vh]";
         
-        btnSide.className = "px-2 py-1 rounded bg-white text-emerald-900 shadow transition";
-        btnStacked.className = "px-2 py-1 rounded text-emerald-100 hover:text-white transition";
+        btnSide.className = "px-2.5 py-1 rounded bg-white text-emerald-900 shadow transition";
+        btnStacked.className = "px-2.5 py-1 rounded text-emerald-100 hover:text-white transition";
       }
     }
 
@@ -614,7 +636,9 @@
 
         kotaTanggal: document.getElementById("kotaTanggal").value,
         namaKepalaSekolah: document.getElementById("namaKepalaSekolah").value,
+        nipKepalaSekolah: document.getElementById("nipKepalaSekolah").value,
         namaGuru: document.getElementById("namaGuru").value,
+        nipGuru: document.getElementById("nipGuru").value,
 
         langkah: [
           {
@@ -699,13 +723,13 @@
 
       currentData.langkah.forEach((step, idx) => {
         const div = document.createElement("div");
-        div.className = "bg-slate-50 p-2.5 rounded border border-slate-200 space-y-1.5";
+        div.className = "bg-slate-50 p-3 rounded border border-slate-200 space-y-2";
         div.innerHTML = `
           <div class="flex justify-between items-center font-bold text-slate-700">
             <span>${step.nama} - ${step.subnama}</span>
             <input type="text" value="${step.waktu}" oninput="currentData.langkah[${idx}].waktu=this.value; renderPreview();" class="p-1 border rounded text-xs w-1/4 text-right bg-white font-medium">
           </div>
-          <textarea rows="5" oninput="currentData.langkah[${idx}].isi=this.value; renderPreview();" class="w-full p-2 border rounded bg-white font-mono text-xs leading-relaxed">${step.isi}</textarea>
+          <textarea rows="6" oninput="currentData.langkah[${idx}].isi=this.value; renderPreview();" class="w-full p-2 border rounded bg-white font-mono text-xs leading-relaxed">${step.isi}</textarea>
         `;
         container.appendChild(div);
       });
@@ -717,7 +741,7 @@
 
       currentData.penilaian.forEach((p, idx) => {
         const div = document.createElement("div");
-        div.className = "bg-slate-50 p-2.5 rounded border border-slate-200 space-y-1.5";
+        div.className = "bg-slate-50 p-3 rounded border border-slate-200 space-y-2";
         div.innerHTML = `
           <span class="font-bold text-slate-700">${p.aspek}</span>
           <input type="text" value="${p.teknik}" oninput="currentData.penilaian[${idx}].teknik=this.value; renderPreview();" class="w-full p-1.5 border rounded bg-white font-medium">
@@ -751,7 +775,9 @@
 
       currentData.kotaTanggal = document.getElementById("kotaTanggal").value;
       currentData.namaKepalaSekolah = document.getElementById("namaKepalaSekolah").value;
+      currentData.nipKepalaSekolah = document.getElementById("nipKepalaSekolah").value;
       currentData.namaGuru = document.getElementById("namaGuru").value;
+      currentData.nipGuru = document.getElementById("nipGuru").value;
 
       renderPreview();
     }
@@ -760,9 +786,9 @@
       if (!currentData.judulModul) return;
 
       const html = `
-        <!-- Header Dokumen dengan Logo JSIT Lampung di Kiri & Logo Sekolah di Kanan -->
+        <!-- Header Dokumen dengan Logo JSIT Lampung (Kiri) & Logo Sekolah (Kanan) -->
         <div style="display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 12px; border-bottom: 2px solid #000; padding-bottom: 10px;">
-          <!-- Logo JSIT Wilayah Lampung (Sebelah Kiri) -->
+          <!-- Logo JSIT Wilayah Lampung -->
           <img src="https://lh3.googleusercontent.com/d/1NYK166dwtbJFMNeNznw7EM3QCoHpRDEH" style="max-height: 70px; max-width: 95px; object-fit: contain;">
           
           <!-- Judul & Keterangan Tengah -->
@@ -770,123 +796,135 @@
             <div style="font-size: 14pt; text-transform: uppercase;">RENCANA PENGAJARAN HARIAN</div>
             <div style="font-size: 12pt; text-transform: uppercase;">MBQ ‘ILMAN WA RUUHAN (IWR)</div>
             ${currentData.subHeader ? `<div style="font-size: 11pt; color: #15803d; font-weight: bold; margin-top: 3px;">${currentData.subHeader}</div>` : ''}
-            <div style="font-size: 9pt; font-weight: normal; margin-top: 3px;">
+            <div style="font-size: 9pt; font-weight: normal; font-style: italic; margin-top: 3px;">
               Badan Pengembangan Pendidikan Al-Qur’an – Jaringan Sekolah Islam Terpadu (JSIT) Indonesia &nbsp;|&nbsp; TP. ${currentData.tp}
             </div>
           </div>
 
-          <!-- Logo Sekolah (Sebelah Kanan, jika diunggah) -->
+          <!-- Logo Sekolah -->
           <div style="width: 95px; text-align: right;">
             ${logoDataUrl ? `<img src="${logoDataUrl}" style="max-height: 70px; max-width: 95px; object-fit: contain; margin-left: auto;">` : ''}
           </div>
         </div>
 
         <!-- Bagian I. Identitas RPH -->
-        <h3 style="font-weight: bold; font-size: 10.5pt; margin-top: 10px; margin-bottom: 4px; color: #166534;">Bagian I. Identitas RPH</h3>
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 9.5pt;" border="1" cellpadding="5">
-          <tr style="background-color: #f8fafc; font-weight: bold;">
-            <th style="width: 30%; text-align: left; border: 1px solid #cbd5e1; background-color: #f1f5f9;">Komponen</th>
-            <th style="text-align: left; border: 1px solid #cbd5e1; background-color: #f1f5f9;">Keterangan</th>
+        <h3 style="font-weight: bold; font-size: 11pt; margin-top: 12px; margin-bottom: 6px; color: #166534;">Bagian I. Identitas RPH</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 9.5pt;" border="1" cellpadding="6">
+          <tr style="background-color: #2e7d32; color: #ffffff; font-weight: bold; text-align: left;">
+            <th style="width: 30%; border: 1px solid #1e6b27; padding: 6px 10px;">Komponen</th>
+            <th style="border: 1px solid #1e6b27; padding: 6px 10px;">Keterangan</th>
           </tr>
-          <tr><td style="border: 1px solid #cbd5e1; font-weight: bold;">Satuan Pendidikan</td><td style="border: 1px solid #cbd5e1; font-weight: bold; color: #166534;">${currentData.satuanPendidikan}</td></tr>
-          <tr><td style="border: 1px solid #cbd5e1; font-weight: bold;">Judul Modul Ajar</td><td style="border: 1px solid #cbd5e1;">${currentData.judulModul}</td></tr>
-          <tr><td style="border: 1px solid #cbd5e1; font-weight: bold;">Mata Pelajaran</td><td style="border: 1px solid #cbd5e1;">Al-Qur'an</td></tr>
-          <tr><td style="border: 1px solid #cbd5e1; font-weight: bold;">Kelas / Jenjang</td><td style="border: 1px solid #cbd5e1;">${currentData.kelasFase}</td></tr>
-          <tr><td style="border: 1px solid #cbd5e1; font-weight: bold;">Alokasi Waktu</td><td style="border: 1px solid #cbd5e1;">${currentData.alokasiWaktu}</td></tr>
-          <tr><td style="border: 1px solid #cbd5e1; font-weight: bold;">Model Pembelajaran</td><td style="border: 1px solid #cbd5e1;">${currentData.model}</td></tr>
-          <tr><td style="border: 1px solid #cbd5e1; font-weight: bold;">Jumlah Peserta Didik</td><td style="border: 1px solid #cbd5e1;">${currentData.jumlahPeserta}</td></tr>
-          <tr><td style="border: 1px solid #cbd5e1; font-weight: bold;">Sarana dan Prasarana</td><td style="border: 1px solid #cbd5e1;">${currentData.sarana}</td></tr>
-          <tr><td style="border: 1px solid #cbd5e1; font-weight: bold;">Target Peserta Didik</td><td style="border: 1px solid #cbd5e1;">${currentData.targetPeserta}</td></tr>
+          <tr><td style="border: 1px solid #d1d5db; font-weight: bold; background-color: #fdf8e2;">Satuan Pendidikan</td><td style="border: 1px solid #d1d5db; font-weight: bold; color: #166534; background-color: #ffffff;">${currentData.satuanPendidikan}</td></tr>
+          <tr><td style="border: 1px solid #d1d5db; font-weight: bold; background-color: #fdf8e2;">Judul Modul Ajar</td><td style="border: 1px solid #d1d5db; background-color: #ffffff;">${currentData.judulModul}</td></tr>
+          <tr><td style="border: 1px solid #d1d5db; font-weight: bold; background-color: #fdf8e2;">Mata Pelajaran</td><td style="border: 1px solid #d1d5db; background-color: #ffffff;">Al-Qur'an</td></tr>
+          <tr><td style="border: 1px solid #d1d5db; font-weight: bold; background-color: #fdf8e2;">Kelas / Jenjang</td><td style="border: 1px solid #d1d5db; background-color: #ffffff;">${currentData.kelasFase}</td></tr>
+          <tr><td style="border: 1px solid #d1d5db; font-weight: bold; background-color: #fdf8e2;">Alokasi Waktu</td><td style="border: 1px solid #d1d5db; background-color: #ffffff;">${currentData.alokasiWaktu}</td></tr>
+          <tr><td style="border: 1px solid #d1d5db; font-weight: bold; background-color: #fdf8e2;">Model Pembelajaran</td><td style="border: 1px solid #d1d5db; background-color: #ffffff;">${currentData.model}</td></tr>
+          <tr><td style="border: 1px solid #d1d5db; font-weight: bold; background-color: #fdf8e2;">Jumlah Peserta Didik</td><td style="border: 1px solid #d1d5db; background-color: #ffffff;">${currentData.jumlahPeserta}</td></tr>
+          <tr><td style="border: 1px solid #d1d5db; font-weight: bold; background-color: #fdf8e2;">Sarana dan Prasarana</td><td style="border: 1px solid #d1d5db; background-color: #ffffff;">${currentData.sarana}</td></tr>
+          <tr><td style="border: 1px solid #d1d5db; font-weight: bold; background-color: #fdf8e2;">Target Peserta Didik</td><td style="border: 1px solid #d1d5db; background-color: #ffffff;">${currentData.targetPeserta}</td></tr>
         </table>
 
         <!-- Bagian II. Capaian Pembelajaran -->
-        <h3 style="font-weight: bold; font-size: 10.5pt; margin-top: 12px; margin-bottom: 4px; color: #166534;">Bagian II. Capaian Pembelajaran</h3>
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 9.5pt;" border="1" cellpadding="5">
-          <tr style="background-color: #f1f5f9; font-weight: bold;">
-            <th style="width: 22%; text-align: left; border: 1px solid #cbd5e1;">Aspek</th>
-            <th style="width: 43%; text-align: left; border: 1px solid #cbd5e1;">Capaian Pembelajaran</th>
-            <th style="text-align: left; border: 1px solid #cbd5e1;">Target Pertemuan Ini</th>
+        <h3 style="font-weight: bold; font-size: 11pt; margin-top: 14px; margin-bottom: 6px; color: #166534;">Bagian II. Capaian Pembelajaran</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 9.5pt;" border="1" cellpadding="6">
+          <tr style="background-color: #2e7d32; color: #ffffff; font-weight: bold; text-align: left;">
+            <th style="width: 22%; border: 1px solid #1e6b27; padding: 6px 10px;">Aspek</th>
+            <th style="width: 43%; border: 1px solid #1e6b27; padding: 6px 10px;">Capaian Pembelajaran</th>
+            <th style="border: 1px solid #1e6b27; padding: 6px 10px;">Target Pertemuan Ini</th>
           </tr>
           <tr>
-            <td style="border: 1px solid #cbd5e1; font-weight: bold;">Adab dan Santun</td>
-            <td style="border: 1px solid #cbd5e1; white-space: pre-line;">${currentData.capaianAdab}</td>
-            <td style="border: 1px solid #cbd5e1;">${currentData.targetAdab}</td>
+            <td style="border: 1px solid #d1d5db; font-weight: bold; background-color: #e8f4fc;">Adab dan Santun</td>
+            <td style="border: 1px solid #d1d5db; white-space: pre-line; background-color: #ffffff;">${currentData.capaianAdab}</td>
+            <td style="border: 1px solid #d1d5db; background-color: #ffffff;">${currentData.targetAdab}</td>
           </tr>
           <tr>
-            <td style="border: 1px solid #cbd5e1; font-weight: bold;">Hafalan</td>
-            <td style="border: 1px solid #cbd5e1;">${currentData.capaianHafalan}</td>
-            <td style="border: 1px solid #cbd5e1;">${currentData.targetHafalan}</td>
+            <td style="border: 1px solid #d1d5db; font-weight: bold; background-color: #e8f4fc;">Hafalan</td>
+            <td style="border: 1px solid #d1d5db; background-color: #ffffff;">${currentData.capaianHafalan}</td>
+            <td style="border: 1px solid #d1d5db; background-color: #ffffff;">${currentData.targetHafalan}</td>
           </tr>
           <tr>
-            <td style="border: 1px solid #cbd5e1; font-weight: bold;">${currentData.labelMakna}</td>
-            <td style="border: 1px solid #cbd5e1;">${currentData.capaianMakna}</td>
-            <td style="border: 1px solid #cbd5e1;">${currentData.targetMakna}</td>
+            <td style="border: 1px solid #d1d5db; font-weight: bold; background-color: #e8f4fc;">${currentData.labelMakna}</td>
+            <td style="border: 1px solid #d1d5db; background-color: #ffffff;">${currentData.capaianMakna}</td>
+            <td style="border: 1px solid #d1d5db; background-color: #ffffff;">${currentData.targetMakna}</td>
           </tr>
           <tr>
-            <td style="border: 1px solid #cbd5e1; font-weight: bold;">${currentData.aspekUtama}</td>
-            <td style="border: 1px solid #cbd5e1;">${currentData.capaianUtama}</td>
-            <td style="border: 1px solid #cbd5e1;">${currentData.targetUtama}</td>
+            <td style="border: 1px solid #d1d5db; font-weight: bold; background-color: #e8f4fc;">${currentData.aspekUtama}</td>
+            <td style="border: 1px solid #d1d5db; background-color: #ffffff;">${currentData.capaianUtama}</td>
+            <td style="border: 1px solid #d1d5db; background-color: #ffffff;">${currentData.targetUtama}</td>
           </tr>
         </table>
 
         <!-- Bagian III. Profil Pelajar IWR -->
-        <h3 style="font-weight: bold; font-size: 10.5pt; margin-top: 12px; margin-bottom: 4px; color: #166534;">Bagian III. Profil Pelajar IWR</h3>
-        <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 9px; text-align: center; border-radius: 4px; font-weight: bold; margin-bottom: 14px; font-size: 9.5pt; color: #166534;">
-          ${currentData.profil1}<br>
-          <span style="color: #047857;">${currentData.profil2}</span>
+        <h3 style="font-weight: bold; font-size: 11pt; margin-top: 14px; margin-bottom: 6px; color: #166534;">Bagian III. Profil Pelajar IWR</h3>
+        <div style="margin-bottom: 16px; font-size: 9.5pt; line-height: 1.6;">
+          <div style="font-weight: bold;">• ${currentData.profil1}</div>
+          <div style="font-weight: bold;">• ${currentData.profil2}</div>
         </div>
 
         <!-- Bagian IV. Langkah-Langkah Pembelajaran -->
-        <h3 style="font-weight: bold; font-size: 10.5pt; margin-top: 12px; margin-bottom: 4px; color: #166534;">Bagian IV. Langkah-Langkah Pembelajaran (7 Langkah)</h3>
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 9.5pt;" border="1" cellpadding="5">
-          <tr style="background-color: #f1f5f9; font-weight: bold;">
-            <th style="width: 25%; text-align: left; border: 1px solid #cbd5e1;">Langkah & Durasi</th>
-            <th style="text-align: left; border: 1px solid #cbd5e1;">Aktivitas Pembelajaran</th>
-          </tr>
-          ${currentData.langkah.map(step => `
-            <tr>
-              <td style="border: 1px solid #cbd5e1; font-weight: bold; vertical-align: top; background-color: #fafafa;">
-                ${step.nama}<br>${step.subnama}<br><span style="font-weight: normal; font-size: 8.5pt; color: #475569;">${step.waktu}</span>
-              </td>
-              <td style="border: 1px solid #cbd5e1; vertical-align: top; white-space: pre-line; line-height: 1.6;">${step.isi}</td>
-            </tr>
-          `).join('')}
-        </table>
+        <h3 style="font-weight: bold; font-size: 11pt; margin-top: 14px; margin-bottom: 8px; color: #166534;">Bagian IV. Langkah-Langkah Pembelajaran (7 Langkah)</h3>
+        <div style="margin-bottom: 16px; space-y-3;">
+          ${currentData.langkah.map((step, idx) => {
+            const theme = stepTheme[idx % stepTheme.length];
+            return `
+              <table style="width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 9.5pt; border: 1px solid #cbd5e1;" border="1" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="width: 25%; background-color: ${theme.leftBg}; color: #ffffff; text-align: center; vertical-align: middle; font-weight: bold; padding: 14px 8px;">
+                    <div style="font-size: 10pt;">${step.nama}</div>
+                    <div style="font-size: 10.5pt; font-weight: bold; margin: 2px 0;">${step.subnama}</div>
+                    <div style="font-size: 8.5pt; font-weight: normal; font-style: italic;">${step.waktu}</div>
+                  </td>
+                  <td style="padding: 0; vertical-align: top; background-color: #ffffff;">
+                    <div style="background-color: ${theme.headerBg}; color:${theme.headerText}; font-weight: bold; padding: 6px 12px; border-bottom: 1px solid #cbd5e1; font-size: 9.5pt;">
+                      Aktivitas
+                    </div>
+                    <div style="padding: 10px 12px; white-space: pre-line; line-height: 1.6; color: #1e293b;">
+                      ${step.isi}
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            `;
+          }).join('')}
+        </div>
 
         <!-- Bagian V. Penilaian -->
-        <h3 style="font-weight: bold; font-size: 10.5pt; margin-top: 12px; margin-bottom: 4px; color: #166534;">Bagian V. Penilaian</h3>
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 9.5pt;" border="1" cellpadding="5">
-          <tr style="background-color: #f1f5f9; font-weight: bold;">
-            <th style="width: 22%; text-align: left; border: 1px solid #cbd5e1;">Aspek</th>
-            <th style="width: 28%; text-align: left; border: 1px solid #cbd5e1;">Teknik Penilaian</th>
-            <th style="text-align: left; border: 1px solid #cbd5e1;">Instrumen</th>
+        <h3 style="font-weight: bold; font-size: 11pt; margin-top: 14px; margin-bottom: 6px; color: #166534;">Bagian V. Penilaian</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 9.5pt;" border="1" cellpadding="6">
+          <tr style="background-color: #2e7d32; color: #ffffff; font-weight: bold; text-align: left;">
+            <th style="width: 22%; border: 1px solid #1e6b27; padding: 6px 10px;">Aspek</th>
+            <th style="width: 28%; border: 1px solid #1e6b27; padding: 6px 10px;">Teknik Penilaian</th>
+            <th style="border: 1px solid #1e6b27; padding: 6px 10px;">Instrumen</th>
           </tr>
           ${currentData.penilaian.map(p => `
             <tr>
-              <td style="border: 1px solid #cbd5e1; font-weight: bold;">${p.aspek}</td>
-              <td style="border: 1px solid #cbd5e1;">${p.teknik}</td>
-              <td style="border: 1px solid #cbd5e1;">${p.instrumen}</td>
+              <td style="border: 1px solid #d1d5db; font-weight: bold; background-color: #e8f4fc;">${p.aspek}</td>
+              <td style="border: 1px solid #d1d5db; background-color: #ffffff;">${p.teknik}</td>
+              <td style="border: 1px solid #d1d5db; background-color: #ffffff;">${p.instrumen}</td>
             </tr>
           `).join('')}
         </table>
 
-        <div style="font-size: 8.5pt; font-style: italic; color: #475569; margin-top: 6px; margin-bottom: 16px;">
-          Catatan: Durasi setiap langkah bersifat fleksibel dan dapat disesuaikan dengan kondisi serta tingkat fokus peserta didik di kelas. Pendidik diharapkan mengutamakan suasana belajar yang menyenangkan.
+        <div style="font-size: 8.5pt; font-style: italic; color: #475569; margin-top: 6px; margin-bottom: 20px;">
+          Catatan: Durasi setiap langkah bersifat fleksibel dan dapat disesuaikan dengan kondisi serta tingkat fokus peserta didik di kelas. Untuk Kelas I SD, pendidik diharapkan mengutamakan suasana belajar yang menyenangkan dan tidak memaksakan ketercapaian hafalan secara penuh dalam satu pertemuan.
         </div>
 
-        <!-- Bagian VI: Blok Tanda Tangan -->
-        <div style="margin-top: 25px; page-break-inside: avoid; font-size: 9.5pt;">
+        <!-- Bagian VI: Blok Tanda Tangan & Pengesahan -->
+        <div style="margin-top: 30px; page-break-inside: avoid; font-size: 9.5pt;">
           <table style="width: 100%; border: none;">
             <tr>
               <td style="width: 50%; text-align: center; border: none; vertical-align: top;">
                 Mengetahui,<br>
                 <b>Kepala Sekolah</b><br><br><br><br><br>
-                <b><u>${currentData.namaKepalaSekolah || '( ............................................ )'}</u></b>
+                <b><u>${currentData.namaKepalaSekolah || '( ............................................ )'}</u></b><br>
+                <span style="font-size: 8.5pt; color: #334155;">NIP/NIY/NPP. ${currentData.nipKepalaSekolah || '....................................'}</span>
               </td>
               <td style="width: 50%; text-align: center; border: none; vertical-align: top;">
                 ${currentData.kotaTanggal || 'Bandar Lampung, 10 Oktober 2026'}<br>
                 <b>Guru Al-Qur'an</b><br><br><br><br><br>
-                <b><u>${currentData.namaGuru || '( ............................................ )'}</u></b>
+                <b><u>${currentData.namaGuru || '( ............................................ )'}</u></b><br>
+                <span style="font-size: 8.5pt; color: #334155;">NIP/NIY/NPP. ${currentData.nipGuru || '....................................'}</span>
               </td>
             </tr>
           </table>
