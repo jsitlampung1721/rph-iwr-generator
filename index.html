@@ -7,7 +7,7 @@
   <!-- Favicon Logo IWR -->
   <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/d/1g4yAaTezHTWbS_v5Kz0B3jARrJE8kit1">
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Pustaka html2pdf.js untuk Export PDF Langsung (Tahap 4) -->
+  <!-- Pustaka html2pdf.js untuk Export PDF Langsung -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     :root {
@@ -20,7 +20,7 @@
     input, select, textarea, button {
       font-size: var(--input-font-size) !important;
     }
-    /* Area Input Fleksibel */
+    /* Area Input Fleksibel (Bisa Ditarik Kebawah / Keatas) */
     #formSection {
       resize: vertical;
       min-height: 350px;
@@ -37,78 +37,167 @@
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans min-h-screen">
 
-  <!-- Header Aplikasi -->
-  <header class="bg-emerald-700 text-white p-3.5 shadow-md no-print sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-3">
+  <!-- Header Application & Navigation Bar -->
+  <header class="bg-emerald-700 text-white shadow-md no-print sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo & Title -->
       <div class="flex items-center gap-3">
-        <img src="https://lh3.googleusercontent.com/d/1g4yAaTezHTWbS_v5Kz0B3jARrJE8kit1" alt="Logo IWR" class="w-9 h-9 object-contain bg-white rounded-full p-0.5">
+        <img src="https://lh3.googleusercontent.com/d/1g4yAaTezHTWbS_v5Kz0B3jARrJE8kit1" alt="Logo IWR" class="w-9 h-9 object-contain bg-white rounded-full p-0.5 shrink-0">
         <div>
-          <h1 class="text-lg font-bold flex items-center gap-2">
-            <span>✨ RPH MBQ 'Ilman Wa Ruuhan Generator</span>
-            <span class="bg-emerald-800 text-emerald-200 text-xs px-2 py-0.5 rounded border border-emerald-600">JSIT 2026</span>
+          <h1 class="text-base md:text-lg font-bold flex items-center gap-2 leading-tight">
+            <span>✨ RPH MBQ IWR Generator</span>
+            <span class="bg-emerald-800 text-emerald-200 text-[10px] md:text-xs px-2 py-0.5 rounded border border-emerald-600 hidden sm:inline-block">JSIT 2026</span>
           </h1>
-          <p class="text-xs text-emerald-100">Badan Pengembangan Pendidikan Al-Qur’an – JSIT Indonesia</p>
+          <p class="text-[10px] md:text-xs text-emerald-100 hidden sm:block">Badan Pengembangan Pendidikan Al-Qur’an – JSIT Indonesia</p>
         </div>
       </div>
 
-      <!-- Control Panel Header -->
-      <div class="flex flex-wrap items-center gap-2">
+      <!-- NAVBAR DESKTOP / TABLET (Satu Shaf Horizontal Rapi) -->
+      <nav class="hidden md:flex items-center gap-2 font-medium text-xs whitespace-nowrap">
         
-        <!-- Pemilih Tema Warna Cetak (Tahap 4) -->
-        <div class="bg-emerald-800 px-2 py-1 rounded-lg flex items-center gap-1 border border-emerald-600 text-xs font-semibold">
-          <span class="text-emerald-200">Tema:</span>
-          <select id="themeSelector" onchange="renderPreview()" class="bg-emerald-700 text-white rounded p-1 text-xs border border-emerald-500 font-medium">
-            <option value="hijau" selected>🟢 Hijau IWR</option>
+        <!-- Tombol Media & Panduan -->
+        <button onclick="openMediaModal()" class="bg-amber-500 hover:bg-amber-400 text-slate-900 px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1 shadow-sm">
+          📖 Panduan IWR
+        </button>
+
+        <!-- DROPDOWN 1: Berkas & Ekspor (JSON, PDF, Word) -->
+        <div class="relative dropdown-container">
+          <button onclick="toggleDropdown('dropdownBerkas')" class="bg-emerald-800 hover:bg-emerald-600 text-white px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 border border-emerald-600 transition">
+            <span>📁 Berkas & PDF</span>
+            <span class="text-[10px]">▼</span>
+          </button>
+          
+          <div id="dropdownBerkas" class="dropdown-content hidden absolute right-0 mt-2 w-48 bg-white text-slate-800 rounded-lg shadow-xl border border-slate-200 z-50 overflow-hidden py-1">
+            <button onclick="downloadPdf(); toggleDropdown('dropdownBerkas');" class="w-full text-left px-3 py-2 text-xs font-medium hover:bg-emerald-50 hover:text-emerald-800 transition flex items-center gap-2 border-b border-slate-100 text-red-600">
+              <span>📥</span> Unduh PDF (.pdf)
+            </button>
+            <button onclick="downloadWord(); toggleDropdown('dropdownBerkas');" class="w-full text-left px-3 py-2 text-xs font-medium hover:bg-emerald-50 hover:text-emerald-800 transition flex items-center gap-2 border-b border-slate-100 text-amber-600">
+              <span>📄</span> Unduh Word (.doc)
+            </button>
+            <button onclick="exportRphJson(); toggleDropdown('dropdownBerkas');" class="w-full text-left px-3 py-2 text-xs font-medium hover:bg-emerald-50 hover:text-emerald-800 transition flex items-center gap-2 border-b border-slate-100">
+              <span>📥</span> Export File JSON
+            </button>
+            <label class="w-full text-left px-3 py-2 text-xs font-medium hover:bg-emerald-50 hover:text-emerald-800 transition flex items-center gap-2 cursor-pointer">
+              <span>📤</span> Import File JSON
+              <input type="file" accept=".json" onchange="importRphJson(event); toggleDropdown('dropdownBerkas');" class="hidden">
+            </label>
+          </div>
+        </div>
+
+        <!-- DROPDOWN 2: Pengaturan Tampilan & Theme -->
+        <div class="relative dropdown-container">
+          <button onclick="toggleDropdown('dropdownTampilan')" class="bg-emerald-800 hover:bg-emerald-600 text-white px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 border border-emerald-600 transition">
+            <span>⚙️ Tampilan</span>
+            <span class="text-[10px]">▼</span>
+          </button>
+
+          <div id="dropdownTampilan" class="dropdown-content hidden absolute right-0 mt-2 w-56 bg-white text-slate-800 rounded-lg shadow-xl border border-slate-200 z-50 p-3 space-y-3">
+            <!-- Theme Picker -->
+            <div>
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Tema Warna Cetak:</label>
+              <select id="themeSelector" onchange="renderPreview()" class="w-full bg-slate-50 border rounded p-1.5 text-xs font-medium">
+                <option value="hijau" selected>🟢 Hijau IWR (Default)</option>
+                <option value="biru">🔵 Biru JSIT</option>
+                <option value="monochrome">⚪ Hitam Putih (Hemat Tinta)</option>
+              </select>
+            </div>
+
+            <!-- Font Size Adjuster -->
+            <div class="border-t pt-2">
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Ukuran Font Form:</label>
+              <div class="flex items-center justify-between bg-slate-50 p-1 rounded border">
+                <button onclick="adjustTextSize(-1)" class="bg-white hover:bg-slate-200 px-2 py-0.5 rounded font-bold border text-xs">A-</button>
+                <button onclick="resetTextSize()" class="bg-white hover:bg-slate-200 px-2 py-0.5 rounded font-bold border text-xs">100%</button>
+                <button onclick="adjustTextSize(1)" class="bg-white hover:bg-slate-200 px-2 py-0.5 rounded font-bold border text-xs">A+</button>
+              </div>
+            </div>
+
+            <!-- Mode Layout Switcher -->
+            <div class="border-t pt-2">
+              <label class="block text-[11px] font-bold text-slate-600 mb-1">Layout Layar:</label>
+              <div class="grid grid-cols-2 gap-1">
+                <button onclick="setLayoutMode('side')" class="bg-emerald-100 text-emerald-800 p-1 rounded font-semibold text-[11px] hover:bg-emerald-200">↔️ Samping</button>
+                <button onclick="setLayoutMode('stacked')" class="bg-slate-100 text-slate-800 p-1 rounded font-semibold text-[11px] hover:bg-slate-200">↕️ Atas-Bawah</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tombol Cetak Langsung -->
+        <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-lg font-semibold transition flex items-center gap-1 shadow-sm border border-emerald-500">
+          🖨️ Cetak
+        </button>
+
+      </nav>
+
+      <!-- TOMBOL HAMBURGER MOBILE / HP (Tampil Hanya di Layar Kecil) -->
+      <button id="btnMobileMenu" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg bg-emerald-800 hover:bg-emerald-600 text-white focus:outline-none transition">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+
+    </div>
+
+    <!-- MENU DRAWER MOBILE (EXPANDABLE / COLLAPSIBLE ON MOBILE) -->
+    <div id="mobileMenu" class="hidden md:hidden bg-emerald-800 border-t border-emerald-600 p-4 space-y-4 no-print">
+      
+      <!-- Panduan -->
+      <button onclick="openMediaModal(); toggleMobileMenu();" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold py-2 px-3 rounded text-xs text-center">
+        📖 Media & Panduan IWR
+      </button>
+
+      <!-- Berkas & Download -->
+      <div class="bg-emerald-900/60 p-3 rounded-lg space-y-2">
+        <span class="text-[11px] font-bold text-emerald-200 uppercase tracking-wider block">📁 Berkas & Dokumen</span>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="downloadPdf(); toggleMobileMenu();" class="bg-red-600 text-white p-2 rounded text-xs font-semibold">📥 Unduh PDF</button>
+          <button onclick="downloadWord(); toggleMobileMenu();" class="bg-amber-500 text-slate-900 p-2 rounded text-xs font-semibold">📄 Unduh Word</button>
+          <button onclick="exportRphJson(); toggleMobileMenu();" class="bg-emerald-700 text-white p-2 rounded text-xs font-semibold">📥 Export JSON</button>
+          <label class="bg-emerald-700 text-white p-2 rounded text-xs font-semibold text-center cursor-pointer block">
+            📤 Import JSON
+            <input type="file" accept=".json" onchange="importRphJson(event); toggleMobileMenu();" class="hidden">
+          </label>
+        </div>
+      </div>
+
+      <!-- Tampilan & Tema -->
+      <div class="bg-emerald-900/60 p-3 rounded-lg space-y-2">
+        <span class="text-[11px] font-bold text-emerald-200 uppercase tracking-wider block">⚙️ Pengaturan Tampilan</span>
+        
+        <div>
+          <label class="block text-[11px] text-emerald-100 mb-1">Tema Warna Cetak:</label>
+          <select id="themeSelectorMobile" onchange="document.getElementById('themeSelector').value=this.value; renderPreview();" class="w-full bg-emerald-800 border border-emerald-600 rounded p-1.5 text-xs font-medium text-white">
+            <option value="hijau">🟢 Hijau IWR</option>
             <option value="biru">🔵 Biru JSIT</option>
-            <option value="monochrome">⚪ Hitam Putih (Hemat Tinta)</option>
+            <option value="monochrome">⚪ Hitam Putih</option>
           </select>
         </div>
 
-        <!-- Tombol Bank Media IWR (Tahap 2) -->
-        <button onclick="openMediaModal()" class="bg-amber-500 hover:bg-amber-400 text-slate-900 px-2.5 py-1 rounded text-xs font-bold transition flex items-center gap-1">
-          📖 Media & Panduan IWR
-        </button>
-
-        <!-- Fitur Export / Import JSON (Tahap 1) -->
-        <div class="bg-emerald-800 px-2 py-1 rounded-lg flex items-center gap-1 border border-emerald-600">
-          <button onclick="exportRphJson()" title="Simpan RPH Ke File JSON" class="bg-emerald-600 hover:bg-emerald-500 text-white px-2 py-1 rounded text-xs font-semibold flex items-center gap-1">
-            📥 Export JSON
-          </button>
-          <label class="bg-emerald-600 hover:bg-emerald-500 text-white px-2 py-1 rounded text-xs font-semibold cursor-pointer flex items-center gap-1">
-            📤 Import JSON
-            <input type="file" id="importJsonInput" accept=".json" onchange="importRphJson(event)" class="hidden">
-          </label>
+        <div class="pt-1">
+          <label class="block text-[11px] text-emerald-100 mb-1">Ukuran Font Form:</label>
+          <div class="flex items-center justify-between bg-emerald-800 p-1 rounded border border-emerald-600">
+            <button onclick="adjustTextSize(-1)" class="px-3 py-1 bg-emerald-700 rounded font-bold text-xs">A-</button>
+            <button onclick="resetTextSize()" class="px-3 py-1 bg-emerald-700 rounded font-bold text-xs">100%</button>
+            <button onclick="adjustTextSize(1)" class="px-3 py-1 bg-emerald-700 rounded font-bold text-xs">A+</button>
+          </div>
         </div>
 
-        <!-- Pengatur Ukuran Font -->
-        <div class="bg-emerald-800 px-2.5 py-1 rounded-lg flex items-center gap-1 text-xs font-semibold border border-emerald-600">
-          <span class="text-emerald-200 mr-1">Font:</span>
-          <button onclick="adjustTextSize(-1)" title="Kecilkan Teks" class="bg-emerald-700 hover:bg-emerald-600 px-2 py-0.5 rounded font-bold">A-</button>
-          <button onclick="resetTextSize()" title="Ukuran Normal" class="bg-emerald-700 hover:bg-emerald-600 px-2 py-0.5 rounded font-bold">100%</button>
-          <button onclick="adjustTextSize(1)" title="Perbesar Teks" class="bg-emerald-700 hover:bg-emerald-600 px-2 py-0.5 rounded font-bold">A+</button>
+        <div class="pt-1">
+          <label class="block text-[11px] text-emerald-100 mb-1">Layout Layar:</label>
+          <div class="grid grid-cols-2 gap-2">
+            <button onclick="setLayoutMode('side'); toggleMobileMenu();" class="bg-emerald-700 p-1.5 rounded text-xs font-semibold">↔️ Samping</button>
+            <button onclick="setLayoutMode('stacked'); toggleMobileMenu();" class="bg-emerald-700 p-1.5 rounded text-xs font-semibold">↕️ Atas-Bawah</button>
+          </div>
         </div>
-
-        <!-- Switcher Mode Tampilan -->
-        <div class="bg-emerald-800 p-1 rounded-lg flex items-center text-xs font-semibold border border-emerald-600">
-          <button id="btnLayoutSide" onclick="setLayoutMode('side')" class="px-2.5 py-1 rounded bg-white text-emerald-900 shadow transition">
-            ↔️ Samping
-          </button>
-          <button id="btnLayoutStacked" onclick="setLayoutMode('stacked')" class="px-2.5 py-1 rounded text-emerald-100 hover:text-white transition">
-            ↕️ Atas-Bawah
-          </button>
-        </div>
-
-        <!-- Unduh PDF Direct & Print -->
-        <button onclick="downloadPdf()" class="bg-red-600 hover:bg-red-500 text-white px-3 py-1.5 rounded text-xs font-semibold transition flex items-center gap-1">
-          📥 Unduh PDF (.pdf)
-        </button>
-        <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 rounded text-xs font-semibold transition">
-          🖨️ Cetak
-        </button>
-        <button onclick="downloadWord()" class="bg-amber-500 hover:bg-amber-400 text-slate-900 px-3 py-1.5 rounded text-xs font-semibold transition">
-          📄 Unduh Word (.doc)
-        </button>
       </div>
+
+      <!-- Cetak -->
+      <button onclick="window.print(); toggleMobileMenu();" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-3 rounded text-xs text-center border border-emerald-400">
+        🖨️ Cetak Dokumen Sekarang
+      </button>
+
     </div>
   </header>
 
@@ -415,7 +504,7 @@
         <!-- Tab 3: SOP Alat Peraga -->
         <div class="bg-blue-50 border border-blue-200 p-4 rounded-lg space-y-2">
           <h3 class="font-bold text-blue-900 text-sm flex items-center gap-1">
-            framed 3. SOP 3-Langkah Penggunaan Alat Peraga IWR
+            🖼️ 3. SOP 3-Langkah Penggunaan Alat Peraga IWR
           </h3>
           <ol class="list-decimal list-inside space-y-1 font-medium text-slate-800">
             <li><b>Langkah Tertutup:</b> Pendidik mencontohkan lafal pokok materi sebanyak 3x (Alat Peraga belum dibuka) agar siswa fokus mendengarkan (*Sema'i*).</li>
@@ -616,7 +705,7 @@
       { id: "3.4", label: "3.4 Menjaga Kebersihan & Ketenangan Kelas", desc: "Menjaga tempat belajar tetap rapi, bersih, dan tenang saat pembelajaran Al-Qur'an." }
     ];
 
-    // Database Tema Warna Dokumen Cetak (Tahap 4)
+    // Database Tema Warna Dokumen Cetak
     const docThemes = {
       hijau: {
         headerBg: '#2e7d32',
@@ -644,7 +733,7 @@
       }
     };
 
-    // Skema Warna Langkah-Langkah Pembelajaran Sesuai Dokumen Sampel Word
+    // Skema Warna Langkah-Langkah Pembelajaran
     const stepTheme = [
       { leftBg: '#1976d2', headerBg: '#e3f2fd', headerText: '#1565c0' },
       { leftBg: '#6a1b9a', headerBg: '#f3e5f5', headerText: '#6a1b9a' },
@@ -659,7 +748,31 @@
     let logoDataUrl = "";
     let baseFontSize = 14;
 
-    /* FITUR TAHAP 4: EXPORT PDF LANGSUNG */
+    /* HAMBURGER & DROPDOWN NAV JS FUNCTIONS */
+    function toggleMobileMenu() {
+      const menu = document.getElementById("mobileMenu");
+      menu.classList.toggle("hidden");
+    }
+
+    function toggleDropdown(id) {
+      const dropdowns = document.querySelectorAll('.dropdown-content');
+      dropdowns.forEach(d => {
+        if (d.id === id) {
+          d.classList.toggle('hidden');
+        } else {
+          d.classList.add('hidden');
+        }
+      });
+    }
+
+    // Menutup dropdown saat diklik di luar area menu
+    window.addEventListener('click', function(e) {
+      if (!e.target.closest('.dropdown-container') && !e.target.closest('#btnMobileMenu')) {
+        document.querySelectorAll('.dropdown-content').forEach(d => d.classList.add('hidden'));
+      }
+    });
+
+    /* EXPORT PDF LANGSUNG */
     function downloadPdf() {
       const element = document.getElementById('documentContent');
       const opt = {
@@ -672,7 +785,7 @@
       html2pdf().set(opt).from(element).save();
     }
 
-    /* FITUR TAHAP 3: KALKULATOR DURASI OTOMATIS */
+    /* KALKULATOR DURASI OTOMATIS */
     function autoCalculateDuration() {
       const totalVal = parseInt(document.getElementById("inputTotalMenit").value) || 70;
       
@@ -700,7 +813,7 @@
       alert(`Berhasil membagi total ${totalVal} menit ke 7 langkah pembelajaran secara proporsional!`);
     }
 
-    /* MODAL MEDIA IWR (Tahap 2) */
+    /* MODAL MEDIA IWR */
     function openMediaModal() {
       document.getElementById("mediaModal").classList.remove("hidden");
     }
@@ -708,7 +821,7 @@
       document.getElementById("mediaModal").classList.add("hidden");
     }
 
-    /* LOCAL STORAGE & EXPORT/IMPORT JSON (Tahap 1) */
+    /* LOCAL STORAGE & EXPORT/IMPORT JSON */
     const STORAGE_KEY_PROFILE = "rph_iwr_saved_profile_2026";
 
     function saveProfileToStorage() {
@@ -836,23 +949,15 @@
       const container = document.getElementById("mainContainer");
       const form = document.getElementById("formSection");
       const preview = document.getElementById("previewSection");
-      const btnSide = document.getElementById("btnLayoutSide");
-      const btnStacked = document.getElementById("btnLayoutStacked");
 
       if (mode === 'stacked') {
         container.className = "max-w-7xl mx-auto p-4 flex flex-col gap-6 my-2";
         form.className = "w-full bg-white p-6 rounded-lg shadow border border-slate-200 no-print space-y-5 h-[88vh] overflow-y-auto";
         preview.className = "w-full bg-white p-8 rounded-lg shadow border border-slate-200 print-area min-h-[88vh]";
-        
-        btnStacked.className = "px-2.5 py-1 rounded bg-white text-emerald-900 shadow transition";
-        btnSide.className = "px-2.5 py-1 rounded text-emerald-100 hover:text-white transition";
       } else {
         container.className = "max-w-7xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6 my-2";
         form.className = "lg:col-span-5 bg-white p-6 rounded-lg shadow border border-slate-200 no-print space-y-5 h-[88vh] overflow-y-auto";
         preview.className = "lg:col-span-7 bg-white p-8 rounded-lg shadow border border-slate-200 print-area min-h-[88vh]";
-        
-        btnSide.className = "px-2.5 py-1 rounded bg-white text-emerald-900 shadow transition";
-        btnStacked.className = "px-2.5 py-1 rounded text-emerald-100 hover:text-white transition";
       }
     }
 
