@@ -38,7 +38,7 @@
       page-break-before: always;
     }
 
-    /* FITUR OPTION 3: STYLESHEET KONTRAS TINGGI PROYEKTOR */
+    /* STYLESHEET KONTRAS TINGGI PROYEKTOR */
     body.high-contrast-mode {
       background-color: #000000 !important;
       color: #ffffff !important;
@@ -115,32 +115,26 @@
       <!-- NAVBAR DESKTOP / TABLET -->
       <nav class="hidden md:flex items-center gap-2 font-medium text-xs whitespace-nowrap">
         
-        <!-- FITUR OPTION 3: Mode Kontras Tinggi Proyektor -->
         <button onclick="toggleHighContrast()" class="bg-black text-yellow-300 hover:bg-slate-900 px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1 shadow-sm border border-yellow-400">
           🔆 Kontras Proyektor
         </button>
 
-        <!-- FITUR OPTION 2: Cetak Rapor Individual -->
         <button onclick="openRaporModal()" class="bg-sky-600 hover:bg-sky-500 text-white px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1 shadow-sm border border-sky-400">
           📜 Rapor Murid
         </button>
 
-        <!-- FITUR OPTION 2: Kartu Munaqasyah -->
         <button onclick="openMunaqasyahModal()" class="bg-purple-600 hover:bg-purple-500 text-white px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1 shadow-sm border border-purple-400">
           🎴 Kartu Kuis
         </button>
 
-        <!-- FITUR GAMIFIKASI 1: Roda Acak Pemanggil Siswa -->
         <button onclick="openSpinnerModal()" class="bg-rose-600 hover:bg-rose-500 text-white px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1 shadow-sm border border-rose-400">
           🎡 Roda Pemanggil
         </button>
 
-        <!-- FITUR GAMIFIKASI 2: Timer & Bel -->
         <button onclick="toggleTimerWidget()" class="bg-amber-600 hover:bg-amber-500 text-white px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1 shadow-sm border border-amber-400">
           ⏱️ Timer
         </button>
 
-        <!-- Slide Presentasi -->
         <button onclick="startPresentationMode()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1 shadow-sm border border-indigo-400">
           📺 Slide
         </button>
@@ -236,7 +230,7 @@
     </div>
   </header>
 
-  <!-- FLOATING WIDGET TIMER & BEL TRANSISI -->
+  <!-- FLOATING WIDGET TIMER -->
   <div id="timerWidget" class="fixed bottom-4 right-4 bg-slate-900 text-white p-4 rounded-2xl shadow-2xl border border-slate-700 z-[150] hidden w-72 no-print space-y-3">
     <div class="flex items-center justify-between border-b border-slate-700 pb-2">
       <span class="font-bold text-xs text-amber-400 flex items-center gap-1">⏱️ TIMER LANGKAH KELAS</span>
@@ -265,10 +259,9 @@
   <!-- Kontainer Utama -->
   <main id="mainContainer" class="max-w-7xl mx-auto p-4 grid grid-cols-1 lg:grid-cols-12 gap-6 my-2">
 
-    <!-- Form Input (Kolom Kiri / Atas) -->
+    <!-- Form Input (Kolom Kiri) -->
     <section id="formSection" class="lg:col-span-5 bg-white p-6 rounded-lg shadow border border-slate-200 no-print space-y-5 h-[88vh] overflow-y-auto">
       
-      <!-- Status LocalStorage & Offline Ready -->
       <div class="text-xs bg-emerald-50 text-emerald-900 p-2.5 rounded border border-emerald-200 space-y-2">
         <div class="flex items-center justify-between">
           <span id="storageStatusText" class="font-semibold flex items-center gap-1">💾 Offline Ready & Auto-Save</span>
@@ -384,7 +377,7 @@
         </div>
       </div>
 
-      <!-- PANEL PENILAIAN DIGITAL + POIN BINTANG SANTUN -->
+      <!-- PANEL PENILAIAN DIGITAL -->
       <div class="bg-indigo-50 border border-indigo-200 p-3.5 rounded-lg space-y-3">
         <div class="flex items-center justify-between">
           <h3 class="text-xs font-bold text-indigo-900 uppercase">📊 Penilaian & Badge Santun (⭐)</h3>
@@ -417,7 +410,7 @@
         </div>
       </div>
 
-      <!-- FITUR OPTION 3: REFLEKSI KBM + SPEECH-TO-TEXT (VOICE RECORDING) -->
+      <!-- REFLEKSI KBM & VOICE RECORDER -->
       <div class="bg-purple-50 border border-purple-200 p-3.5 rounded-lg space-y-3">
         <div class="flex items-center justify-between">
           <h3 class="text-xs font-bold text-purple-900 uppercase flex items-center gap-1">
@@ -430,7 +423,6 @@
 
         <div class="space-y-2">
           <div class="flex items-center justify-between gap-1">
-            <!-- Tombol Speech-to-Text -->
             <button id="btnVoiceRec" onclick="toggleVoiceRecognition()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-2.5 py-1 rounded text-[11px] flex items-center gap-1 shadow">
               <span>🎙️ Rekam Suara (Speech-to-Text)</span>
             </button>
@@ -471,7 +463,7 @@
         </div>
       </div>
 
-      <!-- BAGIAN IV: 7 LANGKAH PEMBELAJARAN & KALKULATOR DURASI -->
+      <!-- BAGIAN IV: 7 LANGKAH PEMBELAJARAN -->
       <div class="space-y-3 border-t pt-3">
         <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian IV. Langkah Pembelajaran (7 Langkah)</h3>
 
@@ -491,7 +483,7 @@
         <div id="formLangkahContainer" class="space-y-3"></div>
       </div>
 
-      <!-- BAGIAN V: PENILAIAN, DIFERENSIASI, & LAMPIRAN -->
+      <!-- BAGIAN V: PENILAIAN & DIFERENSIASI -->
       <div class="space-y-3 border-t pt-3">
         <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian V. Penilaian & Diferensiasi</h3>
         <div id="formPenilaianContainer" class="space-y-3"></div>
@@ -520,7 +512,7 @@
         </div>
       </div>
 
-      <!-- BAGIAN VI: TANDA TANGAN & PENGESAHAN -->
+      <!-- BAGIAN VI: TANDA TANGAN -->
       <div class="space-y-2 border-t pt-3">
         <h3 class="text-xs font-bold text-emerald-800 uppercase">Bagian VI. Tanda Tangan & Pengesahan</h3>
         <div>
@@ -719,7 +711,7 @@
 
       <div class="p-5 overflow-y-auto space-y-4 text-xs text-slate-700 leading-relaxed">
         <div class="bg-purple-50 p-3.5 rounded-lg border border-purple-200 space-y-1">
-          <strong class="text-purple-900 text-sm block">1. Masalah: Terukar Makhraj 'Ain (ع) dan Hamzah (ء)</strong>
+          <strong class="text-purple-900 text-sm block">1. Masalah: Tertukar Makhraj 'Ain (ع) dan Hamzah (ء)</strong>
           <p class="text-slate-700"><b>Solusi Remedial IWR:</b> Bimbing siswa menyentuh pertengahan tenggorokan (*Wasathul Halq*) sambil melafalkan vokal tertekan 'A - 'I - 'U.</p>
         </div>
       </div>
@@ -731,38 +723,176 @@
   </div>
 
   <script>
+    /* DATABASE CAPAIAN PEMBELAJARAN LENGKAP SEMUA JENJANG */
     const cpDatabase = {
       PAUD: {
         TK_A: {
-          namaKelas: "TK A",
+          namaKelas: "TK A (PAUD)",
           alokasi: "2 × 30 menit (1 Pertemuan)",
           model: "Tatap Muka",
           kapasitas: "≤ 8 peserta didik per kelompok",
           bacaanCP: "Mengenal dan membaca huruf Hijaiyah Hamzah-Dhod berharakat Fathah.",
-          hafalanCP: "Menirukan QS. Al-Faatihah, An-Nas, Al-Falaq, Al-Ikhlas, Al-Lahab, An-Nashr, Al-Kaafirun, Al-Kautsar.",
-          maknaCP: "Mengenal arti nama surat dan jumlah ayat yang dihafal.",
-          bacaanList: ["Mengenal Huruf Hamzah - Kho' berharakat Fathah", "Mengenal Huruf Dal - Zay berharakat Fathah"],
+          hafalanCP: "Menirukan QS. Al-Faatihah, An-Nas, Al-Falaq, Al-Ikhlas.",
+          maknaCP: "Mengenal arti nama surat dan jumlah ayat yang dihafal secara sederhana.",
+          bacaanList: ["Jilid 1 Halaman 1-5 (Hamzah - Kho')", "Jilid 1 Halaman 6-10 (Dal - Zay)"],
           hafalanList: ["QS. Al-Faatihah", "QS. An-Nas", "QS. Al-Falaq", "QS. Al-Ikhlas"]
+        },
+        TK_B: {
+          namaKelas: "TK B (PAUD)",
+          alokasi: "2 × 30 menit (1 Pertemuan)",
+          model: "Tatap Muka",
+          kapasitas: "≤ 8 peserta didik per kelompok",
+          bacaanCP: "Membaca huruf Hijaiyah bersambung dua huruf berharakat Fathah & Kasroh.",
+          hafalanCP: "Menirukan QS. Al-Lahab, An-Nashr, Al-Kaafirun, Al-Kautsar.",
+          maknaCP: "Mengetahui kandungan umum surat yang dihafal.",
+          bacaanList: ["Jilid 1 Halaman 11-15 (Sin - Ya')", "Jilid 1 Halaman 16-20 (Sambung Dua Huruf)"],
+          hafalanList: ["QS. Al-Lahab", "QS. An-Nashr", "QS. Al-Kaafirun", "QS. Al-Kautsar"]
         }
       },
       SD: {
         SD_1: {
-          namaKelas: "Kelas I / Sekolah Dasar (Fase A)",
+          namaKelas: "Kelas I SD IT (Fase A)",
           alokasi: "2 × 35 menit (1 Pertemuan)",
           model: "Tatap Muka",
           kapasitas: "≤ 10 peserta didik per kelompok",
-          bacaanCP: "Membaca huruf-huruf Hijaiyah berharakat (Fathah, Kasroh, Dhommah, Mad, Alif Lam, Sukun) sesuai kaidah tajwid.",
-          hafalanCP: "QS. An-Nas, Al-Falaq, Al-Ikhlas, Al-Lahab, An-Nashr, Al-Kaafiruun, Al-Kautsar, Al-Ma'uun, Quraisy, Al-Fiil, Al-Humazah, Al-'Ashr, At-Takatsur, Al-Qoori'ah.",
-          maknaCP: "Menyebutkan arti nama surat, jumlah ayat, dan menyimpulkan hikmah dari surat yang dihafal secara sederhana.",
-          bacaanList: ["Jilid 1 halaman 1-5 (Harakat Fathah)", "Jilid 1 halaman 6-10 (Harakat Kasroh & Dhommah)", "Jilid 2 halaman 1-5 (Mad Thabi'i)", "Jilid 2 halaman 6-10 (Alif Lam & Sukun)"],
-          hafalanList: ["QS. An-Nas ayat 1-6", "QS. Al-Falaq ayat 1-5", "QS. Al-Ikhlas ayat 1-4", "QS. Al-Lahab ayat 1-5", "QS. An-Nashr ayat 1-3", "QS. Al-Kaafiruun ayat 1-6", "QS. Al-Kautsar ayat 1-3"]
+          bacaanCP: "Membaca huruf Hijaiyah berharakat (Fathah, Kasroh, Dhommah, Mad Thabi'i) sesuai kaidah tajwid.",
+          hafalanCP: "QS. An-Nas, Al-Falaq, Al-Ikhlas, Al-Lahab, An-Nashr, Al-Kaafiruun, Al-Kautsar.",
+          maknaCP: "Menyebutkan arti nama surat dan jumlah ayat.",
+          bacaanList: ["Jilid 1 halaman 1-5 (Fathah)", "Jilid 1 halaman 6-10 (Kasroh & Dhommah)", "Jilid 2 halaman 1-5 (Mad Thabi'i)"],
+          hafalanList: ["QS. An-Nas ayat 1-6", "QS. Al-Falaq ayat 1-5", "QS. Al-Ikhlas ayat 1-4", "QS. Al-Lahab ayat 1-5", "QS. An-Nashr ayat 1-3"]
+        },
+        SD_2: {
+          namaKelas: "Kelas II SD IT (Fase A)",
+          alokasi: "2 × 35 menit (1 Pertemuan)",
+          model: "Tatap Muka",
+          kapasitas: "≤ 10 peserta didik per kelompok",
+          bacaanCP: "Membaca hukum Sukun, Tasydid, dan Tanwin dengan lancar.",
+          hafalanCP: "QS. Al-Ma'uun, Quraisy, Al-Fiil, Al-Humazah, Al-'Ashr.",
+          maknaCP: "Menjelaskan pesan pokok surat pendek secara kontekstual.",
+          bacaanList: ["Jilid 2 Halaman 6-10 (Alif Lam & Sukun)", "Jilid 3 Halaman 1-5 (Tanwin & Tasydid)"],
+          hafalanList: ["QS. Al-Ma'uun", "QS. Quraisy", "QS. Al-Fiil", "QS. Al-Humazah", "QS. Al-'Ashr"]
+        },
+        SD_3: {
+          namaKelas: "Kelas III SD IT (Fase B)",
+          alokasi: "2 × 35 menit (1 Pertemuan)",
+          model: "Tatap Muka",
+          kapasitas: "≤ 12 peserta didik per kelompok",
+          bacaanCP: "Menerapkan hukum Nun Sukun/Tanwin (Izhhar, Idgham, Ikhfa, Iqlab).",
+          hafalanCP: "QS. At-Takatsur, Al-Qari'ah, Al-'Adiyat, Al-Zalzalah.",
+          maknaCP: "Memahami sebab turunnya surah (Asbabun Nuzul) sederhana.",
+          bacaanList: ["Jilid 3 Halaman 6-10 (Hukum Nun Sukun)", "Jilid 4 Halaman 1-5 (Ghunnah & Ikhfa)"],
+          hafalanList: ["QS. At-Takatsur", "QS. Al-Qari'ah", "QS. Al-'Adiyat", "QS. Al-Zalzalah"]
+        },
+        SD_4: {
+          namaKelas: "Kelas IV SD IT (Fase B)",
+          alokasi: "2 × 35 menit (1 Pertemuan)",
+          model: "Tatap Muka",
+          kapasitas: "≤ 12 peserta didik per kelompok",
+          bacaanCP: "Membaca Al-Qur'an Juz 1-5 dengan tartil sesuai tajwid dasar.",
+          hafalanCP: "QS. Al-Bayyinah, Al-Qadr, Al-'Alaq, At-Tiin.",
+          maknaCP: "Menganalisis keterkaitan isi kandungan surah dengan kehidupan.",
+          bacaanList: ["Juz 1 Surat Al-Baqarah", "Jilid 4 Halaman 6-10 (Mad Jaiz & Wajib)"],
+          hafalanList: ["QS. Al-Bayyinah", "QS. Al-Qadr", "QS. Al-'Alaq", "QS. At-Tiin"]
+        },
+        SD_5: {
+          namaKelas: "Kelas V SD IT (Fase C)",
+          alokasi: "2 × 35 menit (1 Pertemuan)",
+          model: "Tatap Muka",
+          kapasitas: "≤ 12 peserta didik per kelompok",
+          bacaanCP: "Membaca Al-Qur'an Juz 6-15 secara tartil dan fashih.",
+          hafalanCP: "QS. Al-Insyirah, Ad-Dhuha, Al-Lail, Asy-Syams.",
+          maknaCP: "Menyimpulkan ikhtisar dan hikmah keutamaan surah.",
+          bacaanList: ["Juz 6 Surat An-Nisa'", "Tadarus Juz 30 Tartil"],
+          hafalanList: ["QS. Al-Insyirah", "QS. Ad-Dhuha", "QS. Al-Lail", "QS. Asy-Syams"]
+        },
+        SD_6: {
+          namaKelas: "Kelas VI SD IT (Fase C)",
+          alokasi: "2 × 35 menit (1 Pertemuan)",
+          model: "Tatap Muka",
+          kapasitas: "≤ 12 peserta didik per kelompok",
+          bacaanCP: "Khatam Al-Qur'an 30 Juz dan munaqasyah tajwid praktis.",
+          hafalanCP: "QS. Al-Balad, Al-Fajr, Al-Ghasyiyah, Al-A'la.",
+          maknaCP: "Penguatan pemahaman hafalan Juz 30 secara menyeluruh.",
+          bacaanList: ["Munaqasyah Al-Qur'an 30 Juz", "Evaluasi Tartil & Tajwid Praktis"],
+          hafalanList: ["QS. Al-Balad", "QS. Al-Fajr", "QS. Al-Ghasyiyah", "QS. Al-A'la"]
+        }
+      },
+      SMP: {
+        SMP_7: {
+          namaKelas: "Kelas VII SMP IT (Fase D)",
+          alokasi: "2 × 40 menit (1 Pertemuan)",
+          model: "Tatap Muka / Halqah",
+          kapasitas: "≤ 15 peserta didik per halqah",
+          bacaanCP: "Membaca Al-Qur'an secara tartil, memahami Gharib dan Saktah.",
+          hafalanCP: "Juz 29: QS. Al-Mulk, Al-Qalam, Al-Haqqah.",
+          maknaCP: "Mengkaji makna kosakata (Mufradat) dan kandungan ayat.",
+          bacaanList: ["Al-Qur'an Juz 1-10", "Bacaan Gharib & Saktah dalam Al-Qur'an"],
+          hafalanList: ["QS. Al-Mulk", "QS. Al-Qalam", "QS. Al-Haqqah"]
+        },
+        SMP_8: {
+          namaKelas: "Kelas VIII SMP IT (Fase D)",
+          alokasi: "2 × 40 menit (1 Pertemuan)",
+          model: "Tatap Muka / Halqah",
+          kapasitas: "≤ 15 peserta didik per halqah",
+          bacaanCP: "Menerapkan ilmu tajwid teori dan praktik membaca tartil.",
+          hafalanCP: "Juz 29: QS. Al-Ma'arij, Nuh, Al-Jinn, Al-Muzzammil.",
+          maknaCP: "Memahami tafsir tematik dari surah yang dihafal.",
+          bacaanList: ["Al-Qur'an Juz 11-20", "Hukum Waqaf & Ibtida'"],
+          hafalanList: ["QS. Al-Ma'arij", "QS. Nuh", "QS. Al-Jinn", "QS. Al-Muzzammil"]
+        },
+        SMP_9: {
+          namaKelas: "Kelas IX SMP IT (Fase D)",
+          alokasi: "2 × 40 menit (1 Pertemuan)",
+          model: "Tatap Muka / Halqah",
+          kapasitas: "≤ 15 peserta didik per halqah",
+          bacaanCP: "Khatam bacaan Al-Qur'an 30 Juz dan Ujian Munaqasyah Tahfizh.",
+          hafalanCP: "Juz 29: QS. Al-Muddassir, Al-Qiyamah, Al-Insan, Al-Mursalat.",
+          maknaCP: "Korelasional nilai Al-Qur'an dalam pembentukan akhlak.",
+          bacaanList: ["Al-Qur'an Juz 21-30", "Munaqasyah Tajwid & Ghawamidh"],
+          hafalanList: ["QS. Al-Muddassir", "QS. Al-Qiyamah", "QS. Al-Insan", "QS. Al-Mursalat"]
+        }
+      },
+      SMA: {
+        SMA_10: {
+          namaKelas: "Kelas X SMA IT (Fase E)",
+          alokasi: "2 × 45 menit (1 Pertemuan)",
+          model: "Tatap Muka / Halqah",
+          kapasitas: "≤ 15 peserta didik per halqah",
+          bacaanCP: "Membaca Al-Qur'an dengan nagham Mujawwad/Tahsin standar munaqasyah.",
+          hafalanCP: "Juz 28: QS. Al-Mujadilah, Al-Hasyr, Al-Mumtahanah.",
+          maknaCP: "Tafsir kontekstual dan tadabbur ayat-ayat Al-Qur'an.",
+          bacaanList: ["Tahsin Tilawah Al-Qur'an Lanjutan", "Pengenalan Maqamat Tilawah"],
+          hafalanList: ["QS. Al-Mujadilah", "QS. Al-Hasyr", "QS. Al-Mumtahanah"]
+        },
+        SMA_11: {
+          namaKelas: "Kelas XI SMA IT (Fase F)",
+          alokasi: "2 × 45 menit (1 Pertemuan)",
+          model: "Tatap Muka / Halqah",
+          kapasitas: "≤ 15 peserta didik per halqah",
+          bacaanCP: "Penguasaan mutqin bacaan Al-Qur'an beserta metodologi pengajarannya.",
+          hafalanCP: "Juz 28: QS. As-Saff, Al-Jumu'ah, Al-Munafiqun.",
+          maknaCP: "Pengkajian Asbabun Nuzul dan Implikasi Hukum Islam.",
+          bacaanList: ["Pendalaman Rasm Usmani", "Metodologi Pengajaran Al-Qur'an"],
+          hafalanList: ["QS. As-Saff", "QS. Al-Jumu'ah", "QS. Al-Munafiqun"]
+        },
+        SMA_12: {
+          namaKelas: "Kelas XII SMA IT (Fase F)",
+          alokasi: "2 × 45 menit (1 Pertemuan)",
+          model: "Tatap Muka / Halqah",
+          kapasitas: "≤ 15 peserta didik per halqah",
+          bacaanCP: "Munaqasyah Akhir Syahadah Tahfizh & Sertifikasi Pengajar Al-Qur'an.",
+          hafalanCP: "Juz 28: QS. At-Taghabun, At-Talaq, At-Tahrim.",
+          maknaCP: "Mampu mengajarkan dan menterjemahkan pesan Al-Qur'an.",
+          bacaanList: ["Sertifikasi Tahsin & Tahfizh Guru Muda", "Ujian Komprehensif Al-Qur'an"],
+          hafalanList: ["QS. At-Taghabun", "QS. At-Talaq", "QS. At-Tahrim"]
         }
       }
     };
 
     const adabDatabase = [
       { id: "2.1", label: "2.1 Memelihara & Memuliakan Mushaf/Jilid", desc: "Membawa Al-Qur'an/buku jilid di dada dengan tangan kanan." },
-      { id: "2.2", label: "2.2 Membiasakan Wudu Sebelum Membaca", desc: "Berwudu secara tertib sebelum membaca Al-Qur'an." }
+      { id: "2.2", label: "2.2 Membiasakan Wudu Sebelum Membaca", desc: "Berwudu secara tertib sebelum membaca Al-Qur'an." },
+      { id: "2.3", label: "2.3 Duduk An-Nasyith (Tegak & Khusyuk)", desc: "Duduk rapi, menghadap kiblat, dan fokus menyimak." }
     ];
 
     const docThemes = {
@@ -790,15 +920,13 @@
     let isRecording = false;
     let deferredPrompt = null;
 
-    /* FITUR OPTION 3: MODE KONTRAS TINGGI PROYEKTOR */
     function toggleHighContrast() {
       document.body.classList.toggle("high-contrast-mode");
     }
 
-    /* FITUR OPTION 3: SPEECH-TO-TEXT (PENECATAT SUARA REFLEKSI) */
     function toggleVoiceRecognition() {
       if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-        alert("Browser Anda tidak mendukung Web Speech API! Silakan gunakan Google Chrome atau Microsoft Edge.");
+        alert("Browser Anda tidak mendukung Web Speech API! Gunakan Google Chrome atau Microsoft Edge.");
         return;
       }
 
@@ -818,18 +946,14 @@
             }
           }
           const txtArea = document.getElementById("txtRefleksiGuru");
-          txtArea.value += (txtArea.value ? '\n' : '') + transcript.trim();
-          updatePreviewFromForm();
+          if (txtArea) {
+            txtArea.value += (txtArea.value ? '\n' : '') + transcript.trim();
+            updatePreviewFromForm();
+          }
         };
 
-        recognition.onerror = function(e) {
-          console.error("Speech Error:", e);
-          stopVoiceRecordingState();
-        };
-
-        recognition.onend = function() {
-          stopVoiceRecordingState();
-        };
+        recognition.onerror = function() { stopVoiceRecordingState(); };
+        recognition.onend = function() { stopVoiceRecordingState(); };
       }
 
       if (isRecording) {
@@ -839,9 +963,11 @@
         recognition.start();
         isRecording = true;
         const btn = document.getElementById("btnVoiceRec");
-        btn.innerHTML = "<span>⏹️ Berhenti Rekam</span>";
-        btn.classList.remove("bg-purple-600");
-        btn.classList.add("bg-red-600", "animate-pulse");
+        if (btn) {
+          btn.innerHTML = "<span>⏹️ Berhenti Rekam</span>";
+          btn.classList.remove("bg-purple-600");
+          btn.classList.add("bg-red-600", "animate-pulse");
+        }
       }
     }
 
@@ -855,9 +981,7 @@
       }
     }
 
-    /* FITUR OPTION 3: MODUL PWA & OFFLINE SERVICE WORKER */
     function registerPWAAndOffline() {
-      // Dynamic Manifest Injection
       const manifestObj = {
         name: "RPH MBQ Ilman Wa Ruuhan Generator",
         short_name: "RPH IWR",
@@ -868,16 +992,14 @@
         icons: [{ src: "https://lh3.googleusercontent.com/d/1g4yAaTezHTWbS_v5Kz0B3jARrJE8kit1", sizes: "192x192", type: "image/png" }]
       };
       const blobManifest = new Blob([JSON.stringify(manifestObj)], {type: 'application/json'});
-      const manifestURL = URL.createObjectURL(blobManifest);
       const link = document.createElement('link');
       link.rel = 'manifest';
-      link.href = manifestURL;
+      link.href = URL.createObjectURL(blobManifest);
       document.head.appendChild(link);
 
-      // Offline Service Worker
       if ('serviceWorker' in navigator) {
         const swCode = `
-          const CACHE = 'rph-iwr-v1';
+          const CACHE = 'rph-iwr-v2';
           self.addEventListener('install', e => e.waitUntil(caches.open(CACHE).then(c => c.addAll(['./']))));
           self.addEventListener('fetch', e => e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))));
         `;
@@ -896,13 +1018,267 @@
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
       } else {
-        alert("Aplikasi RPH IWR siap digunakan secara offline & dapat ditambahkan ke Layar Utama melalui menu Browser (Add to Home Screen).");
+        alert("Aplikasi RPH IWR siap digunakan secara offline & dapat ditambahkan ke Layar Utama lewat menu Browser.");
       }
     }
 
-    /* RAPOR MUTABA'AH INDIVIDUAL */
+    /* GANTI JENJANG & KELAS DENGAN NULL SAFETY */
+    function onJenjangChange() {
+      const jenjang = document.getElementById("selectJenjang").value;
+      const kelasSelect = document.getElementById("selectKelas");
+      kelasSelect.innerHTML = "";
+
+      const jenjangData = cpDatabase[jenjang] || {};
+      Object.keys(jenjangData).forEach(k => {
+        const opt = document.createElement("option");
+        opt.value = k;
+        opt.innerText = jenjangData[k].namaKelas;
+        kelasSelect.appendChild(opt);
+      });
+
+      onKelasChange();
+    }
+
+    function onKelasChange() {
+      const jenjang = document.getElementById("selectJenjang").value;
+      const kelasKey = document.getElementById("selectKelas").value;
+
+      let dataKelas = (cpDatabase[jenjang] && cpDatabase[jenjang][kelasKey]) ? cpDatabase[jenjang][kelasKey] : null;
+      if (!dataKelas) {
+        const firstKey = Object.keys(cpDatabase[jenjang] || {})[0];
+        dataKelas = (cpDatabase[jenjang] && cpDatabase[jenjang][firstKey]) ? cpDatabase[jenjang][firstKey] : cpDatabase.SD.SD_1;
+      }
+
+      const selectHafalan = document.getElementById("selectHafalan");
+      selectHafalan.innerHTML = "";
+      (dataKelas.hafalanList || []).forEach(item => {
+        const opt = document.createElement("option");
+        opt.value = item;
+        opt.innerText = item;
+        selectHafalan.appendChild(opt);
+      });
+
+      const selectMateriUtama = document.getElementById("selectMateriUtama");
+      selectMateriUtama.innerHTML = "";
+      (dataKelas.bacaanList || []).forEach(item => {
+        const opt = document.createElement("option");
+        opt.value = item;
+        opt.innerText = item;
+        selectMateriUtama.appendChild(opt);
+      });
+
+      const selectAdab = document.getElementById("selectAdab");
+      selectAdab.innerHTML = "";
+      adabDatabase.forEach(item => {
+        const opt = document.createElement("option");
+        opt.value = item.id;
+        opt.innerText = item.label;
+        selectAdab.appendChild(opt);
+      });
+
+      // Update isi field Capaian Pembelajaran
+      document.getElementById("capaianAdab").value = "Memahami dan membiasakan adab terhadap Al-Qur'an serta guru/orang tua.";
+      document.getElementById("targetAdab").value = "Siswa menunjukkan pembiasaan adab baik selama pembelajaran.";
+      document.getElementById("capaianHafalan").value = dataKelas.hafalanCP || "";
+      document.getElementById("targetHafalan").value = selectHafalan.value || "Sesuai Target";
+      document.getElementById("capaianMakna").value = dataKelas.maknaCP || "";
+      document.getElementById("targetMakna").value = "Memahami arti dan hikmah ayat yang dihafal.";
+      document.getElementById("capaianUtama").value = dataKelas.bacaanCP || "";
+      document.getElementById("targetMateriUtama").value = selectMateriUtama.value || "Sesuai Target";
+
+      onSurahSelectChange();
+    }
+
+    function onSurahSelectChange() {
+      const selectedSurah = document.getElementById("selectHafalan").value || "";
+      if (selectedSurah && selectedSurah.includes("An-Nas")) {
+        document.getElementById("targetMakna").value = "Peserta didik menyebutkan arti QS. An-Nas (Manusia), 6 ayat, dan memohon perlindungan hanya kepada Allah.";
+      }
+      updatePreviewFromForm();
+    }
+
+    function generateRphOtomatis() {
+      const jenjang = document.getElementById("selectJenjang").value;
+      const kelasKey = document.getElementById("selectKelas").value;
+      
+      let dataKelas = (cpDatabase[jenjang] && cpDatabase[jenjang][kelasKey]) ? cpDatabase[jenjang][kelasKey] : cpDatabase.SD.SD_1;
+      const targetHafalanVal = document.getElementById("selectHafalan").value || "QS. An-Nas";
+      const targetMateriVal = document.getElementById("selectMateriUtama").value || "Jilid 1 Halaman 1-5";
+
+      currentData = {
+        satuanPendidikan: document.getElementById("satuanPendidikan").value || "SD IT Permata Hati",
+        judulModul: `Modul Ajar Pembelajaran Al-Qur'an MBQ 'Ilman Wa Ruuhan`,
+        subHeader: `${targetMateriVal} | ${dataKelas.namaKelas} | Satu Pertemuan`,
+        kelasFase: dataKelas.namaKelas,
+        tp: "2025–2026",
+        alokasiWaktu: dataKelas.alokasi,
+        model: dataKelas.model,
+        jumlahPeserta: dataKelas.kapasitas,
+        targetHafalan: targetHafalanVal,
+        targetUtama: targetMateriVal,
+        kotaTanggal: document.getElementById("kotaTanggal").value,
+        namaKepalaSekolah: document.getElementById("namaKepalaSekolah").value,
+        nipKepalaSekolah: document.getElementById("nipKepalaSekolah").value,
+        namaGuru: document.getElementById("namaGuru").value,
+        nipGuru: document.getElementById("nipGuru").value,
+        langkah: [
+          { nama: "Langkah 1", subnama: "Pembukaan", waktu: "4 menit", isi: "1. Salam, Apersepsi & Doa Pembuka.\n2. Doa Penawar Hati bersama-sama." },
+          { nama: "Langkah 2", subnama: "Adab dan Santun", waktu: "5 menit", isi: "1. Praktik adab membawa Al-Qur'an/buku jilid di dada.\n2. Pembiasaan posisi duduk An-Nasyith." },
+          { nama: "Langkah 3", subnama: "Energizer", waktu: "2 menit", isi: "1. Tepuk IWR dan Yel-Yel Semangat Kelas." },
+          { nama: "Langkah 4", subnama: "Hafalan (FASIH 2)", waktu: "10 menit", isi: `1. Talaqqi bersama target hafalan ${targetHafalanVal}.\n2. Muraja'ah hafalan pekan lalu.` },
+          { nama: "Langkah 5", subnama: "Energizer", waktu: "2 menit", isi: "1. Tepuk IWR penyegar suasana konsentrasi." },
+          { nama: "Langkah 6", subnama: "Materi Jilid (FASIH 1)", waktu: "9 menit", isi: `1. Bimbingan bacaan pokok ${targetMateriVal}.\n2. Simakan per-kelompok / fardhi.` },
+          { nama: "Langkah 7", subnama: "Penutup", waktu: "3 menit", isi: "1. Konfirmasi capaian hari ini & Pesan Moral.\n2. Doa Kaffaratul Majlis dan Salam." }
+        ],
+        penilaian: [
+          { aspek: "Adab dan Santun", teknik: "Observasi langsung & Rubrik Sikap" },
+          { aspek: "Capaian Hafalan & Jilid", teknik: "Tes Lisan & Setoran Fardhi" }
+        ]
+      };
+
+      document.getElementById("judulModul").value = currentData.judulModul;
+      document.getElementById("subHeader").value = currentData.subHeader;
+      document.getElementById("kelasFase").value = currentData.kelasFase;
+      document.getElementById("alokasiWaktu").value = currentData.alokasiWaktu;
+
+      renderFormLangkah();
+      renderFormPenilaian();
+      renderPreview();
+      renderDigitalGradingTable();
+    }
+
+    function renderFormLangkah() {
+      const container = document.getElementById("formLangkahContainer");
+      if (!container || !currentData.langkah) return;
+      container.innerHTML = "";
+      currentData.langkah.forEach((step, idx) => {
+        const div = document.createElement("div");
+        div.className = "bg-slate-50 p-3 rounded border border-slate-200 space-y-2";
+        div.innerHTML = `
+          <div class="flex justify-between font-bold text-slate-700">
+            <span>${step.nama} - ${step.subnama}</span>
+            <input type="text" value="${step.waktu}" oninput="currentData.langkah[${idx}].waktu=this.value; renderPreview();" class="p-1 border rounded text-xs w-1/4 text-right">
+          </div>
+          <textarea rows="3" oninput="currentData.langkah[${idx}].isi=this.value; renderPreview();" class="w-full p-2 border rounded bg-white text-xs">${step.isi}</textarea>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function renderFormPenilaian() {
+      const container = document.getElementById("formPenilaianContainer");
+      if (!container || !currentData.penilaian) return;
+      container.innerHTML = "";
+      currentData.penilaian.forEach((p, idx) => {
+        const div = document.createElement("div");
+        div.className = "bg-slate-50 p-3 rounded border border-slate-200 space-y-2";
+        div.innerHTML = `
+          <span class="font-bold text-slate-700">${p.aspek}</span>
+          <input type="text" value="${p.teknik}" oninput="currentData.penilaian[${idx}].teknik=this.value; renderPreview();" class="w-full p-1.5 border rounded bg-white font-medium">
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function updatePreviewFromForm() {
+      if (!currentData) currentData = {};
+      currentData.satuanPendidikan = document.getElementById("satuanPendidikan")?.value || "";
+      currentData.judulModul = document.getElementById("judulModul")?.value || "";
+      currentData.subHeader = document.getElementById("subHeader")?.value || "";
+      currentData.kelasFase = document.getElementById("kelasFase")?.value || "";
+      currentData.kotaTanggal = document.getElementById("kotaTanggal")?.value || "";
+      currentData.namaKepalaSekolah = document.getElementById("namaKepalaSekolah")?.value || "";
+      currentData.nipKepalaSekolah = document.getElementById("nipKepalaSekolah")?.value || "";
+      currentData.namaGuru = document.getElementById("namaGuru")?.value || "";
+      currentData.nipGuru = document.getElementById("nipGuru")?.value || "";
+
+      saveProfileToStorage();
+      renderPreview();
+    }
+
+    function renderPreview() {
+      if (!currentData || !currentData.judulModul) return;
+      const t = docThemes.hijau;
+
+      let html = `
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 12px; border-bottom: 2px solid #000; padding-bottom: 10px;">
+          <div style="width: 95px;"><img src="https://lh3.googleusercontent.com/d/1NYK166dwtbJFMNeNznw7EM3QCoHpRDEH" style="max-height: 70px;"></div>
+          <div style="text-align: center; font-weight: bold; flex-grow: 1;">
+            <div style="font-size: 14pt;">RENCANA PENGAJARAN HARIAN</div>
+            <div style="font-size: 12pt;">MBQ ‘ILMAN WA RUUHAN (IWR)</div>
+            <div style="font-size: 11pt; color: ${t.subTitle};">${currentData.subHeader}</div>
+          </div>
+          <div style="width: 95px; text-align: right;">${logoDataUrl ? `<img src="${logoDataUrl}" style="max-height: 70px;">` : ''}</div>
+        </div>
+
+        <h3 style="font-weight: bold; font-size: 11pt; color: ${t.sectionTitle};">Bagian I. Identitas RPH</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 9.5pt;" border="1" cellpadding="6">
+          <tr><td style="font-weight: bold; width: 30%; background-color: ${t.tdBgLabel};">Satuan Pendidikan</td><td style="font-weight: bold; color: ${t.sectionTitle};">${currentData.satuanPendidikan}</td></tr>
+          <tr><td style="font-weight: bold; background-color: ${t.tdBgLabel};">Judul Modul Ajar</td><td>${currentData.judulModul}</td></tr>
+          <tr><td style="font-weight: bold; background-color: ${t.tdBgLabel};">Kelas / Fase</td><td>${currentData.kelasFase}</td></tr>
+          <tr><td style="font-weight: bold; background-color: ${t.tdBgLabel};">Target Hafalan / Jilid</td><td>${currentData.targetHafalan || '-'} / ${currentData.targetUtama || '-'}</td></tr>
+        </table>
+
+        <h3 style="font-weight: bold; font-size: 11pt; color: ${t.sectionTitle};">Bagian IV. Langkah-Langkah Pembelajaran</h3>
+        <div style="margin-bottom: 16px;">
+          ${(currentData.langkah || []).map((step, idx) => {
+            const theme = stepTheme[idx % stepTheme.length];
+            return `
+              <table style="width: 100%; border-collapse: collapse; margin-bottom: 10px; font-size: 9.5pt; border: 1px solid #cbd5e1;" border="1">
+                <tr>
+                  <td style="width: 25%; background-color: ${theme.leftBg}; color: #fff; text-align: center; font-weight: bold; padding: 10px;">
+                    <div>${step.nama}</div><div>${step.subnama}</div><div style="font-size: 8.5pt;">${step.waktu}</div>
+                  </td>
+                  <td style="padding: 10px; white-space: pre-line;">${step.isi}</td>
+                </tr>
+              </table>
+            `;
+          }).join('')}
+        </div>
+
+        ${document.getElementById("txtRefleksiGuru")?.value ? `
+          <h3 style="font-weight: bold; font-size: 11pt; color: ${t.sectionTitle}; margin-top: 14px;">Catatan Refleksi & Evaluasi Guru</h3>
+          <div style="background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 10px; border-radius: 6px; font-size: 9pt; white-space: pre-line; margin-bottom: 16px;">
+            ${document.getElementById("txtRefleksiGuru").value}
+          </div>
+        ` : ''}
+
+        <div style="margin-top: 30px; page-break-inside: avoid; font-size: 9.5pt;">
+          <table style="width: 100%; border: none;">
+            <tr>
+              <td style="width: 35%; text-align: center; vertical-align: top;">
+                Mengetahui,<br><b>Kepala Sekolah</b><br><br><br><br>
+                <b><u>${currentData.namaKepalaSekolah || '( ............................................ )'}</u></b><br>
+                <span>NIP. ${currentData.nipKepalaSekolah || '....................................'}</span>
+              </td>
+              <td style="width: 30%; text-align: center; vertical-align: middle;">
+                <div id="qrcodeValidasi" style="display: flex; justify-content: center; align-items: center;"></div>
+                <div style="font-size: 7.5pt; color: #475569; font-weight: bold; margin-top: 2px;">VERIFIKASI DIGITAL RPH</div>
+              </td>
+              <td style="width: 35%; text-align: center; vertical-align: top;">
+                ${currentData.kotaTanggal || 'Bandar Lampung, 10 Oktober 2026'}<br><b>Guru Al-Qur'an</b><br><br><br><br>
+                <b><u>${currentData.namaGuru || '( ............................................ )'}</u></b><br>
+                <span>NIP. ${currentData.nipGuru || '....................................'}</span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      `;
+
+      document.getElementById("documentContent").innerHTML = html;
+
+      setTimeout(() => {
+        const qrContainer = document.getElementById("qrcodeValidasi");
+        if (qrContainer) {
+          qrContainer.innerHTML = "";
+          new QRCode(qrContainer, { text: `RPH VALID: ${currentData.satuanPendidikan} - ${currentData.namaGuru}`, width: 64, height: 64 });
+        }
+      }, 100);
+    }
+
+    /* RAPOR INDIVIDUAL */
     function openRaporModal() {
-      const listSiswa = document.getElementById("txtDaftarSiswa").value.split('\n').map(s => s.trim()).filter(s => s !== "");
+      const listSiswa = (document.getElementById("txtDaftarSiswa")?.value || "").split('\n').map(s => s.trim()).filter(s => s !== "");
       const select = document.getElementById("selectRaporSiswa"); select.innerHTML = "";
       if (listSiswa.length === 0) return alert("Isikan daftar nama murid terlebih dahulu!");
       listSiswa.forEach(s => { const opt = document.createElement("option"); opt.value = s; opt.innerText = s; select.appendChild(opt); });
@@ -919,13 +1295,13 @@
         <div style="border: 2px solid #0284c7; padding: 20px; border-radius: 12px; font-size: 9.5pt; background: #fff;">
           <div style="text-align: center; font-weight: bold; margin-bottom: 15px; border-bottom: 2px double #0284c7; padding-bottom: 8px;">
             <div style="font-size: 13pt; color: #0369a1; text-transform: uppercase;">RAPOR MUTABA'AH AL-QUR'AN SISWA</div>
-            <div style="font-size: 10pt;">${currentData.satuanPendidikan}</div>
+            <div style="font-size: 10pt;">${currentData.satuanPendidikan || 'Sekolah'}</div>
           </div>
           <table style="width: 100%; border-collapse: collapse; margin-bottom: 12px;">
             <tr><td style="width: 30%; font-weight: bold;">Nama Siswa:</td><td><strong>${siswa}</strong></td></tr>
-            <tr><td style="font-weight: bold;">Kelas / Jenjang:</td><td>${currentData.kelasFase}</td></tr>
-            <tr><td style="font-weight: bold;">Target Hafalan:</td><td>${currentData.targetHafalan}</td></tr>
-            <tr><td style="font-weight: bold;">Target Materi:</td><td>${currentData.targetUtama}</td></tr>
+            <tr><td style="font-weight: bold;">Kelas / Jenjang:</td><td>${currentData.kelasFase || '-'}</td></tr>
+            <tr><td style="font-weight: bold;">Target Hafalan:</td><td>${currentData.targetHafalan || '-'}</td></tr>
+            <tr><td style="font-weight: bold;">Target Materi:</td><td>${currentData.targetUtama || '-'}</td></tr>
           </table>
           <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;" border="1" cellpadding="6">
             <tr style="background: #e0f2fe; color: #0369a1; font-weight: bold;">
@@ -980,7 +1356,7 @@
     function openSpinnerModal() { document.getElementById("spinnerModal").classList.remove("hidden"); document.getElementById("spinnerModal").classList.add("flex"); }
     function closeSpinnerModal() { document.getElementById("spinnerModal").classList.add("hidden"); document.getElementById("spinnerModal").classList.remove("flex"); }
     function spinRandomStudent() {
-      const listSiswa = document.getElementById("txtDaftarSiswa").value.split('\n').map(s => s.trim()).filter(s => s !== "");
+      const listSiswa = (document.getElementById("txtDaftarSiswa")?.value || "").split('\n').map(s => s.trim()).filter(s => s !== "");
       if (listSiswa.length === 0) return alert("Isikan nama-nama murid!");
       const nameDisplay = document.getElementById("spinnerNameDisplay");
       let counter = 0;
@@ -1017,8 +1393,8 @@
     }
 
     function renderDigitalGradingTable() {
-      const listSiswa = document.getElementById("txtDaftarSiswa").value.split('\n').map(s => s.trim()).filter(s => s !== "");
-      const tbody = document.getElementById("digitalGradingBody"); tbody.innerHTML = "";
+      const listSiswa = (document.getElementById("txtDaftarSiswa")?.value || "").split('\n').map(s => s.trim()).filter(s => s !== "");
+      const tbody = document.getElementById("digitalGradingBody"); if (!tbody) return; tbody.innerHTML = "";
       listSiswa.forEach((siswa) => {
         if (!digitalScores[siswa]) digitalScores[siswa] = { adab: 'BSH', hafalan: '85', jilid: '85', stars: 0 };
         const tr = document.createElement("tr"); tr.className = "border-b hover:bg-slate-50";
@@ -1040,15 +1416,9 @@
       player.play().catch(e => {});
     }
 
-    function onSurahSelectChange() {
-      const selectedSurah = document.getElementById("selectHafalan").value;
-      if (selectedSurah.includes("An-Nas")) document.getElementById("targetMakna").value = "Peserta didik menyebutkan arti QS. An-Nas (Manusia), 6 ayat, dan memohon perlindungan hanya kepada Allah.";
-      updatePreviewFromForm();
-    }
-
     function generateRefleksiOtomatis() {
-      const listSiswa = document.getElementById("txtDaftarSiswa").value.split('\n').filter(s=>s.trim()!=='');
-      document.getElementById("txtRefleksiGuru").value = `• Ketercapaian Kelas: Sekitar 85% (${Math.round(listSiswa.length * 0.85)} dari ${listSiswa.length||10} siswa) menguasai target hafalan.\n• Rencana Tindak Lanjut: Pendampingan talaqqi fardhi khusus.`;
+      const listSiswa = (document.getElementById("txtDaftarSiswa")?.value || "").split('\n').filter(s=>s.trim()!=='');
+      document.getElementById("txtRefleksiGuru").value = `• Ketercapaian Kelas: Sekitar 85% (${Math.round(listSiswa.length * 0.85)} dari ${listSiswa.length||10} siswa) menguasai target hafalan.\n• Rencana Tindak Lanjut: Pendampingan talaqqi fardhi khusus bagi siswa yang belum lancar.`;
       updatePreviewFromForm();
     }
 
@@ -1057,7 +1427,7 @@
 
     function shareRphLink() {
       const shareUrl = `${window.location.origin}${window.location.pathname}#rph=${btoa(encodeURIComponent(JSON.stringify(currentData)))}`;
-      navigator.clipboard.writeText(shareUrl).then(() => alert("🔗 Link RPH disalin ke clipboard!"));
+      navigator.clipboard.writeText(shareUrl).then(() => alert("🔗 Link RPH berhasil disalin ke clipboard!"));
     }
 
     function backupFullData() {
@@ -1095,7 +1465,7 @@
     function closePresentationMode() { document.getElementById("presentationModal").classList.add("hidden"); document.getElementById("presentationModal").classList.remove("flex"); }
 
     function exportNilaiExcel() {
-      const listSiswa = document.getElementById("txtDaftarSiswa").value.split('\n').map(s => s.trim()).filter(s => s !== "");
+      const listSiswa = (document.getElementById("txtDaftarSiswa")?.value || "").split('\n').map(s => s.trim()).filter(s => s !== "");
       if (listSiswa.length === 0) return alert("Isi daftar siswa dulu!");
       const excelData = listSiswa.map((siswa, i) => ({ "No": i + 1, "Nama Siswa": siswa, "Stars": (digitalScores[siswa] ? digitalScores[siswa].stars || 0 : 0), "Adab": (digitalScores[siswa] ? digitalScores[siswa].adab : "BSH"), "Hafalan": (digitalScores[siswa] ? digitalScores[siswa].hafalan : "85"), "Jilid": (digitalScores[siswa] ? digitalScores[siswa].jilid : "85") }));
       const worksheet = XLSX.utils.json_to_sheet(excelData), workbook = XLSX.utils.book_new();
@@ -1113,7 +1483,9 @@
     function autoCalculateDuration() {
       const totalVal = parseInt(document.getElementById("inputTotalMenit").value) || 70;
       let w1 = Math.round(totalVal * 0.07), w2 = Math.round(totalVal * 0.08), w3 = Math.round(totalVal * 0.04), w4 = Math.round(totalVal * 0.33), w5 = Math.round(totalVal * 0.04), w6 = Math.round(totalVal * 0.34), w7 = Math.max(2, totalVal - (w1+w2+w3+w4+w5+w6));
-      currentData.langkah[0].waktu = `${w1} menit`; currentData.langkah[1].waktu = `${w2} menit`; currentData.langkah[2].waktu = `${w3} menit`; currentData.langkah[3].waktu = `${w4} menit`; currentData.langkah[4].waktu = `${w5} menit`; currentData.langkah[5].waktu = `${w6} menit`; currentData.langkah[6].waktu = `${w7} menit`;
+      if (currentData.langkah && currentData.langkah.length >= 7) {
+        currentData.langkah[0].waktu = `${w1} menit`; currentData.langkah[1].waktu = `${w2} menit`; currentData.langkah[2].waktu = `${w3} menit`; currentData.langkah[3].waktu = `${w4} menit`; currentData.langkah[5].waktu = `${w6} menit`; currentData.langkah[6].waktu = `${w7} menit`;
+      }
       document.getElementById("alokasiWaktu").value = `2 × ${Math.round(totalVal/2)} menit (${totalVal} Menit / 1 Pertemuan)`;
       renderFormLangkah(); renderPreview();
     }
@@ -1123,7 +1495,7 @@
 
     const STORAGE_KEY_PROFILE = "rph_iwr_saved_profile_2026";
     function saveProfileToStorage() {
-      const profile = { satuanPendidikan: document.getElementById("satuanPendidikan").value, namaKepalaSekolah: document.getElementById("namaKepalaSekolah").value, nipKepalaSekolah: document.getElementById("nipKepalaSekolah").value, namaGuru: document.getElementById("namaGuru").value, nipGuru: document.getElementById("nipGuru").value, kotaTanggal: document.getElementById("kotaTanggal").value, logoDataUrl: logoDataUrl, daftarSiswa: document.getElementById("txtDaftarSiswa").value };
+      const profile = { satuanPendidikan: document.getElementById("satuanPendidikan")?.value, namaKepalaSekolah: document.getElementById("namaKepalaSekolah")?.value, nipKepalaSekolah: document.getElementById("nipKepalaSekolah")?.value, namaGuru: document.getElementById("namaGuru")?.value, nipGuru: document.getElementById("nipGuru")?.value, kotaTanggal: document.getElementById("kotaTanggal")?.value, logoDataUrl: logoDataUrl, daftarSiswa: document.getElementById("txtDaftarSiswa")?.value };
       localStorage.setItem(STORAGE_KEY_PROFILE, JSON.stringify(profile));
     }
 
@@ -1144,169 +1516,12 @@
       }
     }
 
-    function clearSavedProfile() { if (confirm("Reset data?")) { localStorage.removeItem(STORAGE_KEY_PROFILE); location.reload(); } }
+    function clearSavedProfile() { if (confirm("Reset data profile?")) { localStorage.removeItem(STORAGE_KEY_PROFILE); location.reload(); } }
     function exportRphJson() { const a = document.createElement('a'); a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({ meta: "RPH_IWR_2026", data: currentData, logo: logoDataUrl }, null, 2)); a.download = `Template_RPH.json`; a.click(); }
     function importRphJson(event) { const file = event.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = function(e) { try { const imported = JSON.parse(e.target.result); if (imported.data) { currentData = imported.data; if (imported.logo) logoDataUrl = imported.logo; renderFormLangkah(); renderFormPenilaian(); renderPreview(); renderDigitalGradingTable(); } } catch (err) {} }; reader.readAsText(file); }
 
     function handleLogoUpload(event) { const file = event.target.files[0]; if (file) { const reader = new FileReader(); reader.onload = function(e) { logoDataUrl = e.target.result; saveProfileToStorage(); renderPreview(); }; reader.readAsDataURL(file); } }
     function removeLogo() { logoDataUrl = ""; saveProfileToStorage(); renderPreview(); }
-
-    function onJenjangChange() {
-      const jenjang = document.getElementById("selectJenjang").value, kelasSelect = document.getElementById("selectKelas"); kelasSelect.innerHTML = "";
-      Object.keys(cpDatabase[jenjang] || {}).forEach(k => { const opt = document.createElement("option"); opt.value = k; opt.innerText = cpDatabase[jenjang][k].namaKelas; kelasSelect.appendChild(opt); });
-      onKelasChange();
-    }
-
-    function onKelasChange() {
-      const jenjang = document.getElementById("selectJenjang").value, kelasKey = document.getElementById("selectKelas").value;
-      const dataKelas = (cpDatabase[jenjang] && cpDatabase[jenjang][kelasKey]) ? cpDatabase[jenjang][kelasKey] : cpDatabase.SD.SD_1;
-      const selectHafalan = document.getElementById("selectHafalan"); selectHafalan.innerHTML = "";
-      dataKelas.hafalanList.forEach(item => { const opt = document.createElement("option"); opt.value = item; opt.innerText = item; selectHafalan.appendChild(opt); });
-      const selectMateriUtama = document.getElementById("selectMateriUtama"); selectMateriUtama.innerHTML = "";
-      dataKelas.bacaanList.forEach(item => { const opt = document.createElement("option"); opt.value = item; opt.innerText = item; selectMateriUtama.appendChild(opt); });
-      const selectAdab = document.getElementById("selectAdab"); selectAdab.innerHTML = "";
-      adabDatabase.forEach(item => { const opt = document.createElement("option"); opt.value = item.id; opt.innerText = item.label; selectAdab.appendChild(opt); });
-      onSurahSelectChange();
-    }
-
-    function generateRphOtomatis() {
-      const jenjang = document.getElementById("selectJenjang").value, kelasKey = document.getElementById("selectKelas").value;
-      const dataKelas = (cpDatabase[jenjang] && cpDatabase[jenjang][kelasKey]) ? cpDatabase[jenjang][kelasKey] : cpDatabase.SD.SD_1;
-      const targetHafalanVal = document.getElementById("selectHafalan").value || "QS. An-Nas", targetMateriVal = document.getElementById("selectMateriUtama").value || "Jilid 1 Halaman 1-5";
-
-      currentData = {
-        satuanPendidikan: document.getElementById("satuanPendidikan").value || "SD IT Permata Hati",
-        judulModul: `Modul Ajar Pembelajaran Al-Qur'an Metode Ilman Wa Ruuhan`,
-        subHeader: `Jilid 1 | ${dataKelas.namaKelas} | Satu Pertemuan`,
-        kelasFase: dataKelas.namaKelas, tp: "2025–2026", alokasiWaktu: dataKelas.alokasi, model: dataKelas.model, jumlahPeserta: dataKelas.kapasitas,
-        targetHafalan: targetHafalanVal, targetUtama: targetMateriVal,
-        kotaTanggal: document.getElementById("kotaTanggal").value, namaKepalaSekolah: document.getElementById("namaKepalaSekolah").value, nipKepalaSekolah: document.getElementById("nipKepalaSekolah").value, namaGuru: document.getElementById("namaGuru").value, nipGuru: document.getElementById("nipGuru").value,
-        langkah: [
-          { nama: "Langkah 1", subnama: "Pembukaan", waktu: "4 menit", isi: "1. Salam & Doa Pembuka.\n2. Doa Penawar Hati bersama-sama." },
-          { nama: "Langkah 2", subnama: "Adab dan Santun", waktu: "5 menit", isi: "1. Praktik adab membawa Al-Qur'an/buku jilid di dada." },
-          { nama: "Langkah 3", subnama: "Energizer", waktu: "2 menit", isi: "1. Tepuk IWR dan Yel-Yel Semangat." },
-          { nama: "Langkah 4", subnama: "Hafalan", waktu: "10 menit", isi: `1. Talaqqi bersama target hafalan ${targetHafalanVal}.` },
-          { nama: "Langkah 5", subnama: "Energizer", waktu: "2 menit", isi: "1. Tepuk IWR penyegar suasana." },
-          { nama: "Langkah 6", subnama: "Materi Jilid", waktu: "9 menit", isi: `1. Bimbingan bacaan pokok ${targetMateriVal}.` },
-          { nama: "Langkah 7", subnama: "Penutup", waktu: "3 menit", isi: "1. Doa Kaffaratul Majlis dan Salam." }
-        ],
-        penilaian: [{ aspek: "Adab dan Santun", teknik: "Observasi langsung" }]
-      };
-
-      document.getElementById("judulModul").value = currentData.judulModul;
-      document.getElementById("subHeader").value = currentData.subHeader;
-      renderFormLangkah(); renderFormPenilaian(); renderPreview(); renderDigitalGradingTable();
-    }
-
-    function renderFormLangkah() {
-      const container = document.getElementById("formLangkahContainer"); container.innerHTML = "";
-      currentData.langkah.forEach((step, idx) => {
-        const div = document.createElement("div"); div.className = "bg-slate-50 p-3 rounded border border-slate-200 space-y-2";
-        div.innerHTML = `<div class="flex justify-between font-bold text-slate-700"><span>${step.nama} - ${step.subnama}</span><input type="text" value="${step.waktu}" oninput="currentData.langkah[${idx}].waktu=this.value; renderPreview();" class="p-1 border rounded text-xs w-1/4 text-right"></div><textarea rows="4" oninput="currentData.langkah[${idx}].isi=this.value; renderPreview();" class="w-full p-2 border rounded bg-white text-xs">${step.isi}</textarea>`;
-        container.appendChild(div);
-      });
-    }
-
-    function renderFormPenilaian() {
-      const container = document.getElementById("formPenilaianContainer"); container.innerHTML = "";
-      currentData.penilaian.forEach((p, idx) => {
-        const div = document.createElement("div"); div.className = "bg-slate-50 p-3 rounded border border-slate-200 space-y-2";
-        div.innerHTML = `<span class="font-bold text-slate-700">${p.aspek}</span><input type="text" value="${p.teknik}" oninput="currentData.penilaian[${idx}].teknik=this.value; renderPreview();" class="w-full p-1.5 border rounded bg-white font-medium">`;
-        container.appendChild(div);
-      });
-    }
-
-    function updatePreviewFromForm() {
-      currentData.satuanPendidikan = document.getElementById("satuanPendidikan").value;
-      currentData.judulModul = document.getElementById("judulModul").value;
-      currentData.subHeader = document.getElementById("subHeader").value;
-      currentData.kelasFase = document.getElementById("kelasFase").value;
-      currentData.kotaTanggal = document.getElementById("kotaTanggal").value;
-      currentData.namaKepalaSekolah = document.getElementById("namaKepalaSekolah").value;
-      currentData.nipKepalaSekolah = document.getElementById("nipKepalaSekolah").value;
-      currentData.namaGuru = document.getElementById("namaGuru").value;
-      currentData.nipGuru = document.getElementById("nipGuru").value;
-
-      saveProfileToStorage(); renderPreview();
-    }
-
-    function renderPreview() {
-      if (!currentData.judulModul) return;
-      const t = docThemes[document.getElementById("themeSelector")?.value || "hijau"];
-
-      let html = `
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 12px; border-bottom: 2px solid #000; padding-bottom: 10px;">
-          <div style="width: 95px;"><img src="https://lh3.googleusercontent.com/d/1NYK166dwtbJFMNeNznw7EM3QCoHpRDEH" style="max-height: 70px;"></div>
-          <div style="text-align: center; font-weight: bold; flex-grow: 1;">
-            <div style="font-size: 14pt;">RENCANA PENGAJARAN HARIAN</div>
-            <div style="font-size: 12pt;">MBQ ‘ILMAN WA RUUHAN (IWR)</div>
-            <div style="font-size: 11pt; color: ${t.subTitle};">${currentData.subHeader}</div>
-          </div>
-          <div style="width: 95px; text-align: right;">${logoDataUrl ? `<img src="${logoDataUrl}" style="max-height: 70px;">` : ''}</div>
-        </div>
-
-        <h3 style="font-weight: bold; font-size: 11pt; color: ${t.sectionTitle};">Bagian I. Identitas RPH</h3>
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 9.5pt;" border="1" cellpadding="6">
-          <tr><td style="font-weight: bold; background-color: ${t.tdBgLabel};">Satuan Pendidikan</td><td style="font-weight: bold; color: ${t.sectionTitle};">${currentData.satuanPendidikan}</td></tr>
-          <tr><td style="font-weight: bold; background-color: ${t.tdBgLabel};">Judul Modul Ajar</td><td>${currentData.judulModul}</td></tr>
-        </table>
-
-        <h3 style="font-weight: bold; font-size: 11pt; color: ${t.sectionTitle};">Bagian IV. Langkah-Langkah Pembelajaran</h3>
-        <div style="margin-bottom: 16px;">
-          ${currentData.langkah.map((step, idx) => {
-            const theme = stepTheme[idx % stepTheme.length];
-            return `
-              <table style="width: 100%; border-collapse: collapse; margin-bottom: 10px; font-size: 9.5pt; border: 1px solid #cbd5e1;" border="1">
-                <tr>
-                  <td style="width: 25%; background-color: ${theme.leftBg}; color: #fff; text-align: center; font-weight: bold; padding: 10px;">
-                    <div>${step.nama}</div><div>${step.subnama}</div><div style="font-size: 8.5pt;">${step.waktu}</div>
-                  </td>
-                  <td style="padding: 10px; white-space: pre-line;">${step.isi}</td>
-                </tr>
-              </table>
-            `;
-          }).join('')}
-        </div>
-
-        ${document.getElementById("txtRefleksiGuru")?.value ? `
-          <h3 style="font-weight: bold; font-size: 11pt; color: ${t.sectionTitle}; margin-top: 14px;">Catatan Refleksi & Evaluasi Guru</h3>
-          <div style="background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 10px; border-radius: 6px; font-size: 9pt; white-space: pre-line; margin-bottom: 16px;">
-            ${document.getElementById("txtRefleksiGuru").value}
-          </div>
-        ` : ''}
-
-        <div style="margin-top: 30px; page-break-inside: avoid; font-size: 9.5pt;">
-          <table style="width: 100%; border: none;">
-            <tr>
-              <td style="width: 35%; text-align: center; vertical-align: top;">
-                Mengetahui,<br><b>Kepala Sekolah</b><br><br><br><br>
-                <b><u>${currentData.namaKepalaSekolah || '( ............................................ )'}</u></b><br>
-                <span>NIP. ${currentData.nipKepalaSekolah || '....................................'}</span>
-              </td>
-              <td style="width: 30%; text-align: center; vertical-align: middle;">
-                <div id="qrcodeValidasi" style="display: flex; justify-content: center; align-items: center;"></div>
-                <div style="font-size: 7.5pt; color: #475569; font-weight: bold; margin-top: 2px;">VERIFIKASI DIGITAL RPH</div>
-              </td>
-              <td style="width: 35%; text-align: center; vertical-align: top;">
-                ${currentData.kotaTanggal || 'Bandar Lampung, 10 Oktober 2026'}<br><b>Guru Al-Qur'an</b><br><br><br><br>
-                <b><u>${currentData.namaGuru || '( ............................................ )'}</u></b><br>
-                <span>NIP. ${currentData.nipGuru || '....................................'}</span>
-              </td>
-            </tr>
-          </table>
-        </div>
-      `;
-
-      document.getElementById("documentContent").innerHTML = html;
-
-      setTimeout(() => {
-        const qrContainer = document.getElementById("qrcodeValidasi");
-        if (qrContainer) {
-          qrContainer.innerHTML = "";
-          new QRCode(qrContainer, { text: `RPH VALID: ${currentData.satuanPendidikan} - ${currentData.namaGuru}`, width: 64, height: 64 });
-        }
-      }, 100);
-    }
 
     function downloadWord() {
       const content = document.getElementById("documentContent").innerHTML;
